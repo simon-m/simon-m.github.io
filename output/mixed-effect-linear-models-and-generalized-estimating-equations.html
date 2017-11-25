@@ -1,0 +1,452 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="./themes/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="./themes/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="./themes/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+
+<meta name="author" content="Simon-M" />
+<meta name="description" content="A review of fixed and random effects, linear mixed models and GEE" />
+<meta name="keywords" content="mixed model, generalized estimating equations, marginal model, conditional model, random effect">
+
+<meta property="og:site_name" content="Weblog"/>
+<meta property="og:title" content="Mixed-(effect) linear models and generalized estimating equations."/>
+<meta property="og:description" content="A review of fixed and random effects, linear mixed models and GEE"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="./mixed-effect-linear-models-and-generalized-estimating-equations.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2017-10-31 21:30:00+01:00"/>
+<meta property="article:modified_time" content="2017-11-02 22:00:00+01:00"/>
+<meta property="article:author" content="./author/simon-m.html">
+<meta property="article:section" content="Statistics"/>
+<meta property="article:tag" content="mixed model"/>
+<meta property="article:tag" content="generalized estimating equations"/>
+<meta property="article:tag" content="marginal model"/>
+<meta property="article:tag" content="conditional model"/>
+<meta property="article:tag" content="random effect"/>
+<meta property="og:image" content="">
+
+  <title>Weblog &ndash; Mixed-(effect) linear models and generalized estimating equations.</title>
+
+
+  <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+</head>
+<body>
+  <aside>
+    <div>
+      <a href=".">
+        <img src="./themes/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href="."></a></h1>
+
+
+      <nav>
+        <ul class="list">
+          <li><a href="./pages/links.html#links">Links</a></li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href=".">    Home
+</a>
+
+      <a href="categories.html">Categories</a>
+      <a href="tags.html">Tags</a>
+
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="mixed-effect-linear-models-and-generalized-estimating-equations">Mixed-(effect) linear models and generalized estimating equations.</h1>
+    <p>
+          Posted on mar. 31 octobre 2017 in <a href="./category/statistics.html">Statistics</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <h1>Context</h1>
+<p>I am going to get my hands on some data with correlated measurements and thus, I have been reading
+about approaches to handle such correlated data. Among such methods are various kinds of ANOVA 
+(two-way ANOVA, repeated-measures ANOVA, clustered ANOVA, nested/random effects model/hierarchical ANOVA, 
+split-plot ANOVA), mixed-(effects) models and generalized estimating equations aka marginal 
+models.
+As of now, mixed models and marginal models are pretty much the standard tools for such analyses, 
+mainly because ANOVA-based methods require stronger assumptions and do not handle missing data well.
+I will almost exclusively focus on <em>linear</em> models but be aware that teir exist generalized linear mixed 
+models (GLMM) which are the mixed-model version of generalized linear models (GLM). Moreover, generalized
+stimating equations are an extension of GLM for correlated responses, and as such they can handle the same 
+kind of dependences between covariates and response through the link function.</p>
+<h1>Linear fixed-effects models</h1>
+<p>The response variable \(Y_i\) of observation \(i\) is a random variable which linearly depends
+on the covariates \(x_{ij}\) through coefficients \(\beta_j\) up to an random error term \(\epsilon_i\):
+\[ Y_i = \beta_1 x_{i1} + \dots + \beta_p x_{ip} + \epsilon_i = \sum_{j=1}^{p} \beta_j x_{ij} + \epsilon_i\]
+Equivalently letting \(\mathbf{\beta} = (\beta_1, \dots \beta_p)\) and<br>
+\(\mathbf{x_i} = (x_{i1}, \dots x_{ip})^T\) we have:
+\[ Y_i = \mathbf{\beta} \mathbf{x_i} + \epsilon_i \]
+The assumptions are \(E[\epsilon_i] = 0\), \(Var[\epsilon_i] = \sigma_i^2\), and
+\(cov[\epsilon] = \Sigma\).
+Most often, \(\epsilon\) is assumed to follow a multivariate Gaussian:
+ \(\epsilon \sim \mathcal{N}(0, \Sigma)\).</p>
+<p>Let \(\mathbf{Y}\) be the \(n \times 1\) vector of responses,
+\(\mathbf{x}\) be the \(n \times p\) <em>design matrix</em>, and \(\mathbf{\epsilon}\)
+be the \(n \times 1\) vector of random errors. In the more compact matrix notation, we have:
+\[ \mathbf{Y} = \mathbf{\beta} \mathbf{x} + \mathbf{\epsilon} \]</p>
+<p>In the fixed-effects model, \(\mathbf{x}\) is assumed to be fixed, and does not contribute to 
+the variance of \(\mathbf{Y}\):
+\[Y \sim \mathcal{N}(\mathbf{\beta} \mathbf{x}, \Sigma)\]</p>
+<h1>Fixed and random effects: an example</h1>
+<p>In the course of an analysis, one may want to include a specific categorical covariate
+in the model as a <em>dummy variable</em>; for instance whether a given patient has diabetes.
+In that case, this covariate is relevant to the analysis and not expected to change
+should the experiment be carried-out again.</p>
+<p>One may also want to to control for the center (A or B) in which the measurement were made (in a
+multi-center study) as it could have an impact on the measurements. However, the effect of the center on the 
+response is not of primary interest, but should merely be taken into account as a source of heterogeneity 
+(it is a <em>nuisance</em> variable). Moreover, the distribution of patients among centers could well change in 
+another study.</p>
+<p>In the first case there are two groups (diabetes / no diabetes) whose effect on the response is
+expected to be accurately quantified by the corresponding dummy variable. In the second case,
+there are two groups whose effect on the response can only be estimated given the current data
+because another study using other groups will result in different effects.</p>
+<p>The first case is typical of a <em>fixed effect</em> whereas the second is typical of a <em>random effect</em>.
+Most models including random effects also include fixed effects and can be called <em>random effect models</em>, 
+<em>mixed models</em>, <em>conditional models</em> \(\dots\).</p>
+<p>In a more general setting, random effects can be either categorical or continuous.</p>
+<h1>Linear mixed effects models (LMM):</h1>
+<p>Linar mixed model include both fixed and random effects which are described separately.
+For observation j belonging to group i, we have:
+\[ Y_{ij} = \beta_1 x_{ij1} + \dots + \beta_p x_{ijp} + U_{i1} Z_{ij1}  + \dots + U_{iq} Z_{ijq} + \epsilon_{ij}
+= \sum_{k=1}^{p} \beta_j x_{ijk} + \sum_{l=1}^{q} U_{il} Z_{ijl} + \epsilon_{ij}\]</p>
+<p>As for the fixed effects model, given and \(\mathbf{U_{i}} = (U_{i1}, \dots, U_{iq})\) and
+\(\mathbf{Z_{ij}} = (Z_{ij1}, \dots, Z_{1jq})^T\), this is equivalent to:
+\[ Y_{ij} = \mathbf{\beta} \mathbf{x_{ij}} + \mathbf{U_{i}} \mathbf{Z_{ij}} + \epsilon_{ij}\]</p>
+<p>Note that this is essentially the fixed-effects models to which were added with the random effects 
+\(\mathbf{Z_{ij}}\) and the corresponding group-specific coefficients \(\mathbf{U_{i}}\).</p>
+<p>The equations above assume that all groups have random effects of the
+same dimension \(q\). This is not mandatory and it is possible to have
+and \(\mathbf{U_{i}} = (U_{i1}, \dots, U_{iq_i})\) and 
+\(\mathbf{Z_{ij}} = (Z_{ij1}, \dots, Z_{ijq_i})^T\)</p>
+<p>Let \(n_i\) be the number of observations in group \(i\) and \(\mathbf{Z_i}\) be the 
+\(n_i \times q_i\) design matrix for random effects.
+The other terms are similar to those in the fixed-effects model but restricted to group \(i\).
+Namely \(\mathbf{x_i}\) is of dimension \(n_i \times p\), and \(\mathbf{\epsilon_i}\)
+is of dimension \(n_i \times 1\).
+Then a mixed model takes the following form for group \(i\):
+\[ \mathbf{Y_i} = \mathbf{\beta} \mathbf{x_i} + \mathbf{U_i} \mathbf{Z_i} + \mathbf{\epsilon_i}\]</p>
+<p>Finally, letting \(n = \sum_{i} n_i\) and \(q = \sum_{i} q_i\) we have
+\[ \mathbf{Y} = \mathbf{\beta} \mathbf{x} + \mathbf{U} \mathbf{Z} + \mathbf{\epsilon}\]
+with \(\mathbf{Z}\) of dimension \(n \times q\) and  \(\mathbf{U}\) of dimension \(q \times 1\).</p>
+<h2>Variance components</h2>
+<p>As opposed to the fixed effects model, in this setting \(\epsilon\) is no longer the only contributor to 
+the variance of \(\mathbf{Y}\).
+We have \(U \sim \mathcal{N}(0, R)\), \(R\) being the random effects covariance matrix, and 
+\(\epsilon\) and \(U\) are assumed to be independent, i.e. \(cov[U, \epsilon] = 0_{q \times n}\).</p>
+<p>Therefore, we have
+\(\mathbf{Y|U} \sim \mathcal{N}(\mathbf{X}\mathbf{\beta} + \mathbf{Z}\mathbf{U}, \Sigma\))
+and
+\(\mathbf{Y} \sim \mathcal{N}(\mathbf{X}\mathbf{\beta}, ZRZ^T + \Sigma) =
+\mathcal{N}(\mathbf{X}\mathbf{\beta}, V)\).
+The matrix \(V\) is called the <em>variance-covariance matrix</em>.</p>
+<h1>Model fitting / Parameter estimation</h1>
+<p>For a mixed model, the unknown quantities \(\mathbf{\beta}\), \(\mathbf{U}\), \(\Sigma\) and \(R\) 
+must be estimated.
+More specifically, \(\mathbf{\beta}\), \(\Sigma\) and \(R\) are fixed and which can be directly
+estimated from the data. The situation is rather different for \(\mathbf{U}\) which is a matrix of
+random variables which must be predicted.</p>
+<p>I'll first assume that the covariance matrices are known to estimate \(\mathbf{\beta}\) and \(\mathbf{U}\), 
+which is almost never the case but makes the explanation simpler. In practice these and the covariance matrices are
+estimated jointly.
+In practice, parameter estimation is usually performed using either maximum likelihood (ML) or 
+residual/restricted maximum likelihood (RML / REML).</p>
+<h2>Random and fixed effects estimation</h2>
+<p>Let us start by assuming that \(V = ZRZ^T + \Sigma\) is known, implying that  \(R\) and
+\(\Sigma\) are known too, and seek to estimate \(\mathbf{\beta}\) and \(\mathbf{U}\).
+One way is to solve Henderson's equations also called <em>mixed model equations</em> with the
+following solutions:
+\[ \mathbf{\hat{\beta}} = (\mathbf{X}^T V^{-1} \mathbf{X})^{-1} X^T V^{-1} \mathbf{Y}\]
+\[ \mathbf{\tilde{U}} = R Z^T V^{-1}(\mathbf{Y} - \mathbf{X}\mathbf{\hat{\beta}})\]</p>
+<p>Note that \(\mathbf{\hat{\beta}}\) is a essentially a least squares estimate
+(recall the usual estimate \((X^T X) - X^T Y\)) weighted by the inverse of the variance-covariance 
+matrix. It is also called <em>generalized least squares estimate</em> and is unbiased: 
+\(E[\mathbf{\hat{\beta}}] = \mathbf{\beta}\).</p>
+<p>The estimate \(\mathbf{\tilde{U}}\) is the best linear unbiased predictor (BLUP) of 
+\(\mathbf{U}\) and as such, we have \(E[\mathbf{\tilde{U}}] = \mathbf{U}\).
+Here <em>best</em> refers to the fact that it os the most <em>efficient</em>, i.e. has the minimum variance, among 
+unbiased predictors. Note how it depends on the residuals \(\mathbf{Y} - \mathbf{X}\mathbf{\hat{\beta}}\)
+of the "fixed effect model".</p>
+<h2>Variance parameter estimation</h2>
+<p>For the previous estimations to be computed, one needs to first estimate \(V\) and
+thus \(R\) and \(\Sigma\). "First" here is misleading however as the estimation of 
+effects and variance parameters are usually done jointly.</p>
+<p>The experimental design can sometimes give some information about the structure of these matrices and
+one can specify their <em>structure</em> prior to estimation.
+For instance knowing that the random effects are independent from each other, one may enforce a
+diagonal structure for \(R\).
+Similarly for the random errors \(\Sigma\), one may, for instance, assume that all observations are
+equally correlated (compound symmetry) or that their correlations get weaker with their distance
+in the dataset (e.g. autoregressive structure for longitudinal data where obervations are sorted
+by time). Virtually any correlation structure can be specified but only the most commonly used are 
+supported by statistical softwares, which is most of the time enough for any type of analysis.</p>
+<h2>Maximum likelihood</h2>
+<p>Let \(\theta\) be the vector containing unknown parameters in \(R\) and \(\Sigma\). Their number 
+depends on the correlatino structure chosen: more constraints lead to less parameters to estimate.
+To derivate the likelihood of the model, recall that
+\(\mathbf{Y} \sim \mathcal{N}(\mathbf{X}\mathbf{\beta}, V(\theta))\). Thus the log-likelihood
+\(l(\mathbf{Y}; \mathbf{\beta}, V(\theta))\) of \(\mathbf{Y}\) satisfies:
+\[-2 l(\mathbf{Y}; \mathbf{\beta}, V(\theta)) = \log |V(\theta)| +
+    (\mathbf{Y} - \mathbf{X}\mathbf{\beta})^T V(\theta)^{-1}(\mathbf{Y} - \mathbf{X}\mathbf{\beta}) + n \log 2 \pi\]</p>
+<p>Minimizing this log-likelihood can be done by replacing \(\mathbf{\beta})\ by its maximum
+likelihood estimator 
+\(\mathbf{\hat{\beta}}(\theta) = \mathbf{X}^T V(\theta)^{-1} \mathbf{X})^{-1} X^T V(\theta)^{-1} \mathbf{Y}\)
+(starting with e.g. random intial parameters \(\theta\)) and minimizing
+\(l(\mathbf{Y}; \mathbf{\hat{\beta}}(\theta), V(\theta))\) with respect to \(\theta\).</p>
+<p>The main caveat of the ML estimation is that the variance estimates are negatively (downward) biased
+as they do not take into account the degrees of freedom lost while estimating the fixed effects.
+Indeed, \(\mathbf{\beta}\) is estimated alongside \(V(\theta)\) (i.e. it is not known without 
+uncertainty), and this is not taken into account in the number of degrees of freedom (\(n\) should be 
+replaced by a smaller value).</p>
+<h2>Restricted maximum likelihood</h2>
+<p>Restricted maximum likelihood estimation addresses the biasedness of MLE estimators.
+The core idea is to perform MLE on a modified version of the data, namely linear combinations of \(\mathbf{Y}\).</p>
+<p>First, notice that the design matrix \(\mathbf{X}\) has rank at most \(p\) since it is a \( n \times p\)
+matrix.
+Let \(r = rank(\mathbf{X})\) and \(K\) be the full rank \((n - r) \times n\) matrix satisfying
+\(E[K\mathbf{Y}] = 0 \iff E(K\mathbf{X}\mathbf{\beta}) = 0\).
+Thus, \(K\mathbf{Y} \sim \mathcal{N}(0, K V(\theta) K^T)\) and maximum likelihood
+estimation can be carried out on \(K\mathbf{Y}\) with \((n - r)\) degrees of freedom.
+Moreover, notice that as opposed to \(\mathbf{Y} (\sim \mathcal{N}(\mathbf{X}\mathbf{\beta}, V)\),
+\(\mathbf{\beta}\) no longer appear in the distribution of \(K\mathbf{Y}\), meaning that the
+dependence on fixed effects has been removed.
+MOre conretely, the transformed response \(K\mathbf{Y}\) consists of the residuals obtained after 
+fitting the fixed effects ignoring the variance parameters.</p>
+<p>In contrast with ML, the REML estimates for fixed effect are biased and those for random effect
+are unbiased.</p>
+<p>Remark: REML can also be described from a marginal likelihood point of vue. The marginal likelihood
+\(L_R(\mathbf{Y}; V(\theta))\) with respect to \(\mathbf{Y}\) is found by integrating out the fixed
+effects:
+\(L_R(\mathbf{Y}; V(\theta)) = \int L(\mathbf{Y}; \mathbf{\beta}, V(\theta)) d \mathbf{\beta}\).
+Then log of the marginal likelihood is then maximized.</p>
+<p>In practice, ML and REML are typically computed using iterative schemes such as the Newton-Raphson 
+algorithm and variants thereof, or the expectation-maximization algorithm.</p>
+<h1>Marginal models and Generalized estimating equations</h1>
+<p>As an alternative to LMM, generalized estimating equations (GEE) are often used for modeling correlated
+data. In that context they commonly appear under the name <em>marginal models</em>. Marginal models are actually
+a subset of the more general GEE called population-average GEE (PA-GEE)  as opposed to subject-specific
+GEE (SS-GEE).</p>
+<h2>GEE are an extension of generalized linear models (GLM).</h2>
+<p>Let us forget about random effects for a moment.
+The difference between fixed-effects linear models and GLM is that for the latter, the response variable
+is no longer restricted to be normally distributed. Instead, it can follow any distribution from the
+exponential family.
+Moreover, a <em>link</em> function \(g\) describes how the expectation \(\mu_i\) of \(Y_i\) depends
+on a linear combination of covariates.
+This results in a model of the follwing form:
+\[ g(E[Y_i]) = \beta_1 x_{i1} + \dots + \beta_p x_{ip}= \mathbf{x_i} \mathbf{\beta}\]
+or in compact form:
+\[ g(E[Y]) = \mathbf{X}\mathbf{\beta} \]</p>
+<p>For instance, linear regression consists of a normally distributed \(Y\) with a identity
+link function, and logistic regression consists of a binomially distributed \(Y\) with a logit
+\((x \mapsto \ log \frac{x}{1-x}) \) link function.</p>
+<p>GEE extend GLM by allowing correlated \(Y_i\). The covariance structure can be specified as for
+mixed models. However, note that the covariance is no longer between random effects or random errors
+but between responses.
+As such, the formulation of GEE does not explicitely include random effects.
+In the linear case (\(g\) is the identify function), the model is therefore:
+\[ Y_i = \beta_1 x_{i1} + \dots + \beta_p x_{ip} + \epsilon_i = \mathbf{x_i} \mathbf{\beta} + \epsilon_i \]
+or in compact form
+\[ Y = \mathbf{\beta} \mathbf{x} + \epsilon \]
+where \(\epsilon \sim \mathcal{N}(0, \Sigma)\).
+In that case, there is no \(R\) matrix and  \(V = \Sigma\) is the variance-covariance matrix of
+the model.
+Note that no assumption is made about the distribution of \(Y\) as opposed to LMM.</p>
+<h2>Parameter estimation</h2>
+<p>The parameter estimation of marginal models relies on <em>quasi-likelihood</em> instead of the
+(restricted)-likelihood. It does not require the full distribution of \(Y\) to be known
+but only its mean and covariance matrix.
+In practice, this amounts to solving the following <em>quasi-likelihood estimating equation</em>
+(see <a href="https://onlinecourses.science.psu.edu/stat504/node/182">here</a> and
+<a href="https://en.wikipedia.org/wiki/Generalized_estimating_equation">here</a>):
+\[X^T V^{-1}(Y - \mathbf{X} \mathbf{\beta)} = 0\]</p>
+<p>However, note that the covariance matrix \(V\) is unknown at this point, thus it is replaced by
+an estimate \(\tilde{V}\) which depends on \(\beta\) and initially assumes independence
+(\(\tilde{V}\) is diagonal).
+The quasi-likelihood estimating equation is then solved iteratively, alternating between the
+estimation of \(\mathbf{\beta}\) with fixed \(\tilde{V}\) and of \(\tilde{V}\) with fixed
+\(\mathbf{\beta}\).</p>
+<p>A very rough description of the algorithm is therefore:</p>
+<ol>
+<li>
+<p>Fit an intial fixed effect model without taking into account any covariance 
+  (assume independence, diagonal \(V^0\)), yielding \(\beta^0\)</p>
+</li>
+<li>
+<p>At step \(i\), update the covariance matrix \(V^i\) using the current 
+   estimates \(\beta^{i-1}\).</p>
+</li>
+<li>
+<p>Update \(\beta^i\) from the covariance matrix \(V^i\).</p>
+</li>
+<li>
+<p>Iterate 2. and 3. until convergence.</p>
+</li>
+</ol>
+<p>More details can be found
+<a href="http://support.sas.com/documentation/cdl/en/statug/67523/HTML/default/viewer.htm#statug_gee_details01.htm">here</a>,
+<a href="http://support.sas.com/documentation/cdl/en/statug/67523/HTML/default/viewer.htm#statug_gee_details06.htm">here</a> and
+<a href="https://www.ibm.com/support/knowledgecenter/de/SSLVMB_20.0.0/com.ibm.spss.statistics.help/alg_genlin_gee_estimation_param.htm">here</a>.</p>
+<p>The estimation of the variance of \(\beta\) on the other hand uses the so-called
+<em>robust sandwich estimator</em> (some nice and short explanations in the context of OLS regression
+<a href="http://thestatsgeek.com/2013/10/12/the-robust-sandwich-variance-estimator-for-linear-regression/">here</a>
+and <a href="https://stats.stackexchange.com/questions/50778/sandwich-estimator-intuition">here</a>).</p>
+<h1>Mixed-effect models versus maringla models</h1>
+<p>For linear models, mixed and marginal models yield the same estimates.
+This is however not true in the general case.</p>
+<h2>Interpretation</h2>
+<p>Miwed-models aim at estimating group-specific coefficients i.e. they condition on both the design matrix and
+random effects:
+\[E[Y | \mathbf{U}] = \mathbf{x} \mathbf{\beta} + \mathbf{Z} \mathbf{U}\]
+In other words, they describe how the response of individual groups changes with
+the covariates. The random effects allow the covariate coefficients to vary randomly from one group
+to another, thereby providing a group-specific response. For this reason they are sometimes called
+<em>conditional models</em> as opposed to marginal models.</p>
+<p>On the other hand, marginal models aim at estimating population average coefficients.
+Indeed, as their name suggests, they focuses on marginals, i.e. take averages over random effects, 
+only conditioning on the design matrix:
+\[E[Y] = \mathbf{x} \mathbf{\beta} \]
+In other words, marginal models focus on the impact of covariates on the response over the whole population.</p>
+<p>In terms of interpretation of the coefficients, a very clear example is provided
+<a href="https://stats.stackexchange.com/questions/86309/marginal-model-versus-random-effects-model-how-to-choose-between-them-an-advi">here</a>:</p>
+<p>"<em>If you are a doctor and you want an estimate of how much a statin drug will lower your
+patient’s odds of getting a heart attack, the subject-specific coefficient
+is the clear choice. On the other hand, if you are a state health official and you want to
+know how the number of people who die of heart attacks would change if everyone in the at-risk population
+took the stain drug, you would probably want to use the population–averaged coefficients. (Allison, 2009)</em>"</p>
+<p>Where "subject-specific" refers to the mixed effect / conditional model whereas "population-averaged" refers 
+to the GEE / marginal model.</p>
+<h2>Assumptions and robustness</h2>
+<p>As opposed to LMM, marginal models do not rely on the assumption that random effects are
+normally distributed.</p>
+<p>Marginal models are more robust than LMM when the covariance structure is misspecified, a nice 
+feature of the sandwich estimator.</p>
+<p>Marginal models can only handle data missing completely at random (MCAR, "really random") wheread LMM
+can also handle data missing at random (MAR, randomness with dependence on the covariates).</p>
+<p>Choosing between miwed models and marginal models is therefore primarily a question of scope (group-specific 
+versus population-wise) and also depend on what is known about the data (how certain are we about the correlation 
+structure? and about the complete randomness of missing data?).</p>
+<h1>References:</h1>
+<ul>
+<li>Campbell, Michael J. Statistics at square two: understanding modern statistical applications in medicine. BMJ, 2001</li>
+<li>Duchateau, Luc, Paul Janssen, and John Rowlands. Linear mixed models. An introduction with applications in veterinary research. ILRI (aka ILCA and ILRAD), 1998</li>
+<li>Burton, Paul, Lyle Gurrin, and Peter Sly. "Extending the simple linear regression model to account for correlated responses: an introduction to generalized estimating equations and multilevel mixed modelling." (2004): 1-33</li>
+<li>Hardin, James W. Generalized estimating equations (GEE). John Wiley &amp; Sons, Ltd, 2005</li>
+<li>Naseri, Parisa, et al. "Comparison of generalized estimating equations (GEE), mixed effects models (MEM) and repeated measures ANOVA in analysis of menorrhagia data." Journal of Paramedical Sciences 7.1 (2016): 32-40</li>
+</ul>
+<h1></h1>
+<ul>
+<li><a href="http://statistics.ma.tum.de/fileadmin/w00bdb/www/czado/lec10.pdf">http://statistics.ma.tum.de/fileadmin/w00bdb/www/czado/lec10.pdf</a></li>
+<li><a href="http://people.musc.edu/simhille/Presentations/GEE_tutorial_Betsy/GEE_Tutorial.pdf">http://people.musc.edu/simhille/Presentations/GEE_tutorial_Betsy/GEE_Tutorial.pdf</a></li>
+<li><a href="http://www.misug.org/uploads/8/1/9/1/8191072/kwelch_repeated_measures.pdf">http://www.misug.org/uploads/8/1/9/1/8191072/kwelch_repeated_measures.pdf</a></li>
+<li><a href="http://statmath.wu.ac.at/courses/heather_turner/glmCourse_001.pdf">http://statmath.wu.ac.at/courses/heather_turner/glmCourse_001.pdf</a></li>
+<li><a href="http://www.stat.cmu.edu/~hseltman/309/Book/chapter15.pdf">http://www.stat.cmu.edu/~hseltman/309/Book/chapter15.pdf</a></li>
+<li><a href="http://www.stat.ncsu.edu/people/bloomfield/courses/ST732/02-21.pdf">http://www.stat.ncsu.edu/people/bloomfield/courses/ST732/02-21.pdf</a></li>
+<li><a href="http://www.stat.ncsu.edu/people/bloomfield/courses/ST732/03-23.pdf">http://www.stat.ncsu.edu/people/bloomfield/courses/ST732/03-23.pdf</a></li>
+<li><a href="http://www.stat.ncsu.edu/people/bloomfield/courses/ST732/04-06.pdf">http://www.stat.ncsu.edu/people/bloomfield/courses/ST732/04-06.pdf</a></li>
+<li><a href="http://www.stat.ncsu.edu/people/bloomfield/courses/ST732/04-18.pdf">http://www.stat.ncsu.edu/people/bloomfield/courses/ST732/04-18.pdf}</a></li>
+</ul>
+<h1></h1>
+<ul>
+<li><a href="https://onlinecourses.science.psu.edu/stat504/node/180">https://onlinecourses.science.psu.edu/stat504/node/180</a></li>
+<li><a href="https://support.sas.com/documentation/cdl/en/statug/67523/HTML/default/viewer.htm#statug_genmod_details29.htm">https://support.sas.com/documentation/cdl/en/statug/67523/HTML/default/viewer.htm#statug_genmod_details29.htm</a></li>
+<li><a href="http://support.sas.com/documentation/cdl/en/statug/67523/HTML/default/viewer.htm#statug_gee_details01.htm">http://support.sas.com/documentation/cdl/en/statug/67523/HTML/default/viewer.htm#statug_gee_details01.htm</a></li>
+<li><a href="http://support.sas.com/documentation/cdl/en/statug/67523/HTML/default/viewer.htm#statug_gee_details06.htm">http://support.sas.com/documentation/cdl/en/statug/67523/HTML/default/viewer.htm#statug_gee_details06.htm</a></li>
+<li><a href="https://www.ibm.com/support/knowledgecenter/de/SSLVMB_20.0.0/com.ibm.spss.statistics.help/alg_genlin_gee_estimation_param.htm">https://www.ibm.com/support/knowledgecenter/de/SSLVMB_20.0.0/com.ibm.spss.statistics.help/alg_genlin_gee_estimation_param.htm</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Generalized_estimating_equation">https://en.wikipedia.org/wiki/Generalized_estimating_equation</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Generalized_linear_model">https://en.wikipedia.org/wiki/Generalized_linear_model</a></li>
+</ul>
+<h1></h1>
+<ul>
+<li><a href="http://thestatsgeek.com/2013/10/12/the-robust-sandwich-variance-estimator-for-linear-regression/">http://thestatsgeek.com/2013/10/12/the-robust-sandwich-variance-estimator-for-linear-regression/</a></li>
+</ul>
+<h1></h1>
+<ul>
+<li><a href="https://stats.stackexchange.com/questions/17331/what-is-the-difference-between-generalized-estimating-equations-and-glmm">https://stats.stackexchange.com/questions/17331/what-is-the-difference-between-generalized-estimating-equations-and-glmm</a></li>
+<li><a href="https://stats.stackexchange.com/questions/48671/what-is-restricted-maximum-likelihood-and-when-should-it-be-used">https://stats.stackexchange.com/questions/48671/what-is-restricted-maximum-likelihood-and-when-should-it-be-used</a></li>
+<li><a href="https://stats.stackexchange.com/questions/21760/what-is-a-difference-between-random-effects-fixed-effects-and-marginal-model/68753#68753">https://stats.stackexchange.com/questions/21760/what-is-a-difference-between-random-effects-fixed-effects-and-marginal-model/68753#68753</a></li>
+<li><a href="https://stats.stackexchange.com/questions/86309/marginal-model-versus-random-effects-model-how-to-choose-between-them-an-advi">https://stats.stackexchange.com/questions/86309/marginal-model-versus-random-effects-model-how-to-choose-between-them-an-advi</a></li>
+<li><a href="https://stats.stackexchange.com/questions/62923/models-for-generalized-estimating-equation">https://stats.stackexchange.com/questions/62923/models-for-generalized-estimating-equation</a></li>
+<li><a href="https://stats.stackexchange.com/questions/62939/gee-quasi-likelihood-and-what-it-generalizes">https://stats.stackexchange.com/questions/62939/gee-quasi-likelihood-and-what-it-generalizes</a></li>
+<li><a href="https://stats.stackexchange.com/questions/50778/sandwich-estimator-intuition">https://stats.stackexchange.com/questions/50778/sandwich-estimator-intuition</a></li>
+<li><a href="https://www.reddit.com/r/statistics/comments/16k9z6/can_anyone_help_me_understand_when_to_use/">https://www.reddit.com/r/statistics/comments/16k9z6/can_anyone_help_me_understand_when_to_use/</a></li>
+</ul>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="./tag/mixed-model.html">mixed model</a>
+      <a href="./tag/generalized-estimating-equations.html">generalized estimating equations</a>
+      <a href="./tag/marginal-model.html">marginal model</a>
+      <a href="./tag/conditional-model.html">conditional model</a>
+      <a href="./tag/random-effect.html">random effect</a>
+    </p>
+  </div>
+
+
+
+    <div class="addthis_relatedposts_inline">
+
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Weblog ",
+  "url" : ".",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>
