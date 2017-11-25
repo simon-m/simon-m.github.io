@@ -52,6 +52,6 @@ DISPLAY_CATEGORIES_ON_MENU = False
 
 THEME_STATIC_DIR = "themes"
 THEME = "themes/Flex"
-GITHUB_URL = "https://github.com/simon-m"
+GITHUB_URL = "https://github.com/simon-m/simon-m.github.io/"
 
 
