@@ -1,0 +1,1060 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Weblog</title><link href="/" rel="alternate"></link><link href="/feeds/all.atom.xml" rel="self"></link><id>/</id><updated>2017-11-25T18:59:00+01:00</updated><entry><title>Classification metrics</title><link href="/classification-metrics.html" rel="alternate"></link><published>2017-11-25T18:55:00+01:00</published><updated>2017-11-25T18:55:00+01:00</updated><author><name>Simon-M</name></author><id>tag:None,2017-11-25:/classification-metrics.html</id><summary type="html">&lt;p&gt;A sample of the existing classification metrics with their interpretation.&lt;/p&gt;</summary><content type="html">&lt;p&gt;I never seem to remember these basic measures so I made a quick reference.
+Of course this is a very incomplete list. A very nice reference is wikipedia's
+page about the &lt;a href="https://en.wikipedia.org/wiki/Confusion_matrix"&gt;confusion matrix&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Let \(P\) and \(N\) represent the real positive and negatives and
+\(\tilde{P}\) and \(\tilde{N}\) be the predicted positive and negatives.
+The following confusion matrix will be our reference:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th align="center"&gt;\(P\)&lt;/th&gt;
+&lt;th align="center"&gt;\(N\)&lt;/th&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;\( \tilde P \)&lt;/td&gt;
+&lt;td align="center"&gt;TP = a&lt;/td&gt;
+&lt;td align="center"&gt;FP = b&lt;/td&gt;
+&lt;td&gt;= a + b&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;\( \tilde N \)&lt;/td&gt;
+&lt;td align="center"&gt;FN = c&lt;/td&gt;
+&lt;td align="center"&gt;TN = d&lt;/td&gt;
+&lt;td&gt;= c + d&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td align="center"&gt;= a + c&lt;/td&gt;
+&lt;td align="center"&gt;= b + d&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Sensitivity, true positive rate, recall, probability of detection:
+\[Sens = \frac{TP}{P} = \frac{a}{a+c}\]
+Probability that positive tests are rightly so: \(\mathcal{P}(\tilde{P} | P)\).
+Intrinsic to the test / classifier.&lt;/p&gt;
+&lt;p&gt;Specificity, true negative rate:
+\[Sens = \frac{TN}{N} = \frac{d}{b+d}\]
+Probability that negative tests are rightly so : \(\mathcal{P}(\tilde{N} | N)\).
+Intrinsic to the test / classifier.&lt;/p&gt;
+&lt;p&gt;Positive predictive value, precision:
+\[Sens = \frac{TP}{\tilde{P}} = \frac{a}{a+b}\]
+Probability that, given a postitive prediction, it is a real positive:
+\(\mathcal{P}(P | \tilde{P})\).
+Not intrinsic to the test / classifier; also depends on \(P\).&lt;/p&gt;
+&lt;p&gt;Negative predictive value, precision (note: depends on \(P\)):
+\[Sens = \frac{TN}{\tilde{N}} = \frac{d}{c+d}\]
+Probability that, given a negative prediction, it is a real negative:
+\(\mathcal{P}(N | \tilde{N})\).
+Not intrinsic to the test / classifier; also depends on \(P\).&lt;/p&gt;
+&lt;h1&gt;References&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;https://en.wikipedia.org/wiki/Sensitivity_and_specificity&lt;/li&gt;
+&lt;li&gt;https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values&lt;/li&gt;
+&lt;li&gt;https://en.wikipedia.org/wiki/Confusion_matrix&lt;/li&gt;
+&lt;/ul&gt;</content><category term="Machine learning"></category><category term="Classification metrics"></category><category term="Precision"></category><category term="Sensitivity"></category><category term="Confusion matrix"></category><category term="Predictive value"></category></entry><entry><title>Maximum likelihood estimation</title><link href="/maximum-likelihood-estimation.html" rel="alternate"></link><published>2017-11-25T18:50:00+01:00</published><updated>2017-11-25T18:50:00+01:00</updated><author><name>Simon-M</name></author><id>tag:None,2017-11-25:/maximum-likelihood-estimation.html</id><summary type="html">&lt;p&gt;Some notes about maximum likelihood estimation&lt;/p&gt;</summary><content type="html">&lt;p&gt;Beside &lt;a href="epidemiology-cheat-sheet.html"&gt;epidemiology&lt;/a&gt;, I am also studying some statistics.
+Below you can find my notes on far on maximum likelihood estimation (MLE).&lt;/p&gt;
+&lt;p&gt;Let \(X = (X_1, \dots, X_n)\) be a vector of iid random variables following a
+distribution \(D_{\theta_0}\) parametrized by the vector \(\theta_0\).
+In the continuous case, let \(f_{\theta_0}\) be the probability density function (PDF) of \(D_{\theta_0}\).
+In the discrete case, let \(P_{\theta_0}\) be the probability mass function (PMF) of \(D_{\theta_0}\)
+Let \(x = (x_1, \dots, x_n)\) be a realization of \(X\), i.e. the &lt;em&gt;observed data&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Then, the maximum likelihood estimator (MLE) \(\hat{\theta}\) of \(\theta_0\) is computed as follows.&lt;/p&gt;
+&lt;p&gt;First compute the likelihood \(\mathcal{L}(\theta) = P(X; \theta)\).
+If \(F_{\theta}\) is continuous, then
+\[\mathcal{L}(\theta) = \prod{i=1}^{n} f_{\theta}(x_i)\]
+If \(F_{\theta}\) is discrete, then
+\[\mathcal{L}(\theta) = \prod{i=1}^{n} P_{\theta}(x_i)\]&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;NB&lt;/strong&gt;: the iid assumtion is crucial as it allows the total probability to be equal to the product
+of individual probabilities.&lt;/p&gt;
+&lt;p&gt;The log-likelihood \(\mathcal{l}(\theta)\) is simply the logarithm of \(\mathcal{L}(\theta)\).
+Since \(\log\) is a strictly increasing function, the value maximizing \(\mathcal{l}(\theta)\) is the
+same as that maximizing \(\mathcal{L}(\theta)\). The log-likelihood has the added benefit that it
+allows to get rid of the product which will prove useful for the next calculations.&lt;/p&gt;
+&lt;p&gt;In order to maximize the likelihood, we first need to compute its derivative which respect to the
+parameter of interest (namely \(\theta\)), set the derivative to 0 and solve for \(\theta\):
+\[u(\theta) = \frac{\partial \mathcal{l}(\theta)}{\partial \theta} = 0\]
+This derivative is sometimes called &lt;em&gt;score function&lt;/em&gt; or "Fisher's score function".&lt;/p&gt;
+&lt;p&gt;The score is a random vector whose expectation at the true parameter value \(E_{\theta}[u(\theta)_0]\)
+is equal to 0.&lt;/p&gt;
+&lt;p&gt;The score variance also called &lt;em&gt;information matrix&lt;/em&gt; of "Fisher information matrix" is the positive
+semidefinite symmetric matrix:
+\[\mathcal{I}(\theta) = var(u(\theta)) =
+   E_{\theta} \left[ \left( \frac{\partial \mathcal{l}(\theta)}{\partial \theta} \right)^2 \right] \]
+which under mild regularity conditions can be written
+\[\mathcal{I}(\theta) =
+   -E_{\theta} \left[ \frac{\partial^2 \mathcal{l}(\theta)}{\partial \theta\theta^T} \right] \]&lt;/p&gt;
+&lt;p&gt;Asymptotically we have: \( E[\hat{\theta}] = \theta_0\) and
+\( \sigma^2(\hat{\theta}) = \mathcal{I}(\theta_0)^{-1})\)
+Therefore, \(\hat{\theta}\) is an unbiased estimator for \(\theta_0)\).&lt;/p&gt;
+&lt;!--
+The Cramér-Rao bound gives us a lower bound on the variance of \\(\\hat{\\theta}\\):
+\\[var(\\hat{\\theta}) \\ge 1 / \\mathcal{I}(\\theta)\\]
+--&gt;
+
+&lt;p&gt;&lt;strong&gt;Remark&lt;/strong&gt;: The second order derivative of the log-likelihood is a measure of its curvature, i.e. how "sharply peaked" it is.&lt;/p&gt;
+&lt;h1&gt;References&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://en.wikipedia.org/wiki/Maximum_likelihood_estimation"&gt;https://en.wikipedia.org/wiki/Maximum_likelihood_estimation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://en.wikipedia.org/wiki/Cram%C3%A9r%E2%80%93Rao_bound"&gt;https://en.wikipedia.org/wiki/Cram%C3%A9r%E2%80%93Rao_bound&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://en.wikipedia.org/wiki/Fisher_information"&gt;https://en.wikipedia.org/wiki/Fisher_information&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://en.wikipedia.org/wiki/Likelihood_function"&gt;https://en.wikipedia.org/wiki/Likelihood_function&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://stats.stackexchange.com/questions/68080/basic-question-about-fisher-information-matrix-and-relationship-to-hessian-and-s"&gt;https://stats.stackexchange.com/questions/68080/basic-question-about-fisher-information-matrix-and-relationship-to-hessian-and-s&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><category term="Statistics"></category><category term="Maximum likelihood"></category></entry><entry><title>Epidemiology cheat sheet</title><link href="/epidemiology-cheat-sheet.html" rel="alternate"></link><published>2017-11-25T18:47:00+01:00</published><updated>2017-11-25T18:47:00+01:00</updated><author><name>Simon-M</name></author><id>tag:None,2017-11-25:/epidemiology-cheat-sheet.html</id><summary type="html">&lt;p&gt;The very basics of epidemiology: populations, various measures, types of studies&lt;/p&gt;</summary><content type="html">&lt;p&gt;I am currently learning about epidemiology so here is a short summary of the essential concepts of the field.
+Most of what you will find below is a summary of the excellent lecture slides of the
+&lt;a href="http://ocw.jhsph.edu/index.cfm/go/viewCourse/course/fundepiii/coursePage/lectureNotes/"&gt;Fundamentals of Epidemiology&lt;/a&gt;
+and
+&lt;a href="http://ocw.jhsph.edu/index.cfm/go/viewCourse/course/FundEpi/coursePage/lectureNotes/"&gt;Fundamentals of Epidemiology II&lt;/a&gt;
+courses from the &lt;a href="https://www.jhsph.edu/"&gt;Johns Hopkins Bloomberg School of Public Health&lt;/a&gt; so most credits go to them.&lt;/p&gt;
+&lt;h1&gt;TODO:&lt;/h1&gt;
+&lt;p&gt;instead of an &lt;em&gt;event&lt;/em&gt;, consider a &lt;em&gt;period diseased&lt;/em&gt; which greatly help to show the difference between incidence and prevalence.&lt;/p&gt;
+&lt;h1&gt;Summary measures&lt;/h1&gt;
+&lt;p&gt;Sources:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://ocw.jhsph.edu/courses/FundEpi/PDFs/Lecture5.pdf"&gt;This lecture&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Rothman, Kenneth J., Sander Greenland, and Timothy L. Lash, eds. Modern epidemiology Chapter 3. Lippincott Williams &amp;amp; Wilkins, 2008.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Ratio vs proportion vs rates vs odds vs odds ratio:&lt;/h2&gt;
+&lt;p&gt;Variables \(a\) and \(b\) are absolute freuencies (counts).
+Variable \(p\) and \(q\)are proportions.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Ratio&lt;/strong&gt;: \(r = (a / b\)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Proportion&lt;/strong&gt;: ratio when \(a\) is counted in b (e.g. \(b = a + c \)), relative frequency&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Rate&lt;/strong&gt;: ratio or proportion within a specified time period (same for the numerator and denominator)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Odds&lt;/strong&gt;: \(o = p / (1 - p)\)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Odds ratio&lt;/strong&gt;: \(o_1 / o_2 = \frac{p / (1 - p)}{q / (1 - q)} = \frac{p (1 - q)}{q (1 - p)}\)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Person-time&lt;/h2&gt;
+&lt;p&gt;The time period of a study is not always the measure of time of interest.
+In general the &lt;em&gt;exposure time&lt;/em&gt; (or exposed time, also person-time) is, i.e. the amount of time
+during which an event of interest could occur (e.g. the duration of a treatment which can be shorter than the
+length of the study if a patient drops out.)
+Over a population, the total person-time is the sum of individual person-times.&lt;/p&gt;
+&lt;p&gt;Its unit are &lt;em&gt;person-time&lt;/em&gt;, for instance "patient-month", "child-year". Years being the most common.
+For instance, following 5 people during 3 year lead to a 15 person-year total exposure time.
+If two patients dropped-out after 1 year, the resulting exposure time is \(3 \times 3 + 2 \times 1 = 11\)
+person-year.
+It is also called the total &lt;em&gt;time at risk&lt;/em&gt; for the population of interest.&lt;/p&gt;
+&lt;h2&gt;Open and closed populations&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Closed population or cohort&lt;/strong&gt;: fixed number of individuals at start, except for loss to
+follow-up (which must be corrected in subsequent analyses), ouflow can only occur if people die
+or develop the disease.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Open population&lt;/strong&gt;: inflow and outflow are possible, the size of the population can vary.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Stationary population&lt;/strong&gt;: open population with constant size (inflow compensates outflow).&lt;/p&gt;
+&lt;h2&gt;Incidence rate&lt;/h2&gt;
+&lt;p&gt;Consider an &lt;em&gt;event&lt;/em&gt; to be for instance a new diagnosis for a pathology of interest. Then, the incidence rate
+IR can then be computed as:
+\[ \text{IR} = \frac{ \#\text{events}}{\sum_{s \in \text{subjects}} \text{person_time}(s)} \]
+\[ = \frac{ \#\text{events}}{\text{total_person_time}} \]
+For instance, following 100 people for one year and getting one case, one has
+\( \text{IR} = 1 / 100 = 0.01 \text{ year}^{-1} \).
+Following 40 people for 5 years and getting four cases, one has
+\( \text{IR} = 4 / 200 = 0.02 \text{ year}^{-1} \)&lt;/p&gt;
+&lt;p&gt;Often, neither the patient exposure times (\(\text{person_time}(s)\)) or total exposure time
+\(\text{total_person_time}\) are known. The denominator is therefore approximated by the mid-period population size \(N_{1/2}\) times the length of the time period \(T\):
+\[ = \frac{ \#\text{events}}{N_{1/2} T} \]&lt;/p&gt;
+&lt;p&gt;Defining the individual rate \( \text{individual_rate}(s) \) of a subject \( s \) as \( 0 \)
+if no event occured and \( 1 / \text{person_time}(s)\) if it did, the IR can be defined as:
+\[ IR = \frac{\sum_{s \in \text{subjects}} \text{person_time}(s) \cdot \text{individual_rate}(s) }
+{\sum_{s \in \text{subjects}} \text{person_time}(s)} \]&lt;/p&gt;
+&lt;p&gt;This is the average of individual rate, weighted by person-time.
+For the examples above, we get
+\( \text{IR} = 1 * (1 * 1 / 1) / 100 = 0.01 \text{ year}^{-1} \) and
+\( IR = 4 * (5 * 1 / 5) / 200 = 0.02 \text{ year}^{-1} \).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Remark&lt;/strong&gt;: the IR depends on the unit, which should be reported. It is not a proportion.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Remark 2&lt;/strong&gt;: the IR can be computed for both open and closed (cohort) populations.
+For open populations, the total person-time can be approximated by the average population size
+multiplied by the study duration. This assumes that the in and out-flows are of similar
+magnitude and independent of the diseased state.&lt;/p&gt;
+&lt;h2&gt;Incidence proportion&lt;/h2&gt;
+&lt;p&gt;Also called attack-rate (although it is not a rate).
+In contrast to the incidence rate, the incidence proportion does not divide the number of new
+cases by the total person-time but by the number of prople at risk at the beginning of the trial period:
+\[ \text{IP} = \frac{ \#\text{events}}{\#\text{people initially at risk}} \]&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Remark&lt;/strong&gt;: incidence proportion can easily be confused with &lt;em&gt;period prevalence&lt;/em&gt; (see below).
+The numerator for the former is the number of &lt;em&gt;new cases&lt;/em&gt; whereas for the latter, it is the number
+of &lt;em&gt;diseased&lt;/em&gt; people even if the onset took place before the period of study.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Remark 2&lt;/strong&gt;: incidence proportion can only be computed for closed populations (cohorts).
+Indeed, in an open population we do not know the number of people initially at risk.
+Therefore a new case could either be a person a risk having experienced the event or a
+person who already had experienced the event but flowed to the population under study later
+on; and we cannot find out which is true.&lt;/p&gt;
+&lt;h2&gt;Prevalence proportion&lt;/h2&gt;
+&lt;p&gt;Also called prevalence rate (although not a rate) or absolute risk.&lt;/p&gt;
+&lt;p&gt;As opposed to incidence, the prevalence is concerned with all cases, not only new ones.
+Let \((N_t\) be the population size at time \(t\). The &lt;em&gt;point prevalence&lt;/em&gt; at time \(t\) is then:&lt;/p&gt;
+&lt;p&gt;\[ \text{PR}\cdot = \frac{ \text{#cases}}{N_t} \]&lt;/p&gt;
+&lt;p&gt;Let \((N_T\) be the population size during period \(T\), assuming it remains fixed.
+The &lt;em&gt;period prevalence&lt;/em&gt; period \(T\) is:
+\[ \text{PR}_{[-]} = \frac{ \text{#cases with disease during t}}{N_T} \]&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Remark&lt;/strong&gt;: for the period prevalence, the denominator is the average population size during
+the time interval.&lt;/p&gt;
+&lt;h2&gt;Incidence versus prevalence&lt;/h2&gt;
+&lt;p&gt;Sources:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://ocw.jhsph.edu/courses/FundEpi/PDFs/Lecture6.pdf"&gt;Lecture&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://en.wikipedia.org/wiki/Incidence_(epidemiology)"&gt;https://en.wikipedia.org/wiki/Incidence_(epidemiology)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://en.wikipedia.org/wiki/Prevalence#Period_prevalence"&gt;https://en.wikipedia.org/wiki/Prevalence#Period_prevalence&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Incidence is a &lt;em&gt;rate&lt;/em&gt;, i.e. it gives information on the rate of occurrence of the event.
+This can be seen as the denominator has a time dimension.&lt;/p&gt;
+&lt;p&gt;Prevalence, on the other hand is a proportion of people who got the event, whether it is
+at a given time and including all past occurrences (point prevalence), or during a specified
+time period where only new cases are recorded (period prevalence). The denominator does not
+quantify time, only the population size.&lt;/p&gt;
+&lt;p&gt;For rare diseases and a closed, or open &lt;em&gt;stationary&lt;/em&gt; population, we have:
+\[ \text{PR}_{[-]} = IR \cdot \text{average disease duration} \]&lt;/p&gt;
+&lt;h1&gt;Measures of association&lt;/h1&gt;
+&lt;p&gt;Used to quantify the association between a factor (e.g. higher education) and the occurence of a
+condition (e.g. myopia).&lt;/p&gt;
+&lt;p&gt;Let D be the event "get the disease" and E be the event "exposed". The negative operator is denoted by "~"". Consider the following adjacency table:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;D&lt;/th&gt;
+&lt;th&gt;~D&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;E&lt;/td&gt;
+&lt;td&gt;a&lt;/td&gt;
+&lt;td&gt;b&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;~E&lt;/td&gt;
+&lt;td&gt;c&lt;/td&gt;
+&lt;td&gt;d&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2&gt;Relative risk (RR)&lt;/h2&gt;
+&lt;p&gt;Also called risk ratio.
+If \(P_1\) is the prevalence of a pathology in a population &lt;em&gt;exposed&lt;/em&gt; to some factor, and
+\(P_0\) is the prevalence of the same pathology in a population not exposed to this factor, the relative risk is:
+\[ \text{RR} = P_1 / P_0\ = \frac{a / (a + b)}{c / (c + d)} = \frac{a (c + d}{c (a + b)} \]&lt;/p&gt;
+&lt;p&gt;In terms of probabilities we have:
+\[ \text{RR} = \frac{P(D | E)}{P(D | ~E)}\]&lt;/p&gt;
+&lt;h2&gt;Odds ratio (OR)&lt;/h2&gt;
+&lt;p&gt;Odds of having the disease in the exposed group:
+\[O_1 = \frac{a/(a+b)}{b/a+b} = \frac{a}{b}\]
+In terms of probabilities:
+\[O_1 = \frac{P(D|E)}{P(~D|E)}\]&lt;/p&gt;
+&lt;p&gt;Odds of having the disease in the non-exposed group:
+\[O_0 = \frac{c/(c+d)}{d/c+d} = \frac{c}{d}\]
+In terms of probabilities:
+\[O_0 = \frac{P(D|~E)}{P(~D|~E)}\]&lt;/p&gt;
+&lt;p&gt;Odds ratio:
+\[\text{OR} = O_1 / O_0 = \frac{ad}{bc}\]
+In terms of probabilities:
+\[\text{OR} = \frac{P(D|E)}{P(~D|E)} \frac{P(~D|~E)}{P(D|~E)} \]&lt;/p&gt;
+&lt;h2&gt;Odds ratio versus relative risk&lt;/h2&gt;
+&lt;p&gt;Relative risk can only be calculated for cohort studies (see below) whereas odds ratio can be calculated
+for both case-control and cohort studies.&lt;/p&gt;
+&lt;p&gt;If the incidence of the disease is low, OR is a good approximation of RR since
+\(a + b \approx b\) and \(c + d \approx d\). Thus,
+\[\text{RR} = \frac{a (c + d}{c (a + b)} \approx \frac{ad}{bc} = \text{OR}\]&lt;/p&gt;
+&lt;h1&gt;Stratification and adjustment strategies&lt;/h1&gt;
+&lt;p&gt;&lt;a href="http://ocw.jhsph.edu/courses/FundEpi/PDFs/Lecture7.pdf"&gt;Source&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Stata are basically groups among the data defined by a variable. It could be age groups, sex
+or combinations thereof for instance.&lt;/p&gt;
+&lt;p&gt;When comparing rate or proportions between two populations, the overall measure may be confounded
+by their difference in composition. For instance, a young population may be less likely to die of
+an heart attack than an older one. This calls for &lt;em&gt;adjustments strategies&lt;/em&gt;.&lt;/p&gt;
+&lt;h2&gt;Direct method&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Compute the proportion or rate of interest for each stratum in both populations.
+   For instance prevalence of heart pathology by age group.&lt;/li&gt;
+&lt;li&gt;Build a &lt;em&gt;reference population&lt;/em&gt; by summing the sizes of both populations for each stratum.&lt;/li&gt;
+&lt;li&gt;For each group, use the proportion or rate of interest to compute the &lt;em&gt;expected&lt;/em&gt; number of cases in
+   the reference population for each stratum.&lt;/li&gt;
+&lt;li&gt;Compute the overall proportion or rate for each group from the corresponding expected number of cases
+   instead of the original ones.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This methods requires to have access to the proportions or rates of interest for each stratum
+of the populations. Sometime, all we have are the number of cases instead. Then the indirect method
+can be of use.&lt;/p&gt;
+&lt;h2&gt;Indirect method&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Build a &lt;em&gt;reference population&lt;/em&gt; for the population under study. Both populations should be similar enough.
+   For myopic white females versus general white female population. The rate or proportion of interest (or estimates
+   thereof) must be available.&lt;/li&gt;
+&lt;li&gt;Using the stratum-specific proportions or rates from the reference population and the stratum sizes in the population
+  under study, compute the &lt;em&gt;expected&lt;/em&gt; number of cases in the the population under study.&lt;/li&gt;
+&lt;li&gt;Compute the ratio between the total expected and observed number of cases.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1&gt;Types of study&lt;/h1&gt;
+&lt;h2&gt;Cohort trials&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://ocw.jhsph.edu/courses/FundEpiII/PDFs/Lecture13.pdf"&gt;Source&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;group patients by exposure (non-random)&lt;/li&gt;
+&lt;li&gt;follow how the disease develops&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Remarks:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;propective cohort trials define groups now and follow them in the future&lt;/li&gt;
+&lt;li&gt;retrospective cohort trials define groups from past data and observe the disease now&lt;/li&gt;
+&lt;li&gt;cohort trials allow the computation of both relative risk and odd ratios&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Case-control trials&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://ocw.jhsph.edu/courses/FundEpiII/PDFs/Lecture14.pdf"&gt;Source&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;group patients by disease (non-random)&lt;/li&gt;
+&lt;li&gt;check past exposures&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Cohort versus case-control&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://ocw.jhsph.edu/courses/FundEpiII/PDFs/Lecture16.pdf"&gt;Source&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Case-control trials allow the computation of odd ratios but not of not of the relative risk.
+The reason is that groups are defined by finding people with the disease (cases) and getting a
+number of people without disease (controls). Therefore, the numbers in an adjacency table
+do not give any information about the number of patients sampled to build the case and control
+groups.&lt;/p&gt;
+&lt;p&gt;In particular, case-control trials are often conducted for rare diseases so that cases are
+oversampled compared to controls: the prevalence is what the study design wants it to be.
+Thus we do not know the total number of exposed and non-exposed patients needed to compute the relative risk.&lt;/p&gt;
+&lt;p&gt;In other words, we need to know the prevalence  which is only known for cohort trials since disease status&amp;lt;is not used for defining the groups as opposed to case-control trials.&lt;/p&gt;
+&lt;h2&gt;Cross-sectional trials:&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://ocw.jhsph.edu/courses/FundEpiII/PDFs/Lecture15.pdf"&gt;Source&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Record exposure and disease at the same time&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Remark&lt;/strong&gt;: no causality can be infered.&lt;/p&gt;
+&lt;h2&gt;Randomized clinical trial:&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://ocw.jhsph.edu/courses/FundEpiII/PDFs/Lecture12.pdf"&gt;Source&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;assign patients to groups randomly (possibly stratify with respect to some variables). Give treatment (exposure)&lt;/li&gt;
+&lt;li&gt;follow disease&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Remark&lt;/strong&gt;: necessarily prospective.&lt;/p&gt;
+&lt;h2&gt;Randomzed versus non-randomized trials&lt;/h2&gt;
+&lt;p&gt;Non-randomized trials have a higher risk to include biases.
+For instance, coffee drinkers (exposure) may be more likely to develop lung cancer (disease)
+if coffee drinkers are often heavy smokers.&lt;/p&gt;
+&lt;h1&gt;References&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Rothman, Kenneth J., Sander Greenland, and Timothy L. Lash, eds. Modern epidemiology Chapter 3. Lippincott Williams &amp;amp; Wilkins, 2008.&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://ocw.jhsph.edu/courses/FundEpi/PDFs/Lecture5.pdf"&gt;http://ocw.jhsph.edu/courses/FundEpi/PDFs/Lecture5.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://ocw.jhsph.edu/courses/FundEpi/PDFs/Lecture6.pdf"&gt;http://ocw.jhsph.edu/courses/FundEpi/PDFs/Lecture6.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://ocw.jhsph.edu/courses/FundEpi/PDFs/Lecture7.pdf"&gt;http://ocw.jhsph.edu/courses/FundEpi/PDFs/Lecture7.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://ocw.jhsph.edu/courses/FundEpiII/PDFs/Lecture13.pdf"&gt;http://ocw.jhsph.edu/courses/FundEpiII/PDFs/Lecture13.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://ocw.jhsph.edu/courses/FundEpiII/PDFs/Lecture14.pdf"&gt;http://ocw.jhsph.edu/courses/FundEpiII/PDFs/Lecture14.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://ocw.jhsph.edu/courses/FundEpiII/PDFs/Lecture16.pdf"&gt;http://ocw.jhsph.edu/courses/FundEpiII/PDFs/Lecture16.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://ocw.jhsph.edu/courses/FundEpiII/PDFs/Lecture15.pdf"&gt;http://ocw.jhsph.edu/courses/FundEpiII/PDFs/Lecture15.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="http://ocw.jhsph.edu/courses/FundEpiII/PDFs/Lecture12.pdf"&gt;http://ocw.jhsph.edu/courses/FundEpiII/PDFs/Lecture12.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Incidence_(epidemiology)"&gt;https://en.wikipedia.org/wiki/Incidence_(epidemiology)&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="https://en.wikipedia.org/wiki/Prevalence#Period_prevalence"&gt;https://en.wikipedia.org/wiki/Prevalence#Period_prevalence&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="https://www.cdc.gov/ophss/csels/dsepd/ss1978/lesson3/section2.html"&gt;https://www.cdc.gov/ophss/csels/dsepd/ss1978/lesson3/section2.html&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://health.knowledgeblog.org/2011/07/22/basic-statistics-for-epidemiology/"&gt;http://health.knowledgeblog.org/2011/07/22/basic-statistics-for-epidemiology/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3465772/"&gt;https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3465772/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><category term="Epidemiology"></category><category term="Incidence"></category><category term="Prevalence"></category><category term="Random trial"></category><category term="Risk"></category><category term="Cohort"></category><category term="Cross-sectional"></category><category term="Case-control"></category></entry><entry><title>Classification of text data: using multiple feature spaces</title><link href="/classification-of-text-data-using-multiple-feature-spaces.html" rel="alternate"></link><published>2017-11-02T21:40:00+01:00</published><updated>2017-11-02T21:40:00+01:00</updated><author><name>Simon-M</name></author><id>tag:None,2017-11-02:/classification-of-text-data-using-multiple-feature-spaces.html</id><summary type="html">&lt;p&gt;How to combine multiple topic-based and word embedding-based methods for text classification with scikit-learn and Gensim.&lt;/p&gt;</summary><content type="html">&lt;p&gt;As mentionned in another &lt;a href="using-facebooks-fasttext-for-document-classification.html"&gt;post&lt;/a&gt;, I am currently working on a text classification task and experimenting with
+several features extraction methods.&lt;/p&gt;
+&lt;h1&gt;Input features for text classification&lt;/h1&gt;
+&lt;h2&gt;Topic-based&lt;/h2&gt;
+&lt;p&gt;I have started with the regular "topic-based" method such as
+&lt;a href="https://en.wikipedia.org/wiki/Latent_semantic_analysis"&gt;latent semantic indexing/analysis&lt;/a&gt; (LSI/LSA),
+&lt;a href="https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation"&gt;latent dirichlet allocation&lt;/a&gt; (LDA)
+and &lt;a href="https://en.wikipedia.org/wiki/Non-negative_matrix_factorization"&gt;non-negative matrix factorization&lt;/a&gt; (NMF).&lt;/p&gt;
+&lt;p&gt;These methods start with a term-document matrix \(T\) with documents as rows and terms as columns.
+In the simplest case, the value \(T_{ij}\) is simply the absolute frequency (or count) of
+term \(j\) in document \(i\). This value is often replaced by the so-called TF-IDF value (Term Frequency -
+Inverse Document Frequency) which basically allows to give more importance to rare terms.
+Note that "terms" could be words or n-grams or possibly any other relevant unit of text.&lt;/p&gt;
+&lt;p&gt;From this matrix, topic-based methods seek to discover latent factors called &lt;em&gt;topics&lt;/em&gt;, which are linear
+combinations of the terms and represent documents as linear combinations of topics.
+The expectation is that words found in similar documents will end up in the same topic,
+hoping that topics are more releveant than bare words for classification.
+Moreover using \(T\) directly as input to a classifier would result in on feature per word which can
+lead to a prohibitively large number of features. Topic extraction can therefore be seen as
+a dimensionality reduction step.&lt;/p&gt;
+&lt;p&gt;In practice LSI uses singular value decomposition (SVD) decomposition on \(T\),
+LDA is a probabilistic model over topics and documents, and NMF, well, relies on the
+non-negative matrix factorization of \(T\).&lt;/p&gt;
+&lt;h2&gt;Word embedding-based&lt;/h2&gt;
+&lt;p&gt;Although these approaches are standard in text analysis, I was curious about the newer so-called &lt;em&gt;word embedding&lt;/em&gt;
+methods such as &lt;a href="Bag of Tricks for Efficient Text Classification"&gt;Facebook's FastText&lt;/a&gt;. These follow a rather
+orthogonal approach to topic-based methods as they
+seek to find a vector representation of &lt;em&gt;words&lt;/em&gt; so that semantically similar words are represented by similar vectors
+(according to a given metric).
+To reach this goal, the broad idea is to find an embedding allowing to predict which word should occur given its &lt;em&gt;context&lt;/em&gt;
+(for the continuous bag of words representation, the skip-gram representation swaps words and contexts).
+Here context mean "surroundings words", i.e. words found in a windows around the word of interest.
+Note that I use "word" instead of "terms", but this can also be applied to n-grams as a unit.&lt;/p&gt;
+&lt;p&gt;As opposed to topic-based methods, word-embedding methods consider a more local context:
+for the former, similar terms are those appearing in similar documents, for the latter,
+similar terms appear in similar contexts &lt;em&gt;within&lt;/em&gt; a document.&lt;/p&gt;
+&lt;h2&gt;The best of both worlds?&lt;/h2&gt;
+&lt;p&gt;The two approaches seeming quite complementary so I thought may give a shot to
+combining their resulting features. I settled to use NMF and a FastText-based
+document embedding.&lt;/p&gt;
+&lt;h1&gt;In practice: document FastText&lt;/h1&gt;
+&lt;p&gt;Document embedding methods results in vectors for &lt;em&gt;terms&lt;/em&gt; but not for documents.
+Therefore I used a fairly simple method to get document-vectors from terms-vectors: simply
+concatenate the element-wise min, max and mean of all words in the document. For a
+term-embedding of size \(k\), this results in a document-embedding of size \(3k\).
+This original idea was described &lt;a href="https://arxiv.org/abs/1607.00570"&gt;here&lt;/a&gt; and gave simingly good
+results for short documents.&lt;/p&gt;
+&lt;p&gt;The code using Gensim's FastText:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sklearn.base&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;BaseEstimator&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;gensim.models.fasttext&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;FastText&lt;/span&gt;
+
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;DocumentFastText&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;BaseEstimator&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sentences&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sg&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;hs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;alpha&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0.025&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;window&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;min_count&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                 &lt;span class="n"&gt;max_vocab_size&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;word_ngrams&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;loss&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ns&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sample&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0.001&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;seed&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;workers&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                 &lt;span class="n"&gt;min_alpha&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0.0001&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;negative&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;cbow_mean&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;hashfxn&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;hash&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;iter&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;null_word&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                 &lt;span class="n"&gt;min_n&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;max_n&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sorted_vocab&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;bucket&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;2000000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;trim_rule&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                 &lt;span class="n"&gt;batch_words&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;10000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;epochs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;sentences&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sg&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;sg&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;hs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;hs&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;size&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;size&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;alpha&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;alpha&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;window&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;window&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;min_count&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;min_count&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;max_vocab_size&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;max_vocab_size&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;word_ngrams&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;word_ngrams&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;loss&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;loss&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sample&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;sample&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;seed&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;seed&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;workers&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;workers&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;min_alpha&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;min_alpha&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;negative&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;negative&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cbow_mean&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cbow_mean&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;hashfxn&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;hashfxn&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;iter&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;iter&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;null_word&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;null_word&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;min_n&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;min_n&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;max_n&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;max_n&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sorted_vocab&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;sorted_vocab&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bucket&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;bucket&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;trim_rule&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;trim_rule&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;batch_words&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;batch_words&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;epochs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;epochs&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fast_text&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;FastText&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sentences&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sg&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;hs&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;alpha&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;window&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;min_count&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;max_vocab_size&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                 &lt;span class="n"&gt;word_ngrams&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;loss&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sample&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;seed&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;workers&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;min_alpha&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;negative&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;cbow_mean&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                 &lt;span class="n"&gt;hashfxn&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;iter&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;null_word&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;min_n&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;max_n&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sorted_vocab&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                 &lt;span class="n"&gt;bucket&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;trim_rule&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;batch_words&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;is_fit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;False&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;fit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fast_text&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;build_vocab&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fast_text&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;train&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;epochs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;epochs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;is_fit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;In practice: getting the inputs right&lt;/h1&gt;
+&lt;p&gt;Now, my workflow is based on scikit-learn's
+&lt;a href="http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html#sklearn.pipeline.Pipeline"&gt;pipelines&lt;/a&gt;
+and FastText has been implemented in the Gensim Library but not in sklearn as it is not general enough.
+for this reason, FastText was not design to work with sklearn's convenient
+&lt;a href="http://scikit-learn.org/stable/modules/classes.html#module-sklearn.feature_extraction.text"&gt;Vectorizers&lt;/a&gt;
+and has to be fed with a list of words instead of a document-term matrix.
+Thus I have to find a way to:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;combine the feature coming from both methods before feeding them to the classifier which can be done easily with a FeatureUnion&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;do so starting from a different representation of the text (list versus document-term matrix)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;allow some parameters to be shared between these representations (stop words for instance)&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;For this, let's first build a class which replicates the pre-processing and tokenizing steps of the Vectorizer.
+This yields a list a words for FastText to use while still taking into account the parameters passed to the original
+vectorizer and is used with NMF.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sklearn.base&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;BaseEstimator&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;TextPreProcessor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;BaseEstimator&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;vectorizer&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vectorizer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;vectorizer&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;preprocess&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;vectorizer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;build_preprocessor&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tokenize&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;vectorizer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;build_tokenizer&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;fit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;transform&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;array&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tokenize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;preprocess&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vectorizer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;decode&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;fit_transform&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;transform&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;In practice: putting it all together&lt;/h1&gt;
+&lt;p&gt;Then, it is mostly a matter of building and pluging the corresponding pipes together
+into a final pipeline:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sklearn.feature_extraction.text&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;CountVectorizer&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sklearn.decomposition&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;NMF&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sklearn.pipeline&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Pipeline&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;FeatureUnion&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sklearn.ensemble&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;GradientBoostingClassifier&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sklearn.model_selection&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;StratifiedKFold&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;GridSearchCV&lt;/span&gt;
+
+&lt;span class="n"&gt;train_vectorizer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;CountVectorizer&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;doc_fast_text&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pftc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;DocumentFastText&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;fasttext_subpipe&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Pipeline&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;steps&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;text_prepro&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;pftc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;TextPreProcessor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;train_vectorizer&lt;/span&gt;&lt;span class="p"&gt;)),&lt;/span&gt;
+                                   &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;transfo&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;doc_fast_text&lt;/span&gt;&lt;span class="p"&gt;)])&lt;/span&gt;
+&lt;span class="n"&gt;nmf&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;NMF&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;nmf_subpipe&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Pipeline&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;steps&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;vectorizer&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;train_vectorizer&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;transfo&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;nmf&lt;/span&gt;&lt;span class="p"&gt;)])&lt;/span&gt;
+
+&lt;span class="n"&gt;feature_union&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;FeatureUnion&lt;/span&gt;&lt;span class="p"&gt;([(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;embedding&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;fasttext_subpipe&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;topics&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;nmf_subpipe&lt;/span&gt;&lt;span class="p"&gt;)])&lt;/span&gt;
+
+&lt;span class="n"&gt;classifier&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;GradientBoostingClassifier&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;pipe&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Pipeline&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;steps&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;feature_extraction&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;feature_union&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;classfier&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;classifier&lt;/span&gt;&lt;span class="p"&gt;)])&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;I can then run my workflow; a grid search over parameters for instance.
+Conveniently, multiple nesting of parameters are handled with the "__" syntax.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;params_grid&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;feature_extraction__embedding__transfo__size&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;feature_extraction__embedding__transfo__min_count&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;feature_extraction__embedding__transfo__word_ngrams&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+
+    &lt;span class="s2"&gt;&amp;quot;feature_extraction__topics__vectorizer__ngram_range&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;)],&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;feature_extraction__topics__vectorizer__binary&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;False&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+
+    &lt;span class="s2"&gt;&amp;quot;feature_extraction__topics__transfo__n_components&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;feature_extraction__topics__transfo__alpha&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.25&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;feature_extraction__topics__transfo__l1_ratio&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="n"&gt;kfold_cv&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;StratifiedKFold&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;gs_cv&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;GridSearchCV&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pipe&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;param_grid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;params_grid&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                     &lt;span class="n"&gt;scoring&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;best_cut_mcc_scoring&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;cv&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;kfold_cv&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                     &lt;span class="n"&gt;n_jobs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;n_cores&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;verbose&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                     &lt;span class="n"&gt;random_state&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;RANDOM_STATE_SEED&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;train_text&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;train_decision&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And that's it.&lt;/p&gt;
+&lt;h1&gt;Epilogue&lt;/h1&gt;
+&lt;p&gt;It turns out that using both feature spaces as input improves on using either separately.&lt;/p&gt;
+&lt;h1&gt;References:&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://stats.stackexchange.com/questions/221715/apply-word-embeddings-to-entire-document-to-get-a-feature-vector"&gt;https://stats.stackexchange.com/questions/221715/apply-word-embeddings-to-entire-document-to-get-a-feature-vector&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://arxiv.org/abs/1607.00570"&gt;https://arxiv.org/abs/1607.00570&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><category term="NLP"></category><category term="Text classification"></category><category term="Word embedding"></category><category term="Python"></category><category term="Scikit-learn"></category><category term="Sklearn"></category><category term="Gensim"></category></entry><entry><title>Taking random effects into account: mixed-(effect) models and marginal models.</title><link href="/taking-random-effects-into-account-mixed-effect-models-and-marginal-models.html" rel="alternate"></link><published>2017-10-31T21:30:00+01:00</published><updated>2017-11-25T18:59:00+01:00</updated><author><name>Simon-M</name></author><id>tag:None,2017-10-31:/taking-random-effects-into-account-mixed-effect-models-and-marginal-models.html</id><summary type="html">&lt;p&gt;A review of fixed and random effects, linear mixed models and GEE&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Context&lt;/h1&gt;
+&lt;p&gt;I am going to get my hands on some data with correlated measurements and thus have been reading
+about to handle such these. Among existing methods are various kinds of ANOVA
+(two-way ANOVA, repeated-measures ANOVA, clustered ANOVA, nested/random effects model/hierarchical ANOVA,
+split-plot ANOVA), mixed-(effects) models and generalized estimating equations aka marginal
+models.&lt;/p&gt;
+&lt;p&gt;As of now, mixed models and marginal models are pretty much the standard tools for such analyses,
+mainly because ANOVA-based methods require stronger assumptions and do not handle missing data well.
+I will almost exclusively focus on &lt;em&gt;linear&lt;/em&gt; models but be aware that teir exist generalized linear mixed models (GLMM) which are the mixed-model version of generalized linear models (GLM). Moreover, generalized stimating equations are an extension of GLM for correlated responses, and as such they can handle the same kind of dependences between covariates and response through the link function.&lt;/p&gt;
+&lt;h1&gt;Linear fixed-effects models&lt;/h1&gt;
+&lt;p&gt;The response variable \(Y_i\) of observation \(i\) is a random variable which linearly depends
+on the covariates \(x_{ij}\) through coefficients \(\beta_j\) up to an random error term \(\epsilon_i\):
+\[ Y_i = \beta_1 x_{i1} + \dots + \beta_p x_{ip} + \epsilon_i = \sum_{j=1}^{p} \beta_j x_{ij} + \epsilon_i\]
+Equivalently letting \(\mathbf{\beta} = (\beta_1, \dots \beta_p)\) and&lt;br&gt;
+\(\mathbf{x_i} = (x_{i1}, \dots x_{ip})^T\) we have:
+\[ Y_i = \mathbf{\beta} \mathbf{x_i} + \epsilon_i \]
+The assumptions are \(E[\epsilon_i] = 0\), \(Var[\epsilon_i] = \sigma_i^2\), and
+\(cov[\epsilon] = \Sigma\).
+Most often, \(\epsilon\) is assumed to follow a multivariate Gaussian:
+ \(\epsilon \sim \mathcal{N}(0, \Sigma)\).&lt;/p&gt;
+&lt;p&gt;Let \(\mathbf{Y}\) be the \(n \times 1\) vector of responses,
+\(\mathbf{x}\) be the \(n \times p\) &lt;em&gt;design matrix&lt;/em&gt;, and \(\mathbf{\epsilon}\)
+be the \(n \times 1\) vector of random errors. In the more compact matrix notation, we have:
+\[ \mathbf{Y} = \mathbf{\beta} \mathbf{x} + \mathbf{\epsilon} \]&lt;/p&gt;
+&lt;p&gt;In the fixed-effects model, \(\mathbf{x}\) is assumed to be fixed, and does not contribute to
+the variance of \(\mathbf{Y}\):
+\[Y \sim \mathcal{N}(\mathbf{\beta} \mathbf{x}, \Sigma)\]&lt;/p&gt;
+&lt;h1&gt;Fixed and random effects: an example&lt;/h1&gt;
+&lt;p&gt;In the course of an analysis, one may want to include a specific categorical covariate
+in the model as a &lt;em&gt;dummy variable&lt;/em&gt;; for instance whether a given patient has diabetes.
+In that case, this covariate is relevant to the analysis and not expected to change
+should the experiment be carried-out again.&lt;/p&gt;
+&lt;p&gt;One may also want to to control for the center (A or B) in which the measurement were made (in a
+multi-center study) as it could have an impact on the measurements. However, the effect of the center on the
+response is not of primary interest, but should merely be taken into account as a source of heterogeneity
+(it is a &lt;em&gt;nuisance&lt;/em&gt; variable). Moreover, the distribution of patients among centers could well change in
+another study.&lt;/p&gt;
+&lt;p&gt;In the first case there are two groups (diabetes / no diabetes) whose effect on the response is
+expected to be accurately quantified by the corresponding dummy variable. In the second case,
+there are two groups whose effect on the response can only be estimated given the current data
+because another study using other groups will result in different effects.&lt;/p&gt;
+&lt;p&gt;The first case is typical of a &lt;em&gt;fixed effect&lt;/em&gt; whereas the second is typical of a &lt;em&gt;random effect&lt;/em&gt;.
+Most models including random effects also include fixed effects and can be called &lt;em&gt;random effect models&lt;/em&gt;,
+&lt;em&gt;mixed models&lt;/em&gt;, &lt;em&gt;conditional models&lt;/em&gt; \(\dots\).&lt;/p&gt;
+&lt;p&gt;In a more general setting, random effects can be either categorical or continuous.&lt;/p&gt;
+&lt;h1&gt;Linear mixed effects models (LMM):&lt;/h1&gt;
+&lt;p&gt;Linar mixed model include both fixed and random effects which are described separately.
+For observation j belonging to group i, we have:
+\[ Y_{ij} = \beta_1 x_{ij1} + \dots + \beta_p x_{ijp} + U_{i1} Z_{ij1}  + \dots + U_{iq} Z_{ijq} + \epsilon_{ij}
+= \sum_{k=1}^{p} \beta_j x_{ijk} + \sum_{l=1}^{q} U_{il} Z_{ijl} + \epsilon_{ij}\]&lt;/p&gt;
+&lt;p&gt;As for the fixed effects model, given and \(\mathbf{U_{i}} = (U_{i1}, \dots, U_{iq})\) and
+\(\mathbf{Z_{ij}} = (Z_{ij1}, \dots, Z_{1jq})^T\), this is equivalent to:
+\[ Y_{ij} = \mathbf{\beta} \mathbf{x_{ij}} + \mathbf{U_{i}} \mathbf{Z_{ij}} + \epsilon_{ij}\]&lt;/p&gt;
+&lt;p&gt;Note that this is essentially the fixed-effects models to which were added with the random effects
+\(\mathbf{Z_{ij}}\) and the corresponding group-specific coefficients \(\mathbf{U_{i}}\).&lt;/p&gt;
+&lt;p&gt;The equations above assume that all groups have random effects of the
+same dimension \(q\). This is not mandatory and it is possible to have
+and \(\mathbf{U_{i}} = (U_{i1}, \dots, U_{iq_i})\) and
+\(\mathbf{Z_{ij}} = (Z_{ij1}, \dots, Z_{ijq_i})^T\)&lt;/p&gt;
+&lt;p&gt;Let \(n_i\) be the number of observations in group \(i\) and \(\mathbf{Z_i}\) be the
+\(n_i \times q_i\) design matrix for random effects.
+The other terms are similar to those in the fixed-effects model but restricted to group \(i\).
+Namely \(\mathbf{x_i}\) is of dimension \(n_i \times p\), and \(\mathbf{\epsilon_i}\)
+is of dimension \(n_i \times 1\).
+Then a mixed model takes the following form for group \(i\):
+\[ \mathbf{Y_i} = \mathbf{\beta} \mathbf{x_i} + \mathbf{U_i} \mathbf{Z_i} + \mathbf{\epsilon_i}\]&lt;/p&gt;
+&lt;p&gt;Finally, letting \(n = \sum_{i} n_i\) and \(q = \sum_{i} q_i\) we have
+\[ \mathbf{Y} = \mathbf{\beta} \mathbf{x} + \mathbf{U} \mathbf{Z} + \mathbf{\epsilon}\]
+with \(\mathbf{Z}\) of dimension \(n \times q\) and  \(\mathbf{U}\) of dimension \(q \times 1\).&lt;/p&gt;
+&lt;h2&gt;Variance components&lt;/h2&gt;
+&lt;p&gt;As opposed to the fixed effects model, in this setting \(\epsilon\) is no longer the only contributor to
+the variance of \(\mathbf{Y}\).
+We have \(U \sim \mathcal{N}(0, R)\), \(R\) being the random effects covariance matrix, and
+\(\epsilon\) and \(U\) are assumed to be independent, i.e. \(cov[U, \epsilon] = 0_{q \times n}\).&lt;/p&gt;
+&lt;p&gt;Therefore, we have
+\(\mathbf{Y|U} \sim \mathcal{N}(\mathbf{X}\mathbf{\beta} + \mathbf{Z}\mathbf{U}, \Sigma\))
+and
+\(\mathbf{Y} \sim \mathcal{N}(\mathbf{X}\mathbf{\beta}, ZRZ^T + \Sigma) =
+\mathcal{N}(\mathbf{X}\mathbf{\beta}, V)\).
+The matrix \(V\) is called the &lt;em&gt;variance-covariance matrix&lt;/em&gt;.&lt;/p&gt;
+&lt;h1&gt;Model fitting / Parameter estimation&lt;/h1&gt;
+&lt;p&gt;For a mixed model, the unknown quantities \(\mathbf{\beta}\), \(\mathbf{U}\), \(\Sigma\) and \(R\)
+must be estimated.
+More specifically, \(\mathbf{\beta}\), \(\Sigma\) and \(R\) are fixed and which can be directly
+estimated from the data. The situation is rather different for \(\mathbf{U}\) which is a matrix of
+random variables which must be predicted.&lt;/p&gt;
+&lt;p&gt;I'll first assume that the covariance matrices are known to estimate \(\mathbf{\beta}\) and \(\mathbf{U}\),
+which is almost never the case but makes the explanation simpler. In practice these and the covariance matrices are
+estimated jointly.
+In practice, parameter estimation is usually performed using either maximum likelihood (ML) or
+residual/restricted maximum likelihood (RML / REML).&lt;/p&gt;
+&lt;h2&gt;Random and fixed effects estimation&lt;/h2&gt;
+&lt;p&gt;Let us start by assuming that \(V = ZRZ^T + \Sigma\) is known, implying that  \(R\) and
+\(\Sigma\) are known too, and seek to estimate \(\mathbf{\beta}\) and \(\mathbf{U}\).
+One way is to solve Henderson's equations also called &lt;em&gt;mixed model equations&lt;/em&gt; with the
+following solutions:
+\[ \mathbf{\hat{\beta}} = (\mathbf{X}^T V^{-1} \mathbf{X})^{-1} X^T V^{-1} \mathbf{Y}\]
+\[ \mathbf{\tilde{U}} = R Z^T V^{-1}(\mathbf{Y} - \mathbf{X}\mathbf{\hat{\beta}})\]&lt;/p&gt;
+&lt;p&gt;Note that \(\mathbf{\hat{\beta}}\) is a essentially a least squares estimate
+(recall the usual estimate \((X^T X) - X^T Y\)) weighted by the inverse of the variance-covariance
+matrix. It is also called &lt;em&gt;generalized least squares estimate&lt;/em&gt; and is unbiased:
+\(E[\mathbf{\hat{\beta}}] = \mathbf{\beta}\).&lt;/p&gt;
+&lt;p&gt;The estimate \(\mathbf{\tilde{U}}\) is the best linear unbiased predictor (BLUP) of
+\(\mathbf{U}\) and as such, we have \(E[\mathbf{\tilde{U}}] = \mathbf{U}\).
+Here &lt;em&gt;best&lt;/em&gt; refers to the fact that it os the most &lt;em&gt;efficient&lt;/em&gt;, i.e. has the minimum variance, among
+unbiased predictors. Note how it depends on the residuals \(\mathbf{Y} - \mathbf{X}\mathbf{\hat{\beta}}\)
+of the "fixed effect model".&lt;/p&gt;
+&lt;h2&gt;Variance parameter estimation&lt;/h2&gt;
+&lt;p&gt;For the previous estimations to be computed, one needs to first estimate \(V\) and
+thus \(R\) and \(\Sigma\). "First" here is misleading however as the estimation of
+effects and variance parameters are usually done jointly.&lt;/p&gt;
+&lt;p&gt;The experimental design can sometimes give some information about the structure of these matrices and
+one can specify their &lt;em&gt;structure&lt;/em&gt; prior to estimation.
+For instance knowing that the random effects are independent from each other, one may enforce a
+diagonal structure for \(R\).
+Similarly for the random errors \(\Sigma\), one may, for instance, assume that all observations are
+equally correlated (compound symmetry) or that their correlations get weaker with their distance
+in the dataset (e.g. autoregressive structure for longitudinal data where obervations are sorted
+by time). Virtually any correlation structure can be specified but only the most commonly used are
+supported by statistical softwares, which is most of the time enough for any type of analysis.&lt;/p&gt;
+&lt;h2&gt;Maximum likelihood&lt;/h2&gt;
+&lt;p&gt;Let \(\theta\) be the vector containing unknown parameters in \(R\) and \(\Sigma\). Their number
+depends on the correlatino structure chosen: more constraints lead to less parameters to estimate.
+To derivate the likelihood of the model, recall that
+\(\mathbf{Y} \sim \mathcal{N}(\mathbf{X}\mathbf{\beta}, V(\theta))\). Thus the log-likelihood
+\(l(\mathbf{Y}; \mathbf{\beta}, V(\theta))\) of \(\mathbf{Y}\) satisfies:
+\[-2 l(\mathbf{Y}; \mathbf{\beta}, V(\theta)) = \log |V(\theta)| +
+    (\mathbf{Y} - \mathbf{X}\mathbf{\beta})^T V(\theta)^{-1}(\mathbf{Y} - \mathbf{X}\mathbf{\beta}) + n \log 2 \pi\]&lt;/p&gt;
+&lt;p&gt;Minimizing this log-likelihood can be done by replacing \(\mathbf{\beta}\) by its maximum
+likelihood estimator
+\(\mathbf{\hat{\beta}}(\theta) = \mathbf{X}^T V(\theta)^{-1} \mathbf{X})^{-1} X^T V(\theta)^{-1} \mathbf{Y}\)
+(starting with e.g. random intial parameters \(\theta\)) and minimizing
+\(l(\mathbf{Y}; \mathbf{\hat{\beta}}(\theta), V(\theta))\) with respect to \(\theta\).&lt;/p&gt;
+&lt;p&gt;The main caveat of the ML estimation is that the variance estimates are negatively (downward) biased
+as they do not take into account the degrees of freedom lost while estimating the fixed effects.
+Indeed, \(\mathbf{\beta}\) is estimated alongside \(V(\theta)\) (i.e. it is not known without
+uncertainty), and this is not taken into account in the number of degrees of freedom (\(n\) should be
+replaced by a smaller value).&lt;/p&gt;
+&lt;h2&gt;Restricted maximum likelihood&lt;/h2&gt;
+&lt;p&gt;Restricted maximum likelihood estimation addresses the biasedness of MLE estimators.
+The core idea is to perform MLE on a modified version of the data, namely linear combinations of \(\mathbf{Y}\).&lt;/p&gt;
+&lt;p&gt;First, notice that the design matrix \(\mathbf{X}\) has rank at most \(p\) since it is a \( n \times p\)
+matrix.
+Let \(r = rank(\mathbf{X})\) and \(K\) be the full rank \((n - r) \times n\) matrix satisfying
+\(E[K\mathbf{Y}] = 0 \iff E(K\mathbf{X}\mathbf{\beta}) = 0\).
+Thus, \(K\mathbf{Y} \sim \mathcal{N}(0, K V(\theta) K^T)\) and maximum likelihood
+estimation can be carried out on \(K\mathbf{Y}\) with \((n - r)\) degrees of freedom.
+Moreover, notice that as opposed to \(\mathbf{Y} (\sim \mathcal{N}(\mathbf{X}\mathbf{\beta}, V)\),
+\(\mathbf{\beta}\) no longer appear in the distribution of \(K\mathbf{Y}\), meaning that the
+dependence on fixed effects has been removed.
+MOre conretely, the transformed response \(K\mathbf{Y}\) consists of the residuals obtained after
+fitting the fixed effects ignoring the variance parameters.&lt;/p&gt;
+&lt;p&gt;In contrast with ML, the REML estimates for fixed effect are biased and those for random effect
+are unbiased.&lt;/p&gt;
+&lt;p&gt;Remark: REML can also be described from a marginal likelihood point of vue. The marginal likelihood
+\(L_R(\mathbf{Y}; V(\theta))\) with respect to \(\mathbf{Y}\) is found by integrating out the fixed
+effects:
+\(L_R(\mathbf{Y}; V(\theta)) = \int L(\mathbf{Y}; \mathbf{\beta}, V(\theta)) d \mathbf{\beta}\).
+Then log of the marginal likelihood is then maximized.&lt;/p&gt;
+&lt;p&gt;In practice, ML and REML are typically computed using iterative schemes such as the Newton-Raphson
+algorithm and variants thereof, or the expectation-maximization algorithm.&lt;/p&gt;
+&lt;h1&gt;Marginal models and Generalized estimating equations&lt;/h1&gt;
+&lt;p&gt;As an alternative to LMM, generalized estimating equations (GEE) are often used for modeling correlated
+data. In that context they commonly appear under the name &lt;em&gt;marginal models&lt;/em&gt;. Marginal models are actually
+a subset of the more general GEE called population-average GEE (PA-GEE)  as opposed to subject-specific
+GEE (SS-GEE).&lt;/p&gt;
+&lt;h2&gt;GEE are an extension of generalized linear models (GLM).&lt;/h2&gt;
+&lt;p&gt;Let us forget about random effects for a moment.
+The difference between fixed-effects linear models and GLM is that for the latter, the response variable
+is no longer restricted to be normally distributed. Instead, it can follow any distribution from the
+exponential family.
+Moreover, a &lt;em&gt;link&lt;/em&gt; function \(g\) describes how the expectation \(\mu_i\) of \(Y_i\) depends
+on a linear combination of covariates.
+This results in a model of the follwing form:
+\[ g(E[Y_i]) = \beta_1 x_{i1} + \dots + \beta_p x_{ip}= \mathbf{x_i} \mathbf{\beta}\]
+or in compact form:
+\[ g(E[Y]) = \mathbf{X}\mathbf{\beta} \]&lt;/p&gt;
+&lt;p&gt;For instance, linear regression consists of a normally distributed \(Y\) with a identity
+link function, and logistic regression consists of a binomially distributed \(Y\) with a logit
+\((x \mapsto \ log \frac{x}{1-x}) \) link function.&lt;/p&gt;
+&lt;p&gt;GEE extend GLM by allowing correlated \(Y_i\). The covariance structure can be specified as for
+mixed models. However, note that the covariance is no longer between random effects or random errors
+but between responses.
+As such, the formulation of GEE does not explicitely include random effects.
+In the linear case (\(g\) is the identify function), the model is therefore:
+\[ Y_i = \beta_1 x_{i1} + \dots + \beta_p x_{ip} + \epsilon_i = \mathbf{x_i} \mathbf{\beta} + \epsilon_i \]
+or in compact form
+\[ Y = \mathbf{\beta} \mathbf{x} + \epsilon \]
+where \(\epsilon \sim \mathcal{N}(0, \Sigma)\).
+In that case, there is no \(R\) matrix and  \(V = \Sigma\) is the variance-covariance matrix of
+the model.
+Note that no assumption is made about the distribution of \(Y\) as opposed to LMM.&lt;/p&gt;
+&lt;h2&gt;Parameter estimation&lt;/h2&gt;
+&lt;p&gt;The parameter estimation of marginal models relies on &lt;em&gt;quasi-likelihood&lt;/em&gt; instead of the
+(restricted)-likelihood. It does not require the full distribution of \(Y\) to be known
+but only its mean and covariance matrix.
+In practice, this amounts to solving the following &lt;em&gt;quasi-likelihood estimating equation&lt;/em&gt;
+(see &lt;a href="https://onlinecourses.science.psu.edu/stat504/node/182"&gt;here&lt;/a&gt; and
+&lt;a href="https://en.wikipedia.org/wiki/Generalized_estimating_equation"&gt;here&lt;/a&gt;):
+\[X^T V^{-1}(Y - \mathbf{X} \mathbf{\beta)} = 0\]&lt;/p&gt;
+&lt;p&gt;However, note that the covariance matrix \(V\) is unknown at this point, thus it is replaced by
+an estimate \(\tilde{V}\) which depends on \(\beta\) and initially assumes independence
+(\(\tilde{V}\) is diagonal).
+The quasi-likelihood estimating equation is then solved iteratively, alternating between the
+estimation of \(\mathbf{\beta}\) with fixed \(\tilde{V}\) and of \(\tilde{V}\) with fixed
+\(\mathbf{\beta}\).&lt;/p&gt;
+&lt;p&gt;A very rough description of the algorithm is therefore:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Fit an intial fixed effect model without taking into account any covariance
+  (assume independence, diagonal \(V^0\)), yielding \(\beta^0\)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;At step \(i\), update the covariance matrix \(V^i\) using the current
+   estimates \(\beta^{i-1}\).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Update \(\beta^i\) from the covariance matrix \(V^i\).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Iterate 2. and 3. until convergence.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;More details can be found
+&lt;a href="http://support.sas.com/documentation/cdl/en/statug/67523/HTML/default/viewer.htm#statug_gee_details01.htm"&gt;here&lt;/a&gt;,
+&lt;a href="http://support.sas.com/documentation/cdl/en/statug/67523/HTML/default/viewer.htm#statug_gee_details06.htm"&gt;here&lt;/a&gt; and
+&lt;a href="https://www.ibm.com/support/knowledgecenter/de/SSLVMB_20.0.0/com.ibm.spss.statistics.help/alg_genlin_gee_estimation_param.htm"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The estimation of the variance of \(\beta\) on the other hand uses the so-called
+&lt;em&gt;robust sandwich estimator&lt;/em&gt; (some nice and short explanations in the context of OLS regression
+&lt;a href="http://thestatsgeek.com/2013/10/12/the-robust-sandwich-variance-estimator-for-linear-regression/"&gt;here&lt;/a&gt;
+and &lt;a href="https://stats.stackexchange.com/questions/50778/sandwich-estimator-intuition"&gt;here&lt;/a&gt;).&lt;/p&gt;
+&lt;h1&gt;Mixed-effect models versus maringla models&lt;/h1&gt;
+&lt;p&gt;For linear models, mixed and marginal models yield the same estimates.
+This is however not true in the general case.&lt;/p&gt;
+&lt;h2&gt;Interpretation&lt;/h2&gt;
+&lt;p&gt;Mixed-models aim at estimating group-specific coefficients i.e. they condition on both the design matrix and
+random effects:
+\[E[Y | \mathbf{U}] = \mathbf{x} \mathbf{\beta} + \mathbf{Z} \mathbf{U}\]
+In other words, they describe how the response of individual groups changes with
+the covariates. The random effects allow the covariate coefficients to vary randomly from one group
+to another, thereby providing a group-specific response. For this reason they are sometimes called
+&lt;em&gt;conditional models&lt;/em&gt; as opposed to marginal models.&lt;/p&gt;
+&lt;p&gt;On the other hand, marginal models aim at estimating population average coefficients.
+Indeed, as their name suggests, they focuses on marginals, i.e. take averages over random effects,
+only conditioning on the design matrix:
+\[E[Y] = \mathbf{x} \mathbf{\beta} \]
+In other words, marginal models focus on the impact of covariates on the response over the whole population.&lt;/p&gt;
+&lt;p&gt;In terms of interpretation of the coefficients, a very clear example is provided
+&lt;a href="https://stats.stackexchange.com/questions/86309/marginal-model-versus-random-effects-model-how-to-choose-between-them-an-advi"&gt;here&lt;/a&gt;:&lt;/p&gt;
+&lt;p&gt;"&lt;em&gt;If you are a doctor and you want an estimate of how much a statin drug will lower your
+patient’s odds of getting a heart attack, the subject-specific coefficient
+is the clear choice. On the other hand, if you are a state health official and you want to
+know how the number of people who die of heart attacks would change if everyone in the at-risk population
+took the stain drug, you would probably want to use the population–averaged coefficients. (Allison, 2009)&lt;/em&gt;"&lt;/p&gt;
+&lt;p&gt;Where "subject-specific" refers to the mixed effect / conditional model whereas "population-averaged" refers
+to the GEE / marginal model.&lt;/p&gt;
+&lt;h2&gt;Assumptions and robustness&lt;/h2&gt;
+&lt;p&gt;As opposed to LMM, marginal models do not rely on the assumption that random effects are
+normally distributed.&lt;/p&gt;
+&lt;p&gt;Marginal models are more robust than LMM when the covariance structure is misspecified, a nice
+feature of the sandwich estimator.&lt;/p&gt;
+&lt;p&gt;Marginal models can only handle data missing completely at random (MCAR, "really random") wheread LMM
+can also handle data missing at random (MAR, randomness with dependence on the covariates).&lt;/p&gt;
+&lt;p&gt;Choosing between miwed models and marginal models is therefore primarily a question of scope (group-specific
+versus population-wise) and also depend on what is known about the data (how certain are we about the correlation
+structure? and about the complete randomness of missing data?).&lt;/p&gt;
+&lt;h1&gt;References:&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Campbell, Michael J. Statistics at square two: understanding modern statistical applications in medicine. BMJ, 2001&lt;/li&gt;
+&lt;li&gt;Duchateau, Luc, Paul Janssen, and John Rowlands. Linear mixed models. An introduction with applications in veterinary research. ILRI (aka ILCA and ILRAD), 1998&lt;/li&gt;
+&lt;li&gt;Burton, Paul, Lyle Gurrin, and Peter Sly. "Extending the simple linear regression model to account for correlated responses: an introduction to generalized estimating equations and multilevel mixed modelling." (2004): 1-33&lt;/li&gt;
+&lt;li&gt;Hardin, James W. Generalized estimating equations (GEE). John Wiley &amp;amp; Sons, Ltd, 2005&lt;/li&gt;
+&lt;li&gt;Naseri, Parisa, et al. "Comparison of generalized estimating equations (GEE), mixed effects models (MEM) and repeated measures ANOVA in analysis of menorrhagia data." Journal of Paramedical Sciences 7.1 (2016): 32-40&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://statistics.ma.tum.de/fileadmin/w00bdb/www/czado/lec10.pdf"&gt;http://statistics.ma.tum.de/fileadmin/w00bdb/www/czado/lec10.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://people.musc.edu/simhille/Presentations/GEE_tutorial_Betsy/GEE_Tutorial.pdf"&gt;http://people.musc.edu/simhille/Presentations/GEE_tutorial_Betsy/GEE_Tutorial.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://www.misug.org/uploads/8/1/9/1/8191072/kwelch_repeated_measures.pdf"&gt;http://www.misug.org/uploads/8/1/9/1/8191072/kwelch_repeated_measures.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://statmath.wu.ac.at/courses/heather_turner/glmCourse_001.pdf"&gt;http://statmath.wu.ac.at/courses/heather_turner/glmCourse_001.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://www.stat.cmu.edu/~hseltman/309/Book/chapter15.pdf"&gt;http://www.stat.cmu.edu/~hseltman/309/Book/chapter15.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://www.stat.ncsu.edu/people/bloomfield/courses/ST732/02-21.pdf"&gt;http://www.stat.ncsu.edu/people/bloomfield/courses/ST732/02-21.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://www.stat.ncsu.edu/people/bloomfield/courses/ST732/03-23.pdf"&gt;http://www.stat.ncsu.edu/people/bloomfield/courses/ST732/03-23.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://www.stat.ncsu.edu/people/bloomfield/courses/ST732/04-06.pdf"&gt;http://www.stat.ncsu.edu/people/bloomfield/courses/ST732/04-06.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://www.stat.ncsu.edu/people/bloomfield/courses/ST732/04-18.pdf"&gt;http://www.stat.ncsu.edu/people/bloomfield/courses/ST732/04-18.pdf}&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://onlinecourses.science.psu.edu/stat504/node/180"&gt;https://onlinecourses.science.psu.edu/stat504/node/180&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://support.sas.com/documentation/cdl/en/statug/67523/HTML/default/viewer.htm#statug_genmod_details29.htm"&gt;https://support.sas.com/documentation/cdl/en/statug/67523/HTML/default/viewer.htm#statug_genmod_details29.htm&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://support.sas.com/documentation/cdl/en/statug/67523/HTML/default/viewer.htm#statug_gee_details01.htm"&gt;http://support.sas.com/documentation/cdl/en/statug/67523/HTML/default/viewer.htm#statug_gee_details01.htm&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://support.sas.com/documentation/cdl/en/statug/67523/HTML/default/viewer.htm#statug_gee_details06.htm"&gt;http://support.sas.com/documentation/cdl/en/statug/67523/HTML/default/viewer.htm#statug_gee_details06.htm&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.ibm.com/support/knowledgecenter/de/SSLVMB_20.0.0/com.ibm.spss.statistics.help/alg_genlin_gee_estimation_param.htm"&gt;https://www.ibm.com/support/knowledgecenter/de/SSLVMB_20.0.0/com.ibm.spss.statistics.help/alg_genlin_gee_estimation_param.htm&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://en.wikipedia.org/wiki/Generalized_estimating_equation"&gt;https://en.wikipedia.org/wiki/Generalized_estimating_equation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://en.wikipedia.org/wiki/Generalized_linear_model"&gt;https://en.wikipedia.org/wiki/Generalized_linear_model&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://thestatsgeek.com/2013/10/12/the-robust-sandwich-variance-estimator-for-linear-regression/"&gt;http://thestatsgeek.com/2013/10/12/the-robust-sandwich-variance-estimator-for-linear-regression/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://stats.stackexchange.com/questions/17331/what-is-the-difference-between-generalized-estimating-equations-and-glmm"&gt;https://stats.stackexchange.com/questions/17331/what-is-the-difference-between-generalized-estimating-equations-and-glmm&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://stats.stackexchange.com/questions/48671/what-is-restricted-maximum-likelihood-and-when-should-it-be-used"&gt;https://stats.stackexchange.com/questions/48671/what-is-restricted-maximum-likelihood-and-when-should-it-be-used&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://stats.stackexchange.com/questions/21760/what-is-a-difference-between-random-effects-fixed-effects-and-marginal-model/68753#68753"&gt;https://stats.stackexchange.com/questions/21760/what-is-a-difference-between-random-effects-fixed-effects-and-marginal-model/68753#68753&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://stats.stackexchange.com/questions/86309/marginal-model-versus-random-effects-model-how-to-choose-between-them-an-advi"&gt;https://stats.stackexchange.com/questions/86309/marginal-model-versus-random-effects-model-how-to-choose-between-them-an-advi&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://stats.stackexchange.com/questions/62923/models-for-generalized-estimating-equation"&gt;https://stats.stackexchange.com/questions/62923/models-for-generalized-estimating-equation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://stats.stackexchange.com/questions/62939/gee-quasi-likelihood-and-what-it-generalizes"&gt;https://stats.stackexchange.com/questions/62939/gee-quasi-likelihood-and-what-it-generalizes&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://stats.stackexchange.com/questions/50778/sandwich-estimator-intuition"&gt;https://stats.stackexchange.com/questions/50778/sandwich-estimator-intuition&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.reddit.com/r/statistics/comments/16k9z6/can_anyone_help_me_understand_when_to_use/"&gt;https://www.reddit.com/r/statistics/comments/16k9z6/can_anyone_help_me_understand_when_to_use/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><category term="Statistics"></category><category term="Mixed models"></category><category term="Generalized estimating equations"></category><category term="Marginal models"></category><category term="Conditional models"></category><category term="Random effects"></category></entry><entry><title>Using Facebook's FastText for document classification.</title><link href="/using-facebooks-fasttext-for-document-classification.html" rel="alternate"></link><published>2017-10-24T18:30:00+02:00</published><updated>2017-10-31T23:00:00+01:00</updated><author><name>Simon-M</name></author><id>tag:None,2017-10-24:/using-facebooks-fasttext-for-document-classification.html</id><summary type="html">&lt;p&gt;A short introduction to using FastText for document classification&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Context&lt;/h1&gt;
+&lt;p&gt;I am currently working on classifying some medical data in the form of examination notes,
+the goal being to predict whether a patient has a pathology or not.
+This text data has a few quirks compared to textbook examples of document classification:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Documents (one per patient) are short: less than 30 words on average&lt;/li&gt;
+&lt;li&gt;The text is dirty&lt;/li&gt;
+&lt;li&gt;many word contain typos, resulting in multiple tmers refering to the same thing&lt;/li&gt;
+&lt;li&gt;many abbreviations are used and end up in conflicts&lt;/li&gt;
+&lt;li&gt;Many words and mostly important ones are subject-specific jargon and thus cannot be recovered
+   using general-purpose spelling correctors.&lt;/li&gt;
+&lt;li&gt;The single binary label pathology/no_pathology is noisy because it is the result of partial manual
+   annotation. more specifically, a subset of the dataset was selected for annotation based on a
+   currated list of keywords (and their typo'd variations). The rest was labeled as "no_pathology".
+   Moreover, the manual annotation was also carried out in a fairly limited time-frame which did not allow
+   multiple pass on the same patients by several annotators.&lt;/li&gt;
+&lt;li&gt;The dataset in very unbalanced since around 1.2% of the patient are part of the "pathology" class.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;On the plus side, the dataset is rather large with ~600000 patients.&lt;/p&gt;
+&lt;p&gt;On the minus side, I have access to a fairly limited amount of computing power (no GPU, intel i3 with 4 Gb RAM).
+Therefore, even though I am fairly attracted to the shiny neural networks-based methods
+(in particular convolutional, recurrent and long-short term memory NN which seem to enjoy a fair share
+of success) there is absolutely no way I can run them. Also, cloud-based solutions such as Amazon's AWS are out of
+the question, the first reason for that being that the data should not leave the lab.&lt;/p&gt;
+&lt;h1&gt;Facebook's fastText&lt;/h1&gt;
+&lt;p&gt;After trying a bunch of different methods which will be the subject of another article,
+I was reading on language models, in particular n-grams and word embeddings/representations
+such as word2vec and GloVe, hoping to find new ideas for extracting relevant features from
+my documents' text.&lt;/p&gt;
+&lt;p&gt;Both the n-gram and word representation are interesting in their own right but I am rather
+impressed by the semantic properties of word2vec. However, word embedding methods are called
+this way for a reason: the unit are words, which means each word gets vector representation.
+I am therefore left with the follwing question: how to meaningfully combine these and get a document
+representation?&lt;/p&gt;
+&lt;p&gt;I then stumbled upon an interesting article:
+&lt;a href="https://arxiv.org/abs/1607.01759"&gt;Bag of Tricks for Efficient Text Classification&lt;/a&gt;.
+In short, the approach described by the authors consists in defining word (or n-gram) representation
+&lt;em&gt;à la&lt;/em&gt; word2vec, simply average them to get a sentence representation and feed that to a linear
+classifier.&lt;/p&gt;
+&lt;p&gt;I like this approach for several reasons: it uses the apparently powerful word2vec framework,
+it is conceptually simple, it compares favorably to baselines and more sophisticated models,
+it is fast and in particular much much faster than the neural network-based models I cannot
+afford, and finally , it is already implemented in the
+&lt;a href="https://github.com/facebookresearch/fastText/"&gt;fastText library&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I am therefore going to try my luck and use fastText's classifier to gauge its ability to
+classify my data. If it works well I will also try to use the sentence representations as
+extra features along with the LDA topic mixtures I have used so far.&lt;/p&gt;
+&lt;p&gt;Note that fastText is not limited to classification: it can be used in an unsupervised fashion
+to get word and sentence embeddings.&lt;/p&gt;
+&lt;h2&gt;FastText for Windows&lt;/h2&gt;
+&lt;p&gt;First hurdle: fastText is designed to build under Unix-like systems.
+that's a bummer as despite being a long-standing user and fan of Linux systems,
+I am stuck with Windows at work.
+Fortunately, someone may have felt the same and shared a
+&lt;a href="http://cs.mcgill.ca/~mxia3/FastText-for-Windows/"&gt;Windows version&lt;/a&gt; of the library.
+Thumbs up to you &lt;a href="http://cs.mcgill.ca/~mxia3"&gt;Meng Xuan Xia&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;After a quick and painless compilation with MS Visual C++ (my first time using it), I am
+ready to start.&lt;/p&gt;
+&lt;h1&gt;Getting started&lt;/h1&gt;
+&lt;p&gt;I am mainly giving  short version of the &lt;a href="https://github.com/facebookresearch/fastText/"&gt;documentation&lt;/a&gt;
+and &lt;a href="https://github.com/facebookresearch/fastText/blob/master/tutorials"&gt;tutorials&lt;/a&gt;, so you
+will probably need to read them too.&lt;/p&gt;
+&lt;p&gt;The command-line interface (CLI) is very simple to use and the input format is very minimalistic
+and convenient (I am looking at you Weka and ARFF).&lt;/p&gt;
+&lt;p&gt;The training set format is as such:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;This is an example sentence __label__example
+This is one is not (yes it is though) __label__not_example
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Basically, each sentence/document is written as is on a single line and the labels are
+prefixed with __label__ (this can be customized using the -label option on the CLI).
+In this case, I simply encode the single binary label as two labels "__label__pathology" and
+"__label__no_pathology".&lt;/p&gt;
+&lt;p&gt;Training a default classifier is dead simple with the "supervised" command.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;fastText.exe supervised -input training_set.txt -output default_model
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The performance of the resulting model can then be investigated using the test command&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;fastText.exe test default_model.bin test_file.txt 1;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The "1" here is the default value for the number of top label to be used as the prediction.
+In the general case, a value of "1" will give as prediction the best label only.
+In my case, since I have a single binary label, using "1" is the way to go.
+This prints the precision achieved on the test set.&lt;/p&gt;
+&lt;p&gt;In this case, precision is not a good measure because of the very strong unbalance of the dataset.
+Always predicting "no_pathology", one can expect precision and recall to reach ~98.8%.
+Such a high baseline makes it difficult to assess whether this classifier is better than the
+dummy "always predict no-pathology" one.&lt;/p&gt;
+&lt;p&gt;Fortunately, I can rely on the "predict" command to get predictions and compute the confusion matrix
+or any other metric such as Matthews Correlation Coefficient (MCC).&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;fastText.exe predict default_model.bin test_file.txt 1 &amp;gt; predictions.txt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Still, I need a more detailed account of the classifier's performance. Specifically,
+I would like to get a maximum of true positives (TP) (don't we all?) while keeping the number of
+false positives (FP) close to TP. This has to do with the way the
+classifier will be used, namely screening and human validation of the positive predictions.
+The goal is to give a reasonable number of screened patients to the validators.
+I therefore need to have access to a probability-like number instead of 0 / 1 decisions in order
+to vary the "positive" cutoff during subsequent analyses.&lt;/p&gt;
+&lt;p&gt;For that, I use the "predict-prob" command of fasttext.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;fastText.exe predict-proba default_model.bin test_file.txt 1 &amp;gt; class_probabilities.txt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;Parameters&lt;/h1&gt;
+&lt;p&gt;A short description of the parameters is provided in the documentation, but I will
+expand a little here on the most important ones.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;The "-loss" option allows you to choose the loss which is optimized for.&lt;/p&gt;
+&lt;p&gt;The default value is "ns" for negative sampling. It is an approximation of the softmax loss
+based on sampling "negative examples".&lt;/p&gt;
+&lt;p&gt;Briefly and very roughly, the goal of word2vec is to find an embedding of words, i.e. a vector
+representation for each word in a space of fixed dimension.
+Given a &lt;em&gt;context&lt;/em&gt; i.e. words surrounding a word of interest (e.g. in a fixed size window around it),
+a good embedding should satisfy the following:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;the dot product between the vectors of a word and a context often found together should be large.&lt;/li&gt;
+&lt;li&gt;this dot product must be small for words and contexts which rarely co-occur&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Given the vector representation \(w_i\) of a word and a context \(c_j\), the goal is
+therefore to maximize \(\frac{w_i \cdot c_j}{sum_w(w \cdot c_j)}\). The normalization
+is a sum over all words which can be prohibitively large and yield very long computation
+times.&lt;/p&gt;
+&lt;p&gt;Remark: this is a gross simplification; the actual softmax loss is actually
+\(-log P(w_i | c_j) = -log(e^{w_i \cdot c_j} / sum_w(e^{w \cdot c_i}))\) which
+should be minimized instead of maximized.&lt;/p&gt;
+&lt;p&gt;An alternative is therefore to replace the sum over all words by  a sum over a random
+sample, under the reasonable assumption that most are "negative", i.e. rarely co-occur
+with a given context. This resutls in the negative sampling loss. See also this
+&lt;a href="https://stackoverflow.com/questions/27860652/word2vec-negative-sampling-in-layman-term"&gt;stackoverflow post&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The "softmax" value results in using the regular softmax loss which is much &lt;em&gt;much&lt;/em&gt; slower.&lt;/p&gt;
+&lt;p&gt;The "hs" value uses hierarchical softmax. The goal is to organize the set of all words in a tree so that
+the sum over all words reduces instrad to a sum over one path in the tree.&lt;/p&gt;
+&lt;p&gt;Namely, the probability \(P(w_i | c_j)\) is computed by first building
+a &lt;a href="https://en.wikipedia.org/wiki/Huffman_coding"&gt;Huffman tree&lt;/a&gt; with words as leaves,
+so that most common words are found at smaller depth.
+Each internal node \(n_i\) has two children and their associated probabilities \(p_i\) and
+\(q_i = 1 - p_i\) where \(p_i\) depends both on \(c_j\) and a vector which is learned during training.
+The probaility \(P(w_i | c_j)\) is then computed by following the path from the root to the
+\(w_i\) and multiplying the \(p_i\) or \(q_i\) depending on which child is followed.
+Since the depth of a balanced tree with \(n\) leaves is \(O(log(n))\), this reduces the computation of
+the softmax loss from \(O(W)\) to \(O(log(W)\) for \(W\) words. A more detailed explanation with nice
+graphics can be found &lt;a href="http://building-babylon.net/2017/08/01/hierarchical-softmax/"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;For a more rigorous description of negative sampling and hierarchical softmax, see
+&lt;a href="https://arxiv.org/abs/1310.4546"&gt;this article&lt;/a&gt; and references therein.
+In general, ns or hs are the only way to train the model in reasonable time. As a rule of thumb,
+ns requires several epochs to be accurate (-epoch flag) wheread hs does not benefits from more epoch
+(&lt;a href="https://groups.google.com/forum/#!msg/word2vec-toolkit/WUWad9fL0jU/LdbWy1jQjUIJ"&gt;as stated here&lt;/a&gt;).&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;The "-bucket" option is used to tune the number of buckets used in the hash table. There is a
+trade-off between accuracy and memory used as a smaller value implies more collisions.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;The "-lr" option tunes the learning rate. In general, a larger value means faster trainig and a
+potentially less accurate model because of a higher risk of getting stuck in local minimum.&lt;/p&gt;
+&lt;h1&gt;Some results&lt;/h1&gt;
+&lt;p&gt;After a rather light parameter tuning phase, the best cutoff to balance TP and FP results in
+a ~2/3 precision. Interestingly, this is almost the best that can be reached.
+Indeed, lowering the threshold further (i.e. predicting more and more patients as "pathology") yields
+very marginal changes on the precision, TP and FP until reaching a threshold where everything is predicted
+as "pathology". This is because most of the low probabilities are all clustered very closeley around the
+same value.&lt;/p&gt;
+&lt;p&gt;All in all, these results are fairly good considering I did not have to engineer any features and spent
+little time optimizing the parameters.
+The next step is to see whether word2vec features could benefit a classifier when used along LDA
+topic mixtures.&lt;/p&gt;
+&lt;h1&gt;Further thoughts:&lt;/h1&gt;
+&lt;p&gt;I stumbled upon other alternatives in a similar philosophy:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://radimrehurek.com/gensim/models/doc2vec.html"&gt;Gensim's Doc2Vec&lt;/a&gt; does exactly what it
+  says: it computes the embedding of whole documents/sentences which can then be fed to a classifier.
+  Note: Gensim also implements word2vec and FastText.&lt;/li&gt;
+&lt;li&gt;Using word2vec/FasText, compute a component-wise max or min or average over all word representations
+  and use the resulting vector as the sentence embedding. Computing all three min and max and average and
+  concatenating them can also be used to get another embedding. Idea from this
+  &lt;a href="https://stats.stackexchange.com/questions/221715/apply-word-embeddings-to-entire-document-to-get-a-feature-vector"&gt;stackexchange post&lt;/a&gt;
+  and &lt;a href="https://arxiv.org/abs/1607.00570"&gt;this paper&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;References:&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://arxiv.org/abs/1607.01759"&gt;https://arxiv.org/abs/1607.01759&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/facebookresearch/fastText/"&gt;https://github.com/facebookresearch/fastText/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/facebookresearch/fastText/blob/master/tutorials"&gt;https://github.com/facebookresearch/fastText/blob/master/tutorials&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://stackoverflow.com/questions/27860652/word2vec-negative-sampling-in-layman-term"&gt;https://stackoverflow.com/questions/27860652/word2vec-negative-sampling-in-layman-term&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://groups.google.com/forum/#!msg/word2vec-toolkit/WUWad9fL0jU/LdbWy1jQjUIJ"&gt;https://groups.google.com/forum/#!msg/word2vec-toolkit/WUWad9fL0jU/LdbWy1jQjUIJ&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://arxiv.org/abs/1310.4546"&gt;https://arxiv.org/abs/1310.4546&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://building-babylon.net/2017/08/01/hierarchical-softmax/"&gt;http://building-babylon.net/2017/08/01/hierarchical-softmax/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://en.wikipedia.org/wiki/Huffman_coding"&gt;https://en.wikipedia.org/wiki/Huffman_coding&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://stats.stackexchange.com/questions/221715/apply-word-embeddings-to-entire-document-to-get-a-feature-vector"&gt;https://stats.stackexchange.com/questions/221715/apply-word-embeddings-to-entire-document-to-get-a-feature-vector&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://radimrehurek.com/gensim/models/doc2vec.html"&gt;https://radimrehurek.com/gensim/models/doc2vec.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://arxiv.org/abs/1607.00570"&gt;https://arxiv.org/abs/1607.00570&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><category term="NLP"></category><category term="Text classification"></category><category term="Word embedding"></category></entry></feed>
