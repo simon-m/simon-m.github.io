@@ -1,50 +1,107 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-          <title>Weblog</title>
-        <meta charset="utf-8" />
-        <link href="https://simon-m.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Weblog Full Atom Feed" />
-        <link href="https://simon-m.github.io/feeds/machine-learning.atom.xml" type="application/atom+xml" rel="alternate" title="Weblog Categories Atom Feed" />
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="./themes/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="./themes/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="./themes/font-awesome/css/font-awesome.min.css">
 
 
-    <meta name="tags" content="NLP" />
-    <meta name="tags" content="Text classification" />
-    <meta name="tags" content="Word embedding" />
-    <meta name="tags" content="Python" />
-    <meta name="tags" content="Scikit-learn" />
-    <meta name="tags" content="Sklearn" />
-    <meta name="tags" content="Gensim" />
+    <link href="https://simon-m.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Weblog Atom">
+
+
+
+
+
+<meta name="author" content="Simon-M" />
+<meta name="description" content="How to combine multiple topic-based and word embedding-based methods for text classification with scikit-learn and Gensim." />
+<meta name="keywords" content="NLP, Text classification, Word embedding, Python, Scikit-learn, Sklearn, Gensim">
+
+<meta property="og:site_name" content="Weblog"/>
+<meta property="og:title" content="Classification of text data: using multiple feature spaces"/>
+<meta property="og:description" content="How to combine multiple topic-based and word embedding-based methods for text classification with scikit-learn and Gensim."/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="./classification-of-text-data-using-multiple-feature-spaces.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2017-11-02 21:40:00+01:00"/>
+<meta property="article:modified_time" content="2017-11-02 21:40:00+01:00"/>
+<meta property="article:author" content="./author/simon-m.html">
+<meta property="article:section" content="Machine learning"/>
+<meta property="article:tag" content="NLP"/>
+<meta property="article:tag" content="Text classification"/>
+<meta property="article:tag" content="Word embedding"/>
+<meta property="article:tag" content="Python"/>
+<meta property="article:tag" content="Scikit-learn"/>
+<meta property="article:tag" content="Sklearn"/>
+<meta property="article:tag" content="Gensim"/>
+<meta property="og:image" content="">
+
+  <title>Weblog &ndash; Classification of text data: using multiple feature spaces</title>
+
+
+<script         src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'>
+</script>
+
 
 </head>
+<body>
+  <aside>
+    <div>
+      <a href=".">
+        <img src="./themes/img/profile.png" alt="What's in there?" title="What's in there?">
+      </a>
+      <h1><a href=".">What's in there?</a></h1>
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="https://simon-m.github.io/">Weblog <strong>Random notes about data analysis at large</strong></a></h1>
-        </header><!-- /#banner -->
-        <nav id="menu"><ul>
-            <li><a href="categories.html">Categories</a></li>
-            <li><a href="tags.html">Tags</a></li>
-            <li><a href="https://simon-m.github.io/pages/links.html">Links</a></li>
-        </ul></nav><!-- /#menu -->
-<section id="content" class="body">
+<p>Random notes about data analysis at large</p>
+      <nav>
+        <ul class="list">
+          <li><a href="./pages/links.html#links">Links</a></li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href=".">    Home
+</a>
+
+      <a href="categories.html">Categories</a>
+      <a href="tags.html">Tags</a>
+
+      <a href="https://simon-m.github.io/feeds/all.atom.xml">    Atom
+</a>
+
+    </nav>
+
+<article class="single">
   <header>
-    <h2 class="entry-title">
-      <a href="https://simon-m.github.io/classification-of-text-data-using-multiple-feature-spaces.html" rel="bookmark"
-         title="Permalink to Classification of text data: using multiple feature spaces">Classification of text data: using multiple feature spaces</a></h2>
- 
+      
+    <h1 id="classification-of-text-data-using-multiple-feature-spaces">Classification of text data: using multiple feature spaces</h1>
+    <p>
+          Posted on jeu. 02 novembre 2017 in <a href="./category/machine-learning.html">Machine learning</a>
+
+
+    </p>
   </header>
-  <footer class="post-info">
-    <time class="published" datetime="2017-11-02T21:40:00+01:00">
-      Thu 02 November 2017
-    </time>
-    <time class="modified" datetime="2017-11-02T21:40:00+01:00">
-      Thu 02 November 2017
-    </time>
-    <address class="vcard author">
-      By           <a class="url fn" href="https://simon-m.github.io/author/simon-m.html">Simon-M</a>
-    </address>
-  </footer><!-- /.post-info -->
-  <div class="entry-content">
+
+
+  <div>
     <p>As mentionned in another <a href="using-facebooks-fasttext-for-document-classification.html">post</a>, I am currently working on a text classification task and experimenting with
 several features extraction methods.</p>
 <h1>Input features for text classification</h1>
@@ -238,13 +295,45 @@ Conveniently, multiple nesting of parameters are handled with the "__" syntax.</
 <li><a href="https://stats.stackexchange.com/questions/221715/apply-word-embeddings-to-entire-document-to-get-a-feature-vector">https://stats.stackexchange.com/questions/221715/apply-word-embeddings-to-entire-document-to-get-a-feature-vector</a></li>
 <li><a href="https://arxiv.org/abs/1607.00570">https://arxiv.org/abs/1607.00570</a></li>
 </ul>
-  </div><!-- /.entry-content -->
-</section>
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
-                which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-        </footer><!-- /#contentinfo -->
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="./tag/nlp.html">NLP</a>
+      <a href="./tag/text-classification.html">Text classification</a>
+      <a href="./tag/word-embedding.html">Word embedding</a>
+      <a href="./tag/python.html">Python</a>
+      <a href="./tag/scikit-learn.html">Scikit-learn</a>
+      <a href="./tag/sklearn.html">Sklearn</a>
+      <a href="./tag/gensim.html">Gensim</a>
+    </p>
+  </div>
+
+
+
+    <div class="addthis_relatedposts_inline">
+
+
+</article>
+
+    <footer>
+<p>&copy;  2017</p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Weblog ",
+  "url" : ".",
+  "image": "",
+  "description": "Notes and ressources about data analysis, machine learning, statistics and epidemiology"
+}
+</script>
+
 </body>
 </html>

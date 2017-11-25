@@ -1,49 +1,106 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-          <title>Weblog</title>
-        <meta charset="utf-8" />
-        <link href="https://simon-m.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Weblog Full Atom Feed" />
-        <link href="https://simon-m.github.io/feeds/machine-learning.atom.xml" type="application/atom+xml" rel="alternate" title="Weblog Categories Atom Feed" />
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="./themes/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="./themes/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="./themes/font-awesome/css/font-awesome.min.css">
 
 
-    <meta name="tags" content="Machine learning" />
-    <meta name="tags" content="Classification metrics" />
-    <meta name="tags" content="Precision" />
-    <meta name="tags" content="Sensitivity" />
-    <meta name="tags" content="Confusion matrix" />
-    <meta name="tags" content="Predictive value" />
+    <link href="https://simon-m.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Weblog Atom">
+
+
+
+
+
+<meta name="author" content="Simon-M" />
+<meta name="description" content="A sample of the existing classification metrics with their interpretation." />
+<meta name="keywords" content="Machine learning, Classification metrics, Precision, Sensitivity, Confusion matrix, Predictive value">
+
+<meta property="og:site_name" content="Weblog"/>
+<meta property="og:title" content="Classification metrics"/>
+<meta property="og:description" content="A sample of the existing classification metrics with their interpretation."/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="./classification-metrics.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2017-11-25 18:55:00+01:00"/>
+<meta property="article:modified_time" content="2017-11-25 18:55:00+01:00"/>
+<meta property="article:author" content="./author/simon-m.html">
+<meta property="article:section" content="Machine learning"/>
+<meta property="article:tag" content="Machine learning"/>
+<meta property="article:tag" content="Classification metrics"/>
+<meta property="article:tag" content="Precision"/>
+<meta property="article:tag" content="Sensitivity"/>
+<meta property="article:tag" content="Confusion matrix"/>
+<meta property="article:tag" content="Predictive value"/>
+<meta property="og:image" content="">
+
+  <title>Weblog &ndash; Classification metrics</title>
+
+
+<script         src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'>
+</script>
+
 
 </head>
+<body>
+  <aside>
+    <div>
+      <a href=".">
+        <img src="./themes/img/profile.png" alt="What's in there?" title="What's in there?">
+      </a>
+      <h1><a href=".">What's in there?</a></h1>
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="https://simon-m.github.io/">Weblog <strong>Random notes about data analysis at large</strong></a></h1>
-        </header><!-- /#banner -->
-        <nav id="menu"><ul>
-            <li><a href="categories.html">Categories</a></li>
-            <li><a href="tags.html">Tags</a></li>
-            <li><a href="https://simon-m.github.io/pages/links.html">Links</a></li>
-        </ul></nav><!-- /#menu -->
-<section id="content" class="body">
+<p>Random notes about data analysis at large</p>
+      <nav>
+        <ul class="list">
+          <li><a href="./pages/links.html#links">Links</a></li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href=".">    Home
+</a>
+
+      <a href="categories.html">Categories</a>
+      <a href="tags.html">Tags</a>
+
+      <a href="https://simon-m.github.io/feeds/all.atom.xml">    Atom
+</a>
+
+    </nav>
+
+<article class="single">
   <header>
-    <h2 class="entry-title">
-      <a href="https://simon-m.github.io/classification-metrics.html" rel="bookmark"
-         title="Permalink to Classification metrics">Classification metrics</a></h2>
- 
+      
+    <h1 id="classification-metrics">Classification metrics</h1>
+    <p>
+          Posted on sam. 25 novembre 2017 in <a href="./category/machine-learning.html">Machine learning</a>
+
+
+    </p>
   </header>
-  <footer class="post-info">
-    <time class="published" datetime="2017-11-25T18:55:00+01:00">
-      Sat 25 November 2017
-    </time>
-    <time class="modified" datetime="2017-11-25T18:55:00+01:00">
-      Sat 25 November 2017
-    </time>
-    <address class="vcard author">
-      By           <a class="url fn" href="https://simon-m.github.io/author/simon-m.html">Simon-M</a>
-    </address>
-  </footer><!-- /.post-info -->
-  <div class="entry-content">
+
+
+  <div>
     <p>I never seem to remember these basic measures so I made a quick reference.
 Of course this is a very incomplete list. A very nice reference is wikipedia's
 page about the <a href="https://en.wikipedia.org/wiki/Confusion_matrix">confusion matrix</a>.</p>
@@ -104,13 +161,44 @@ Not intrinsic to the test / classifier; also depends on \(P\).</p>
 <li><a href="https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values">https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Confusion_matrix">https://en.wikipedia.org/wiki/Confusion_matrix</a></li>
 </ul>
-  </div><!-- /.entry-content -->
-</section>
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
-                which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-        </footer><!-- /#contentinfo -->
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="./tag/machine-learning.html">Machine learning</a>
+      <a href="./tag/classification-metrics.html">Classification metrics</a>
+      <a href="./tag/precision.html">Precision</a>
+      <a href="./tag/sensitivity.html">Sensitivity</a>
+      <a href="./tag/confusion-matrix.html">Confusion matrix</a>
+      <a href="./tag/predictive-value.html">Predictive value</a>
+    </p>
+  </div>
+
+
+
+    <div class="addthis_relatedposts_inline">
+
+
+</article>
+
+    <footer>
+<p>&copy;  2017</p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Weblog ",
+  "url" : ".",
+  "image": "",
+  "description": "Notes and ressources about data analysis, machine learning, statistics and epidemiology"
+}
+</script>
+
 </body>
 </html>

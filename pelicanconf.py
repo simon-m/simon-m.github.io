@@ -15,9 +15,6 @@ PATH = 'content'
 TIMEZONE = 'Europe/Paris'
 
 DEFAULT_LANG = u'en'
-DEFAULT_LANG = 'en'
-OG_LOCALE = 'en_UK'
-LOCALE = 'en_UK'
 
 
 # Feed generation is usually not desired when developing
