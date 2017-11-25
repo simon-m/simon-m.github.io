@@ -55,9 +55,9 @@ Probability that, given a negative prediction, it is a real negative:
 Not intrinsic to the test / classifier; also depends on \(P\).&lt;/p&gt;
 &lt;h1&gt;References&lt;/h1&gt;
 &lt;ul&gt;
-&lt;li&gt;https://en.wikipedia.org/wiki/Sensitivity_and_specificity&lt;/li&gt;
-&lt;li&gt;https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values&lt;/li&gt;
-&lt;li&gt;https://en.wikipedia.org/wiki/Confusion_matrix&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://en.wikipedia.org/wiki/Sensitivity_and_specificity"&gt;https://en.wikipedia.org/wiki/Sensitivity_and_specificity&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values"&gt;https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://en.wikipedia.org/wiki/Confusion_matrix"&gt;https://en.wikipedia.org/wiki/Confusion_matrix&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</content><category term="Machine learning"></category><category term="Classification metrics"></category><category term="Precision"></category><category term="Sensitivity"></category><category term="Confusion matrix"></category><category term="Predictive value"></category></entry><entry><title>Classification of text data: using multiple feature spaces</title><link href="/classification-of-text-data-using-multiple-feature-spaces.html" rel="alternate"></link><published>2017-11-02T21:40:00+01:00</published><updated>2017-11-02T21:40:00+01:00</updated><author><name>Simon-M</name></author><id>tag:None,2017-11-02:/classification-of-text-data-using-multiple-feature-spaces.html</id><summary type="html">&lt;p&gt;How to combine multiple topic-based and word embedding-based methods for text classification with scikit-learn and Gensim.&lt;/p&gt;</summary><content type="html">&lt;p&gt;As mentionned in another &lt;a href="using-facebooks-fasttext-for-document-classification.html"&gt;post&lt;/a&gt;, I am currently working on a text classification task and experimenting with
 several features extraction methods.&lt;/p&gt;
 &lt;h1&gt;Input features for text classification&lt;/h1&gt;

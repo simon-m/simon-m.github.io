@@ -46,6 +46,6 @@ Not intrinsic to the test / classifier; also depends on \\(P\\).
 
 # References
 
-- https://en.wikipedia.org/wiki/Sensitivity_and_specificity
-- https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values
-- https://en.wikipedia.org/wiki/Confusion_matrix
+- [https://en.wikipedia.org/wiki/Sensitivity_and_specificity](https://en.wikipedia.org/wiki/Sensitivity_and_specificity)
+- [https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values](https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values)
+- [https://en.wikipedia.org/wiki/Confusion_matrix](https://en.wikipedia.org/wiki/Confusion_matrix)

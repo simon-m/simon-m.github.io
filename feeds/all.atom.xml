@@ -55,9 +55,9 @@ Probability that, given a negative prediction, it is a real negative:
 Not intrinsic to the test / classifier; also depends on \(P\).&lt;/p&gt;
 &lt;h1&gt;References&lt;/h1&gt;
 &lt;ul&gt;
-&lt;li&gt;https://en.wikipedia.org/wiki/Sensitivity_and_specificity&lt;/li&gt;
-&lt;li&gt;https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values&lt;/li&gt;
-&lt;li&gt;https://en.wikipedia.org/wiki/Confusion_matrix&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://en.wikipedia.org/wiki/Sensitivity_and_specificity"&gt;https://en.wikipedia.org/wiki/Sensitivity_and_specificity&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values"&gt;https://en.wikipedia.org/wiki/Positive_and_negative_predictive_values&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://en.wikipedia.org/wiki/Confusion_matrix"&gt;https://en.wikipedia.org/wiki/Confusion_matrix&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</content><category term="Machine learning"></category><category term="Classification metrics"></category><category term="Precision"></category><category term="Sensitivity"></category><category term="Confusion matrix"></category><category term="Predictive value"></category></entry><entry><title>Maximum likelihood estimation</title><link href="/maximum-likelihood-estimation.html" rel="alternate"></link><published>2017-11-25T18:50:00+01:00</published><updated>2017-11-25T18:50:00+01:00</updated><author><name>Simon-M</name></author><id>tag:None,2017-11-25:/maximum-likelihood-estimation.html</id><summary type="html">&lt;p&gt;Some notes about maximum likelihood estimation&lt;/p&gt;</summary><content type="html">&lt;p&gt;Beside &lt;a href="epidemiology-cheat-sheet.html"&gt;epidemiology&lt;/a&gt;, I am also studying some statistics.
 Below you can find my notes on far on maximum likelihood estimation (MLE).&lt;/p&gt;
 &lt;p&gt;Let \(X = (X_1, \dots, X_n)\) be a vector of iid random variables following a
