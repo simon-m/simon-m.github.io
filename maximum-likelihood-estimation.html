@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="/themes/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="/themes/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="/themes/font-awesome/css/font-awesome.min.css">
+
+
+    <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Weblog Atom">
+
+
+
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+
+<meta name="author" content="Simon-M" />
+<meta name="description" content="Some notes about maximum likelihood estimation" />
+<meta name="keywords" content="Statistics, Maximum likelihood">
+
+<meta property="og:site_name" content="Weblog"/>
+<meta property="og:title" content="Maximum likelihood estimation"/>
+<meta property="og:description" content="Some notes about maximum likelihood estimation"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/maximum-likelihood-estimation.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2017-11-25 18:50:00+01:00"/>
+<meta property="article:modified_time" content="2017-11-25 18:50:00+01:00"/>
+<meta property="article:author" content="/author/simon-m.html">
+<meta property="article:section" content="Statistics"/>
+<meta property="article:tag" content="Statistics"/>
+<meta property="article:tag" content="Maximum likelihood"/>
+<meta property="og:image" content="">
+
+  <title>Weblog &ndash; Maximum likelihood estimation</title>
+
+
+  <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="">
+        <img src="/themes/img/profile.png" alt="" title="">
+      </a>
+      <h1><a href=""></a></h1>
+
+
+      <nav>
+        <ul class="list">
+          <li><a href="/pages/links.html#links">Links</a></li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="">    Home
+</a>
+
+      <a href="categories.html">Categories</a>
+      <a href="tags.html">Tags</a>
+
+      <a href="/feeds/all.atom.xml">    Atom
+</a>
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="maximum-likelihood-estimation">Maximum likelihood estimation</h1>
+    <p>
+          Posted on sam. 25 novembre 2017 in <a href="/category/statistics.html">Statistics</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>Beside <a href="epidemiology-cheat-sheet.html">epidemiology</a>, I am also studying some statistics.
+Below you can find my notes on far on maximum likelihood estimation (MLE).</p>
+<p>Let \(X = (X_1, \dots, X_n)\) be a vector of iid random variables following a
+distribution \(D_{\theta_0}\) parametrized by the vector \(\theta_0\).
+In the continuous case, let \(f_{\theta_0}\) be the probability density function (PDF) of \(D_{\theta_0}\).
+In the discrete case, let \(P_{\theta_0}\) be the probability mass function (PMF) of \(D_{\theta_0}\)
+Let \(x = (x_1, \dots, x_n)\) be a realization of \(X\), i.e. the <em>observed data</em>.</p>
+<p>Then, the maximum likelihood estimator (MLE) \(\hat{\theta}\) of \(\theta_0\) is computed as follows.</p>
+<p>First compute the likelihood \(\mathcal{L}(\theta) = P(X; \theta)\).
+If \(F_{\theta}\) is continuous, then
+\[\mathcal{L}(\theta) = \prod{i=1}^{n} f_{\theta}(x_i)\]
+If \(F_{\theta}\) is discrete, then
+\[\mathcal{L}(\theta) = \prod{i=1}^{n} P_{\theta}(x_i)\]</p>
+<p><strong>NB</strong>: the iid assumtion is crucial as it allows the total probability to be equal to the product
+of individual probabilities.</p>
+<p>The log-likelihood \(\mathcal{l}(\theta)\) is simply the logarithm of \(\mathcal{L}(\theta)\).
+Since \(\log\) is a strictly increasing function, the value maximizing \(\mathcal{l}(\theta)\) is the
+same as that maximizing \(\mathcal{L}(\theta)\). The log-likelihood has the added benefit that it
+allows to get rid of the product which will prove useful for the next calculations.</p>
+<p>In order to maximize the likelihood, we first need to compute its derivative which respect to the
+parameter of interest (namely \(\theta\)), set the derivative to 0 and solve for \(\theta\):
+\[u(\theta) = \frac{\partial \mathcal{l}(\theta)}{\partial \theta} = 0\]
+This derivative is sometimes called <em>score function</em> or "Fisher's score function".</p>
+<p>The score is a random vector whose expectation at the true parameter value \(E_{\theta}[u(\theta)_0]\)
+is equal to 0.</p>
+<p>The score variance also called <em>information matrix</em> of "Fisher information matrix" is the positive
+semidefinite symmetric matrix:
+\[\mathcal{I}(\theta) = var(u(\theta)) =
+   E_{\theta} \left[ \left( \frac{\partial \mathcal{l}(\theta)}{\partial \theta} \right)^2 \right] \]
+which under mild regularity conditions can be written
+\[\mathcal{I}(\theta) =
+   -E_{\theta} \left[ \frac{\partial^2 \mathcal{l}(\theta)}{\partial \theta\theta^T} \right] \]</p>
+<p>Asymptotically we have: \( E[\hat{\theta}] = \theta_0\) and
+\( \sigma^2(\hat{\theta}) = \mathcal{I}(\theta_0)^{-1})\)
+Therefore, \(\hat{\theta}\) is an unbiased estimator for \(\theta_0)\).</p>
+<!--
+The Cramér-Rao bound gives us a lower bound on the variance of \\(\\hat{\\theta}\\):
+\\[var(\\hat{\\theta}) \\ge 1 / \\mathcal{I}(\\theta)\\]
+-->
+
+<p><strong>Remark</strong>: The second order derivative of the log-likelihood is a measure of its curvature, i.e. how "sharply peaked" it is.</p>
+<h1>References</h1>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Maximum_likelihood_estimation">https://en.wikipedia.org/wiki/Maximum_likelihood_estimation</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Cram%C3%A9r%E2%80%93Rao_bound">https://en.wikipedia.org/wiki/Cram%C3%A9r%E2%80%93Rao_bound</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Fisher_information">https://en.wikipedia.org/wiki/Fisher_information</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Likelihood_function">https://en.wikipedia.org/wiki/Likelihood_function</a></li>
+<li><a href="https://stats.stackexchange.com/questions/68080/basic-question-about-fisher-information-matrix-and-relationship-to-hessian-and-s">https://stats.stackexchange.com/questions/68080/basic-question-about-fisher-information-matrix-and-relationship-to-hessian-and-s</a></li>
+</ul>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="/tag/statistics.html">Statistics</a>
+      <a href="/tag/maximum-likelihood.html">Maximum likelihood</a>
+    </p>
+  </div>
+
+
+
+    <div class="addthis_relatedposts_inline">
+
+
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Weblog ",
+  "url" : "",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>
