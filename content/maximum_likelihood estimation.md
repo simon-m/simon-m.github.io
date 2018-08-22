@@ -10,9 +10,9 @@ Summary: Some notes about maximum likelihood estimation
 Beside [epidemiology](epidemiology-cheat-sheet.html), I am also studying some statistics.
 Below you can find my notes so far on maximum likelihood estimation (MLE).
 
-Let \\(X = (X_1, \\dots, X_n)\\) be a vector of [iid](https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables) 
+Let \\(X = (X_1, \\dots, X_n)\\) be a vector of [iid](https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables)
 random variables following a distribution \\(D_{\\theta_0}\\) parametrized by the vector \\(\\theta_0\\).
-For instance, if \\(D\\) is a [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution), 
+For instance, if \\(D\\) is a [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution),
 then \\(\\theta_0 = (\\mu, \\sigma)\\).
 In the continuous case, let \\(f_{\\theta_0}\\) be the probability density function (PDF) of \\(D_{\\theta_0}\\).
 In the discrete case, let \\(P_{\\theta_0}\\) be the probability mass function (PMF) of \\(D_{\\theta_0}\\).
@@ -22,9 +22,9 @@ Then, the maximum likelihood estimator (MLE) \\(\\hat{\\theta}\\) of \\(\\theta_
 
 First compute the likelihood \\(\mathcal{L}(\\theta | X) = p_\\theta(X)\\) for a given \\(\\theta\\).
 If \\(D_{\\theta}\\) is continuous, then
-\\[\mathcal{L}(\\theta) = \\prod{i=1}^{n} f_{\\theta}(x_i)\\]
+\\[\mathcal{L}(\\theta) = \\prod_{i=1}^{n} f_{\\theta}(x_i)\\]
 If \\(D_{\\theta}\\) is discrete, then
-\\[\mathcal{L}(\\theta) = \\prod{i=1}^{n} P_{\\theta}(x_i)\\]
+\\[\mathcal{L}(\\theta) = \\prod_{i=1}^{n} P_{\\theta}(x_i)\\]
 
 **NB**: the iid assumtion is crucial here as it allows the total probability to be equal to the product
 of individual probabilities.
