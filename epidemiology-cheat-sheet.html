@@ -135,7 +135,7 @@ person-year.
 It is also called the total <em>time at risk</em> for the population of interest.</p>
 <h2>Open and closed populations</h2>
 <p><strong>Closed population or cohort</strong>: fixed number of individuals, except for loss to
-follow-up or death (which must be corrected in subsequent analyses, see 
+follow-up or death (which must be corrected in subsequent analyses, see
 <a href="https://en.wikipedia.org/wiki/Censoring_(statistics)">censoring</a>).</p>
 <p><strong>Open population</strong>: inflow and outflow are possible, the size of the population can vary.</p>
 <p><strong>Stationary population</strong>: open population with constant size (inflow compensates outflow).</p>
@@ -184,7 +184,7 @@ As opposed to an <em>event</em> defined above, consider a <em>case</em> to be a 
 <p>As opposed to incidence, the prevalence is concerned with all cases, not only new ones.
 Let \(N_t\) be the population size at time \(t\). The <em>point prevalence</em> at time \(t\) is then:
 \[ \text{PR}\cdot = \frac{ \text{#cases}}{N_t} \]
-Here the number of cases refers to both cases with diagnosis in the past and during 
+Here the number of cases refers to both cases with diagnosis in the past and during
 period \(T\).</p>
 <p>Let \(N_T\) be the average population size during for period \(T\), assuming it remains fixed.
 The <em>period prevalence</em> period \(T\) is:
@@ -250,11 +250,11 @@ In terms of probabilities:
 In terms of probabilities:
 \[\text{OR} = \frac{P(D | E)}{P( \tilde D | E)} \frac{P( \tilde D | \tilde E)}{P(D | \tilde E)} \]</p>
 <h2>Odds ratio versus relative risk</h2>
-<p>Relative risk can only be calculated for cohort studies whereas odds ratio can be calculated for 
+<p>Relative risk can only be calculated for cohort studies whereas odds ratio can be calculated for
 both case-control and cohort studies (see section "Cohort versus case-control" below).</p>
 <p>If the incidence of the disease is low, OR is a good approximation of RR since
 \(a + b \approx b\) and \(c + d \approx d\). Thus,
-\[\text{RR} = \frac{a (c + d}{c (a + b)} \approx \frac{ad}{bc} = \text{OR}\]</p>
+\[\text{RR} = \frac{a (c + d)}{c (a + b)} \approx \frac{ad}{bc} = \text{OR}\]</p>
 <h1>Stratification and adjustment strategies</h1>
 <p><a href="http://ocw.jhsph.edu/courses/FundEpi/PDFs/Lecture7.pdf">Source</a></p>
 <p>Stata are basically groups among the data defined by a variable. It could be age groups, sex
@@ -277,7 +277,7 @@ of the populations. Sometime, we only have access to the number of cases. Then t
 is of use.</p>
 <h2>Indirect method</h2>
 <ol>
-<li>Build a <em>reference population</em> for the population under study. Both populations should be similar enough. 
+<li>Build a <em>reference population</em> for the population under study. Both populations should be similar enough.
    The rate or proportion of interest (or estimates thereof) must be available for the reference population.</li>
 <li>Using the stratum-specific rates or proportions from the reference population and the stratum sizes in the population
   under study, compute the <em>expected</em> number of cases in the the population under study.</li>
@@ -312,7 +312,7 @@ groups.</p>
 <p>In particular, case-control trials are often conducted for rare diseases so that cases are
 oversampled compared to controls: the prevalence is what the study design wants it to be.
 Thus we do not know the total number of exposed and non-exposed patients needed to compute the relative risk.</p>
-<p>In other words, we need to know the prevalence  which is only known for cohort trials since disease status is not used 
+<p>In other words, we need to know the prevalence  which is only known for cohort trials since disease status is not used
 for defining the groups as opposed to case-control trials.</p>
 <h2>Cross-sectional trials:</h2>
 <p><a href="http://ocw.jhsph.edu/courses/FundEpiII/PDFs/Lecture15.pdf">Source</a></p>
@@ -321,7 +321,7 @@ for defining the groups as opposed to case-control trials.</p>
 <h2>Randomized clinical trial:</h2>
 <p><a href="http://ocw.jhsph.edu/courses/FundEpiII/PDFs/Lecture12.pdf">Source</a></p>
 <ul>
-<li>Assign patients to groups randomly (possibly stratify with respect to some variables). </li>
+<li>Assign patients to groups randomly (possibly stratify with respect to some variables).</li>
 <li>Administer the treatments to non-control groups (exposure).</li>
 <li>Follow how the disease develops.</li>
 </ul>

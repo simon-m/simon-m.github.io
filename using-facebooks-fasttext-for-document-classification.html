@@ -115,9 +115,9 @@ This text data has a few quirks compared to textbook examples of document classi
 </ul>
 <p>On the plus side, the dataset is rather large with ~600,000 patients.
 On the minus side, I have access to a fairly limited amount of computing power (no GPU, intel i3 with 4 Gb RAM).
-Therefore, even though I am fairly attracted to the recent neural networks-based methods (such as recurent neural networks 
-which seem to enjoy a fair share of success) there is absolutely no way I can run them on my machine. Also, cloud-based 
-solutions such as Amazon's AWS are out of the question, the main reason for that being that the data should not leave 
+Therefore, even though I am fairly attracted to the recent neural networks-based methods (such as recurent neural networks
+which seem to enjoy a fair share of success) there is absolutely no way I can run them on my machine. Also, cloud-based
+solutions such as Amazon's AWS are out of the question, the main reason for that being that the data should not leave
 the lab.</p>
 <h1>Facebook's fastText</h1>
 <p>After trying a bunch of different methods which will be the subject of another article,
@@ -150,7 +150,7 @@ I am stuck with Windows at work.
 Fortunately, someone may have felt the same and shared a
 <a href="http://cs.mcgill.ca/~mxia3/FastText-for-Windows/">Windows version</a> of the library.
 Thumbs up to you <a href="http://cs.mcgill.ca/~mxia3">Meng Xuan Xia</a>.</p>
-<p>After a quick and painless compilation with MS Visual C++ (appreciable considering it was my first time 
+<p>After a quick and painless compilation with MS Visual C++ (appreciable considering it was my first time
 using it), I am ready to start.</p>
 <h1>Getting started</h1>
 <p>I am mainly giving  short version of the <a href="https://github.com/facebookresearch/fastText/">documentation</a>
@@ -241,12 +241,12 @@ Each internal node \(n_i\) has two children and their associated probabilities \
 The probaility \(P(w_i | c_j)\) is then computed by following the path from the root to the
 \(w_i\) and multiplying the \(p_i\) or \(q_i\) depending on which child is followed.
 Since the depth of a balanced tree with \(n\) leaves is \(O(log n)\), this reduces the computation of
-the softmax loss from \(O(W)\) to \(O(log W\) for \(W\) words. A more detailed explanation with nice
+the softmax loss from \(O(W)\) to \(O(log W)\) for \(W\) words. A more detailed explanation with nice
 graphics can be found <a href="http://building-babylon.net/2017/08/01/hierarchical-softmax/">here</a>.</p>
 <p>For a more rigorous description of negative sampling and hierarchical softmax, see
 <a href="https://arxiv.org/abs/1310.4546">this article</a> and references therein.</p>
-<p>In general, "ns" or "hs" are the only way to train the model in reasonable time when the vocabulary size is large. 
-As a rule of thumb, "ns" requires several epochs to be accurate ("-epoch" flag) whereas "hs" does not benefits from 
+<p>In general, "ns" or "hs" are the only way to train the model in reasonable time when the vocabulary size is large.
+As a rule of thumb, "ns" requires several epochs to be accurate ("-epoch" flag) whereas "hs" does not benefits from
 more epoch(<a href="https://groups.google.com/forum/#!msg/word2vec-toolkit/WUWad9fL0jU/LdbWy1jQjUIJ">as stated here</a>).</p>
 <hr>
 <p>The "-bucket" option is used to tune the number of buckets used in the hash table. There is a
