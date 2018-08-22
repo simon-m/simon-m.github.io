@@ -10,15 +10,15 @@ Summary: A review of fixed and random effects, linear mixed models and GEE
 I am going to get my hands on some data with correlated measurements and thus have been reading
 about to handle these. Among existing methods are various kinds of [ANOVA](https://en.wikipedia.org/wiki/Analysis_of_variance)
 (two-way ANOVA, repeated-measures ANOVA, clustered ANOVA, nested / hierarchical ANOVA,
-split-plot ANOVA), [mixed-(effects) models](https://en.wikipedia.org/wiki/Mixed_model) 
-and [generalized estimating equations](https://en.wikipedia.org/wiki/Generalized_estimating_equation) 
+split-plot ANOVA), [mixed-(effects) models](https://en.wikipedia.org/wiki/Mixed_model)
+and [generalized estimating equations](https://en.wikipedia.org/wiki/Generalized_estimating_equation)
 also called marginal models.
 
 As of now, mixed models and marginal models are pretty much the standard tools for such analyses,
 mainly because ANOVA-based methods require stronger assumptions and do not handle missing data well.
-I will almost exclusively focus on *linear* models but be aware that there exist generalized linear mixed 
-models (GLMM) which are the "mixed-model version" of generalized linear models (GLM). Similarly, generalized 
-estimating equations are an extension of GLM for correlated responses, and as such they can handle the same 
+I will almost exclusively focus on *linear* models but be aware that there exist generalized linear mixed
+models (GLMM) which are the "mixed-model version" of generalized linear models (GLM). Similarly, generalized
+estimating equations are an extension of GLM for correlated responses, and as such they can handle the same
 kind of dependencies between covariates and responses through the link function.
 
 # Linear fixed-effects models
@@ -26,10 +26,10 @@ The response variable \\(Y_i\\) of observation \\(i\\) is a random variable whic
 on the covariates \\(x_{ij}\\) through coefficients \\(\\beta_j\\) up to an random error term \\(\\epsilon_i\\):
 \\[ Y_i = \\beta_1 x_{i1} + \\dots + \\beta_p x_{ip} + \\epsilon_i = \\sum_{j=1}^{p} \\beta_j x_{ij} + \\epsilon_i\\]
 Equivalently letting \\(\\mathbf{\\beta} = (\\beta_1, \\dots \\beta_p)\\) and  
-\\(\\mathbf{x}_i = (x_{i1}, \\dots x_{ip})^T\\) we have:
-\\[ Y_i = \\mathbf{\\beta} \\mathbf{x}_i + \\epsilon_i \\]
+\\(\\mathbf{x_i} = (x_{i1}, \\dots x_{ip})^T\\) we have:
+\\[ Y_i = \\mathbf{\\beta} \\mathbf{x_i} + \\epsilon_i \\]
 
-The assumptions of the model are that 
+The assumptions of the model are that
 - \\(E[\\epsilon_i] = 0\\)
 - \\(Var[\\epsilon_i] = \\sigma_i^2\\),
 - \\(cov[\\epsilon] = \\Sigma\\).
@@ -76,25 +76,25 @@ For observation \\(j\\) belonging to group \\(i\\), we have:
 \\[ Y_{ij} = \\beta_1 x_{ij1} + \\dots + \\beta_p x_{ijp} + U_{i1} Z_{ij1}  + \\dots + U_{iq} Z_{ijq} + \\epsilon_{ij}
 = \\sum_{k=1}^{p} \\beta_j x_{ijk} + \\sum_{l=1}^{q} U_{il} Z_{ijl} + \\epsilon_{ij}\\]
 
-As for the fixed effects model above we, given and \\(\\mathbf{U}_{i} = (U_{i1}, \\dots, U_{iq})\\) and
-\\(\\mathbf{Z}_{ij} = (Z_{ij1}, \\dots, Z_{1jq})^T\\), we can write this as:
-\\[ Y_{ij} = \\mathbf{\\beta} \\mathbf{x}_{ij} + \\mathbf{U}_{i} \\mathbf{Z}_{ij} + \\epsilon_{ij}\\]
+As for the fixed effects model above, given and \\(\\mathbf{U_i} = (U_{i1}, \\dots, U_{iq})\\) and
+\\(\\mathbf{Z_{ij]} = (Z_{ij1}, \\dots, Z_{1jq})^T\\), we can write this as:
+\\[ Y_{ij} = \\mathbf{\\beta} \\mathbf{x_{ij}} + \\mathbf{U_i} \\mathbf{Z_{ij}} + \\epsilon_{ij}\\]
 
 Note that this is essentially the fixed-effects models to which were added with the random effects
-\\(\\mathbf{Z}_{ij}\\) and the corresponding group-specific coefficients \\(\mathbf{U}_{i}\\).
+\\(\\mathbf{Z_{ij}}\\) and the corresponding group-specific coefficients \\(\mathbf{U_i}\\).
 
 The equations above assume that all groups have random effects of the
 same dimension \\(q\\). This is not mandatory and it is possible to have
-and \\(\\mathbf{U}_{i} = (U_{i1}, \\dots, U_{iq_i})\\) and
-\\(\\mathbf{Z}_{ij} = (Z_{ij1}, \\dots, Z_{ijq_i})^T\\)
+and \\(\\mathbf{U_i} = (U_{i1}, \\dots, U_{iq_i})\\) and
+\\(\\mathbf{Z_{ij}} = (Z_{ij1}, \\dots, Z_{ijq_i})^T\\)
 
-Let \\(n_i\\) be the number of observations in group \\(i\\) and \\(\\mathbf{Z}_i\\) be the
+Let \\(n_i\\) be the number of observations in group \\(i\\) and \\(\\mathbf{Z_i}\\) be the
 \\(n_i \\times q_i\\) design matrix for random effects.
 The other terms are similar to those in the fixed-effects model but restricted to group \\(i\\).
-Namely \\(\\mathbf{x}_i\\) is of dimension \\(n_i \\times p\\), and \\(\\mathbf{\\epsilon}_i\\)
+Namely \\(\\mathbf{x_i}\\) is of dimension \\(n_i \\times p\\), and \\(\\mathbf{\\epsilon_i}\\)
 is of dimension \\(n_i \\times 1\\).
 Then a mixed model takes the following form for group \\(i\\):
-\\[ \\mathbf{Y}_i = \\mathbf{\\beta} \\mathbf{x}_i + \\mathbf{U}_i \\mathbf{Z}_i + \\mathbf{\\epsilon}_i\\]
+\\[ \\mathbf{Y_i} = \\mathbf{\\beta} \\mathbf{x_i} + \\mathbf{U_i} \\mathbf{Z_i} + \\mathbf{\\epsilon_i}\\]
 
 Finally, letting \\(n = \\sum_{i} n_i\\) and \\(q = \\sum_{i} q_i\\) we have the full matrix form:
 \\[ \\mathbf{Y} = \\mathbf{\\beta} \\mathbf{x} + \\mathbf{U} \\mathbf{Z} + \\mathbf{\\epsilon}\\]
@@ -121,20 +121,20 @@ More specifically, \\(\\mathbf{\\beta}\\), \\(\\Sigma\\) and \\(R\\) are fixed a
 estimated from the data. The situation is rather different for \\(\\mathbf{U}\\) which is a matrix of
 random variables and must be *predicted*.
 
-In the following, we will first assume that the covariance matrices are known in order to estimate 
+In the following, we will first assume that the covariance matrices are known in order to estimate
 \\(\\mathbf{\\beta}\\) and \\(\\mathbf{U}\\)
-This is almost never the case but makes the explanation simpler. In practice the covariance matrices 
+This is almost never the case but makes the explanation simpler. In practice the covariance matrices
 and the remaining parameters are estimated jointly.
-Parameter estimation is usually performed using either 
-[maximum likelihood](https://en.wikipedia.org/wiki/Maximum_likelihood_estimation) (ML) 
-or [residual/restricted maximum likelihood](https://en.wikipedia.org/wiki/Restricted_maximum_likelihood) 
+Parameter estimation is usually performed using either
+[maximum likelihood](https://en.wikipedia.org/wiki/Maximum_likelihood_estimation) (ML)
+or [residual/restricted maximum likelihood](https://en.wikipedia.org/wiki/Restricted_maximum_likelihood)
 (RML / REML).
 
 ## Random and fixed effects estimation
-Let us start by assuming that the variance-covariance matrix \\(V = ZRZ^T + \\Sigma\\) is known, 
+Let us start by assuming that the variance-covariance matrix \\(V = ZRZ^T + \\Sigma\\) is known,
 implying that  \\(R\\) and
 \\(\\Sigma\\) are known too, and try to estimate \\(\\mathbf{\\beta}\\) and \\(\\mathbf{U}\\).
-One to do this way is to solve Henderson's equations also called *mixed model equations* which have 
+One to do this way is to solve Henderson's equations also called *mixed model equations* which have
 the following solutions:
 \\[ \\mathbf{\\hat{\\beta}} = (\\mathbf{X}^T V^{-1} \\mathbf{X})^{-1} X^T V^{-1} \\mathbf{Y}\\]
 \\[ \\mathbf{\\tilde{U}} = R Z^T V^{-1}(\\mathbf{Y} - \\mathbf{X}\\mathbf{\\hat{\\beta}})\\]
@@ -155,7 +155,7 @@ For the previous estimations to be computed, one needs to first estimate \\(V\\)
 thus \\(R\\) and \\(\\Sigma\\). "First" here is misleading however as the estimation of
 effects and variance parameters are usually done jointly.
 
-The experimental design can sometimes give some information about the structure of these matrices which 
+The experimental design can sometimes give some information about the structure of these matrices which
 can be specified prior to estimation.
 For instance knowing that the random effects are independent from each other, one may enforce a
 diagonal structure for \\(R\\).
@@ -179,20 +179,20 @@ Minimizing this log-likelihood can be done by replacing \\(\\mathbf{\\beta}\\) b
 likelihood estimator given the current parameter vector \\(\\theta\\):  
 \\(\\mathbf{\\hat{\\beta}}(\\theta) = (\\mathbf{X}^T V(\\theta)^{-1} \\mathbf{X})^{-1} X^T V(\\theta)^{-1} \\mathbf{Y}\\).
 
-One can start with random intial parameters \\(\\theta\\) and minimize 
+One can start with random intial parameters \\(\\theta\\) and minimize
 \\(l(\\mathbf{Y}; \\mathbf{\\hat{\\beta}}(\\theta), V(\\theta))\\).
-Alternating the estimation of \\(\\theta\\) and \\(\\mathbf{\\beta}(\\theta)\\) until convergence yield the 
+Alternating the estimation of \\(\\theta\\) and \\(\\mathbf{\\beta}(\\theta)\\) until convergence yield the
 final parameter values.
 
 The main caveat of the ML estimation is that the variance estimates are negatively biased
 as they do not take into account the degrees of freedom lost while estimating the fixed effects.
-Indeed, as it depends on \\(\\theta\\), mathbf{\\beta}\\) is estimated alongside 
+Indeed, as it depends on \\(\\theta\\), mathbf{\\beta}\\) is estimated alongside
 \\(V(\\theta)\\), and this is not taken into account in the number of degrees of freedom: \\(n\\) should be
 replaced by a smaller value.
 
 ## Variance parameter estimation with restricted maximum likelihood
 Restricted maximum likelihood estimation addresses the biasedness of MLE estimators.
-The core idea is to perform MLE on a modified version of the data, namely using a 
+The core idea is to perform MLE on a modified version of the data, namely using a
 linear combinations of \\(\\mathbf{Y}\\).
 
 First, notice that the design matrix \\(\\mathbf{X}\\) has rank at most \\(p\\) since it is a \\( n \\times p\\)
@@ -216,10 +216,10 @@ The log of the marginal likelihood is then maximized.
 In contrast with ML, the REML estimates for fixed effect are *biased* and those for random effect
 are *unbiased*.
 
-Remark: 
+Remark:
 
 In practice, ML and REML are typically computed using iterative schemes such as the [Newton-Raphson](https://en.wikipedia.org/wiki/Newton%27s_method)
-optimization algorithm and variants thereof, or the [expectation-maximization](https://en.wikipedia.org/wiki/Expectation%E2%80%93maximization_algorithm) 
+optimization algorithm and variants thereof, or the [expectation-maximization](https://en.wikipedia.org/wiki/Expectation%E2%80%93maximization_algorithm)
 algorithm.
 
 
@@ -231,12 +231,12 @@ GEE (SS-GEE).
 
 ## GEE are an extension of generalized linear models (GLM).
 Let us forget about random effects for a moment.
-The difference between fixed-effects linear models and generalized linear models (GLM) is that for the latter, 
+The difference between fixed-effects linear models and generalized linear models (GLM) is that for the latter,
 the response variable is no longer restricted to be normally distributed. Instead, it can follow any distribution from the
 [exponential family](https://en.wikipedia.org/wiki/Exponential_family).
 Moreover, a *link* function \\(g\\) describes how the expectation \\(\\mu_i\\) of \\(Y_i\\) depends
 on a linear combination of covariates.
-This results in a model of the follwing form:
+This results in a model of the following form:
 \\[ g(E[Y_i]) = \\beta_1 x_{i1} + \\dots + \\beta_p x_{ip}= \\mathbf{x_i} \\mathbf{\\beta}\\]
 or in compact form:
 \\[ g(E[Y]) = \\mathbf{X}\\mathbf{\\beta} \\]
@@ -252,7 +252,7 @@ As such, the formulation of GEE does not explicitely include random effects.
 In the linear case (\\(g\\) is the identify function), the model is therefore:
 \\[ Y_i = \\beta_1 x_{i1} + \\dots + \\beta_p x_{ip} + \\epsilon_i = \\mathbf{x_i} \\mathbf{\\beta} + \\epsilon_i \\]
 or in compact form
-\\[ Y = \\mathbf{\\beta} \\mathbf{x} + \\epsilon \\]
+\\[ Y = \\mathbf{\\beta} \\mathbf{X} + \\epsilon \\]
 where \\(\\epsilon \\sim \\mathcal{N}(0, \\Sigma)\\).
 In that case, there is no \\(R\\) matrix and  \\(V = \\Sigma\\) is the variance-covariance matrix of
 the model.
@@ -291,8 +291,8 @@ I will not go into more details, but good explanations can be found
 [here](http://support.sas.com/documentation/cdl/en/statug/67523/HTML/default/viewer.htm#statug_gee_details06.htm) and
 [here](https://www.ibm.com/support/knowledgecenter/de/SSLVMB_20.0.0/com.ibm.spss.statistics.help/alg_genlin_gee_estimation_param.htm).
 
-Since 
-The estimation of the variance of \\(\\beta\\) uses the so-called *robust sandwich estimator* 
+Since
+The estimation of the variance of \\(\\beta\\) uses the so-called *robust sandwich estimator*
 (some nice and short explanations in the context of OLS regression
 [here](http://thestatsgeek.com/2013/10/12/the-robust-sandwich-variance-estimator-for-linear-regression/)
 and [here](https://stats.stackexchange.com/questions/50778/sandwich-estimator-intuition)).

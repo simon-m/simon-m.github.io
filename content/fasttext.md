@@ -26,9 +26,9 @@ This text data has a few quirks compared to textbook examples of document classi
 
 On the plus side, the dataset is rather large with ~600,000 patients.
 On the minus side, I have access to a fairly limited amount of computing power (no GPU, intel i3 with 4 Gb RAM).
-Therefore, even though I am fairly attracted to the recent neural networks-based methods (such as recurent neural networks 
-which seem to enjoy a fair share of success) there is absolutely no way I can run them on my machine. Also, cloud-based 
-solutions such as Amazon's AWS are out of the question, the main reason for that being that the data should not leave 
+Therefore, even though I am fairly attracted to the recent neural networks-based methods (such as recurent neural networks
+which seem to enjoy a fair share of success) there is absolutely no way I can run them on my machine. Also, cloud-based
+solutions such as Amazon's AWS are out of the question, the main reason for that being that the data should not leave
 the lab.
 
 
@@ -71,7 +71,7 @@ Fortunately, someone may have felt the same and shared a
 [Windows version](http://cs.mcgill.ca/~mxia3/FastText-for-Windows/) of the library.
 Thumbs up to you [Meng Xuan Xia](http://cs.mcgill.ca/~mxia3).
 
-After a quick and painless compilation with MS Visual C++ (appreciable considering it was my first time 
+After a quick and painless compilation with MS Visual C++ (appreciable considering it was my first time
 using it), I am ready to start.
 
 
@@ -177,14 +177,14 @@ Each internal node \\(n_i\\) has two children and their associated probabilities
 The probaility \\(P(w_i | c_j)\\) is then computed by following the path from the root to the
 \\(w_i\\) and multiplying the \\(p_i\\) or \\(q_i\\) depending on which child is followed.
 Since the depth of a balanced tree with \\(n\\) leaves is \\(O(log n)\\), this reduces the computation of
-the softmax loss from \\(O(W)\\) to \\(O(log W\\) for \\(W\\) words. A more detailed explanation with nice
+the softmax loss from \\(O(W)\\) to \\(O(log W)\\) for \\(W\\) words. A more detailed explanation with nice
 graphics can be found [here](http://building-babylon.net/2017/08/01/hierarchical-softmax/).
 
 For a more rigorous description of negative sampling and hierarchical softmax, see
 [this article](https://arxiv.org/abs/1310.4546) and references therein.
 
-In general, "ns" or "hs" are the only way to train the model in reasonable time when the vocabulary size is large. 
-As a rule of thumb, "ns" requires several epochs to be accurate ("-epoch" flag) whereas "hs" does not benefits from 
+In general, "ns" or "hs" are the only way to train the model in reasonable time when the vocabulary size is large.
+As a rule of thumb, "ns" requires several epochs to be accurate ("-epoch" flag) whereas "hs" does not benefits from
 more epoch([as stated here](https://groups.google.com/forum/#!msg/word2vec-toolkit/WUWad9fL0jU/LdbWy1jQjUIJ)).
 
 - ---
