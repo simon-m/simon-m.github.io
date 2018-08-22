@@ -118,10 +118,12 @@ on the covariates \(x_{ij}\) through coefficients \(\beta_j\) up to an random er
 Equivalently letting \(\mathbf{\beta} = (\beta_1, \dots \beta_p)\) and<br>
 \(\mathbf{x_i} = (x_{i1}, \dots x_{ip})^T\) we have:
 \[ Y_i = \mathbf{\beta} \mathbf{x_i} + \epsilon_i \]</p>
-<p>The assumptions of the model are that
-- \(E[\epsilon_i] = 0\)
-- \(Var[\epsilon_i] = \sigma_i^2\),
-- \(cov[\epsilon] = \Sigma\).</p>
+<p>The assumptions of the model are that</p>
+<ul>
+<li>\(E[\epsilon_i] = 0\)</li>
+<li>\(Var[\epsilon_i] = \sigma_i^2\),</li>
+<li>\(cov[\epsilon] = \Sigma\).</li>
+</ul>
 <p>Most often, \(\epsilon\) is assumed to follow a multivariate Gaussian centered at 0:
  \(\epsilon \sim \mathcal{N}(0, \Sigma)\).</p>
 <p>Let \(\mathbf{Y}\) be the \(n \times 1\) vector of responses,
