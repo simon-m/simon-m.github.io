@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="HandheldFriendly" content="True" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="robots" content="" />
+    <meta name="robots" content="index, follow" />
 
   <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
 
@@ -98,29 +98,31 @@
 
   <div>
     <p>Beside <a href="epidemiology-cheat-sheet.html">epidemiology</a>, I am also studying some statistics.
-Below you can find my notes on far on maximum likelihood estimation (MLE).</p>
-<p>Let \(X = (X_1, \dots, X_n)\) be a vector of iid random variables following a
-distribution \(D_{\theta_0}\) parametrized by the vector \(\theta_0\).
+Below you can find my notes so far on maximum likelihood estimation (MLE).</p>
+<p>Let \(X = (X_1, \dots, X_n)\) be a vector of <a href="https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables">iid</a> 
+random variables following a distribution \(D_{\theta_0}\) parametrized by the vector \(\theta_0\).
+For instance, if \(D\) is a <a href="https://en.wikipedia.org/wiki/Normal_distribution">normal distribution</a>, 
+then \(\theta_0 = (\mu, \sigma)\).
 In the continuous case, let \(f_{\theta_0}\) be the probability density function (PDF) of \(D_{\theta_0}\).
-In the discrete case, let \(P_{\theta_0}\) be the probability mass function (PMF) of \(D_{\theta_0}\)
-Let \(x = (x_1, \dots, x_n)\) be a realization of \(X\), i.e. the <em>observed data</em>.</p>
+In the discrete case, let \(P_{\theta_0}\) be the probability mass function (PMF) of \(D_{\theta_0}\).
+Finally, let \(x = (x_1, \dots, x_n)\) be a realization of \(X\), i.e. the <em>observed data</em>.</p>
 <p>Then, the maximum likelihood estimator (MLE) \(\hat{\theta}\) of \(\theta_0\) is computed as follows.</p>
-<p>First compute the likelihood \(\mathcal{L}(\theta) = P(X; \theta)\).
-If \(F_{\theta}\) is continuous, then
+<p>First compute the likelihood \(\mathcal{L}(\theta | X) = p_\theta(X)\) for a given \(\theta\).
+If \(D_{\theta}\) is continuous, then
 \[\mathcal{L}(\theta) = \prod{i=1}^{n} f_{\theta}(x_i)\]
-If \(F_{\theta}\) is discrete, then
+If \(D_{\theta}\) is discrete, then
 \[\mathcal{L}(\theta) = \prod{i=1}^{n} P_{\theta}(x_i)\]</p>
-<p><strong>NB</strong>: the iid assumtion is crucial as it allows the total probability to be equal to the product
+<p><strong>NB</strong>: the iid assumtion is crucial here as it allows the total probability to be equal to the product
 of individual probabilities.</p>
 <p>The log-likelihood \(\mathcal{l}(\theta)\) is simply the logarithm of \(\mathcal{L}(\theta)\).
 Since \(\log\) is a strictly increasing function, the value maximizing \(\mathcal{l}(\theta)\) is the
 same as that maximizing \(\mathcal{L}(\theta)\). The log-likelihood has the added benefit that it
-allows to get rid of the product which will prove useful for the next calculations.</p>
-<p>In order to maximize the likelihood, we first need to compute its derivative which respect to the
+allows to get replace products with sums which will prove useful for the next calculations.</p>
+<p>In order to maximize the log-likelihood, we first need to compute its derivative which respect to the
 parameter of interest (namely \(\theta\)), set the derivative to 0 and solve for \(\theta\):
 \[u(\theta) = \frac{\partial \mathcal{l}(\theta)}{\partial \theta} = 0\]
 This derivative is sometimes called <em>score function</em> or "Fisher's score function".</p>
-<p>The score is a random vector whose expectation at the true parameter value \(E_{\theta}[u(\theta)_0]\)
+<p>The score is a random vector whose expectation at the true parameter value \(E_{\theta}[u(\theta_0)]\)
 is equal to 0.</p>
 <p>The score variance also called <em>information matrix</em> of "Fisher information matrix" is the positive
 semidefinite symmetric matrix:
@@ -130,8 +132,8 @@ which under mild regularity conditions can be written
 \[\mathcal{I}(\theta) =
    -E_{\theta} \left[ \frac{\partial^2 \mathcal{l}(\theta)}{\partial \theta\theta^T} \right] \]</p>
 <p>Asymptotically we have: \( E[\hat{\theta}] = \theta_0\) and
-\( \sigma^2(\hat{\theta}) = \mathcal{I}(\theta_0)^{-1})\)
-Therefore, \(\hat{\theta}\) is an unbiased estimator for \(\theta_0)\).</p>
+\( \sigma^2(\hat{\theta}) = \mathcal{I}(\theta_0)^{-1}\)
+Therefore, \(\hat{\theta}\) is an unbiased estimator for \(\theta_0\).</p>
 <!--
 The Cramér-Rao bound gives us a lower bound on the variance of \\(\\hat{\\theta}\\):
 \\[var(\\hat{\\theta}) \\ge 1 / \\mathcal{I}(\\theta)\\]

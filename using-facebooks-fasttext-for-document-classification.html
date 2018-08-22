@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="HandheldFriendly" content="True" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="robots" content="" />
+    <meta name="robots" content="index, follow" />
 
   <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
 
@@ -105,29 +105,29 @@ This text data has a few quirks compared to textbook examples of document classi
 <ul>
 <li>Documents (one per patient) are short: less than 30 words on average</li>
 <li>The text is dirty</li>
-<li>many word contain typos, resulting in multiple tmers refering to the same thing</li>
-<li>many abbreviations are used and end up in conflicts</li>
-<li>Many words and mostly important ones are subject-specific jargon and thus cannot be recovered
+<li>many words contain typos, resulting in multiple terms refering to the same thing.</li>
+<li>many abbreviations are used and some are conflicting.</li>
+<li>Many words, and particularly the relevant ones, are subject-specific jargon and thus cannot be recovered
    using general-purpose spelling correctors.</li>
-<li>The single binary label pathology/no_pathology is noisy because it is the result of partial manual
-   annotation. more specifically, a subset of the dataset was selected for annotation based on a
+<li>The single binary label "pathology" / "no_pathology" is noisy because it is the result of partial manual
+   annotation. More specifically, a subset of the dataset was selected for annotation based on a
    currated list of keywords (and their typo'd variations). The rest was labeled as "no_pathology".
-   Moreover, the manual annotation was also carried out in a fairly limited time-frame which did not allow
+   Moreover, the manual annotation was carried out in a fairly limited time-frame which did not allow
    multiple pass on the same patients by several annotators.</li>
-<li>The dataset in very unbalanced since around 1.2% of the patient are part of the "pathology" class.</li>
+<li>The dataset suffers from major class imbalance since only ~1.2% of the patient are part of the "pathology" class.</li>
 </ul>
-<p>On the plus side, the dataset is rather large with ~600000 patients.</p>
-<p>On the minus side, I have access to a fairly limited amount of computing power (no GPU, intel i3 with 4 Gb RAM).
-Therefore, even though I am fairly attracted to the shiny neural networks-based methods
-(in particular convolutional, recurrent and long-short term memory NN which seem to enjoy a fair share
-of success) there is absolutely no way I can run them. Also, cloud-based solutions such as Amazon's AWS are out of
-the question, the first reason for that being that the data should not leave the lab.</p>
+<p>On the plus side, the dataset is rather large with ~600,000 patients.
+On the minus side, I have access to a fairly limited amount of computing power (no GPU, intel i3 with 4 Gb RAM).
+Therefore, even though I am fairly attracted to the recent neural networks-based methods (such as recurent neural networks 
+which seem to enjoy a fair share of success) there is absolutely no way I can run them on my machine. Also, cloud-based 
+solutions such as Amazon's AWS are out of the question, the main reason for that being that the data should not leave 
+the lab.</p>
 <h1>Facebook's fastText</h1>
 <p>After trying a bunch of different methods which will be the subject of another article,
 I was reading on language models, in particular n-grams and word embeddings/representations
 such as word2vec and GloVe, hoping to find new ideas for extracting relevant features from
 my documents' text.</p>
-<p>Both the n-gram and word representation are interesting in their own right but I am rather
+<p>Both the n-gram and word representation are interesting in their own right but I have been rather
 impressed by the semantic properties of word2vec. However, word embedding methods are called
 this way for a reason: the unit are words, which means each word gets vector representation.
 I am therefore left with the follwing question: how to meaningfully combine these and get a document
@@ -137,29 +137,28 @@ representation?</p>
 In short, the approach described by the authors consists in defining word (or n-gram) representation
 <em>à la</em> word2vec, simply average them to get a sentence representation and feed that to a linear
 classifier.</p>
-<p>I like this approach for several reasons: it uses the apparently powerful word2vec framework,
+<p>I like this approach for several reasons: it uses the apparently word2vec framework,
 it is conceptually simple, it compares favorably to baselines and more sophisticated models,
 it is fast and in particular much much faster than the neural network-based models I cannot
-afford, and finally , it is already implemented in the
+afford, and finally, it is already implemented in the
 <a href="https://github.com/facebookresearch/fastText/">fastText library</a>.</p>
-<p>I am therefore going to try my luck and use fastText's classifier to gauge its ability to
-classify my data. If it works well I will also try to use the sentence representations as
-extra features along with the LDA topic mixtures I have used so far.</p>
+<p>I therefore decided to try my luck and use fastText's classifier to gauge its ability to
+classify my data.</p>
 <p>Note that fastText is not limited to classification: it can be used in an unsupervised fashion
 to get word and sentence embeddings.</p>
 <h2>FastText for Windows</h2>
 <p>First hurdle: fastText is designed to build under Unix-like systems.
-that's a bummer as despite being a long-standing user and fan of Linux systems,
+That's a bummer as despite being a long-standing user of Linux systems,
 I am stuck with Windows at work.
 Fortunately, someone may have felt the same and shared a
 <a href="http://cs.mcgill.ca/~mxia3/FastText-for-Windows/">Windows version</a> of the library.
 Thumbs up to you <a href="http://cs.mcgill.ca/~mxia3">Meng Xuan Xia</a>.</p>
-<p>After a quick and painless compilation with MS Visual C++ (my first time using it), I am
-ready to start.</p>
+<p>After a quick and painless compilation with MS Visual C++ (appreciable considering it was my first time 
+using it), I am ready to start.</p>
 <h1>Getting started</h1>
 <p>I am mainly giving  short version of the <a href="https://github.com/facebookresearch/fastText/">documentation</a>
-and <a href="https://github.com/facebookresearch/fastText/blob/master/tutorials">tutorials</a>, so you
-will probably need to read them too.</p>
+and <a href="https://github.com/facebookresearch/fastText/blob/master/tutorials">tutorials</a>, but it is advisable you
+read them too.</p>
 <p>The command-line interface (CLI) is very simple to use and the input format is very minimalistic
 and convenient (I am looking at you Weka and ARFF).</p>
 <p>The training set format is as such:</p>
@@ -189,7 +188,7 @@ This prints the precision achieved on the test set.</p>
 <p>In this case, precision is not a good measure because of the very strong unbalance of the dataset.
 Always predicting "no_pathology", one can expect precision and recall to reach ~98.8%.
 Such a high baseline makes it difficult to assess whether this classifier is better than the
-dummy "always predict no-pathology" one.</p>
+dummy "always predict no-pathology" strategy.</p>
 <p>Fortunately, I can rely on the "predict" command to get predictions and compute the confusion matrix
 or any other metric such as Matthews Correlation Coefficient (MCC).</p>
 <div class="highlight"><pre><span></span>fastText.exe predict default_model.bin test_file.txt 1 &gt; predictions.txt;
@@ -203,14 +202,14 @@ classifier will be used, namely screening and human validation of the positive p
 The goal is to give a reasonable number of screened patients to the validators.
 I therefore need to have access to a probability-like number instead of 0 / 1 decisions in order
 to vary the "positive" cutoff during subsequent analyses.</p>
-<p>For that, I use the "predict-prob" command of fasttext.</p>
+<p>For that, I use the "predict-proba" command.</p>
 <div class="highlight"><pre><span></span>fastText.exe predict-proba default_model.bin test_file.txt 1 &gt; class_probabilities.txt;
 </pre></div>
 
 
 <h1>Parameters</h1>
 <p>A short description of the parameters is provided in the documentation, but I will
-expand a little here on the most important ones.</p>
+expand a little on the most important ones.</p>
 <hr>
 <p>The "-loss" option allows you to choose the loss which is optimized for.</p>
 <p>The default value is "ns" for negative sampling. It is an approximation of the softmax loss
@@ -224,11 +223,11 @@ a good embedding should satisfy the following:</p>
 <li>this dot product must be small for words and contexts which rarely co-occur</li>
 </ol>
 <p>Given the vector representation \(w_i\) of a word and a context \(c_j\), the goal is
-therefore to maximize \(\frac{w_i \cdot c_j}{sum_w(w \cdot c_j)}\). The normalization
+therefore to maximize \(\frac{w_i \cdot c_j}{\sum_w(w \cdot c_j)}\). The normalization
 is a sum over all words which can be prohibitively large and yield very long computation
 times.</p>
-<p>Remark: this is a gross simplification; the actual softmax loss is actually
-\(-log P(w_i | c_j) = -log(e^{w_i \cdot c_j} / sum_w(e^{w \cdot c_i}))\) which
+<p>Remark: this is a simplification to get the idea across; the actual softmax loss is actually
+\(-log P(w_i | c_j) = -log(e^{w_i \cdot c_j} / \sum_w(e^{w \cdot c_i}))\) which
 should be minimized instead of maximized.</p>
 <p>An alternative is therefore to replace the sum over all words by  a sum over a random
 sample, under the reasonable assumption that most are "negative", i.e. rarely co-occur
@@ -241,36 +240,36 @@ the sum over all words reduces instrad to a sum over one path in the tree.</p>
 a <a href="https://en.wikipedia.org/wiki/Huffman_coding">Huffman tree</a> with words as leaves,
 so that most common words are found at smaller depth.
 Each internal node \(n_i\) has two children and their associated probabilities \(p_i\) and
-\(q_i = 1 - p_i\) where \(p_i\) depends both on \(c_j\) and a vector which is learned during training.
+\(q_i = 1 - p_i\) where \(p_i\) depends both on the context \(c_j\) and a vector which is learned during training.
 The probaility \(P(w_i | c_j)\) is then computed by following the path from the root to the
 \(w_i\) and multiplying the \(p_i\) or \(q_i\) depending on which child is followed.
-Since the depth of a balanced tree with \(n\) leaves is \(O(log(n))\), this reduces the computation of
-the softmax loss from \(O(W)\) to \(O(log(W)\) for \(W\) words. A more detailed explanation with nice
+Since the depth of a balanced tree with \(n\) leaves is \(O(log n)\), this reduces the computation of
+the softmax loss from \(O(W)\) to \(O(log W\) for \(W\) words. A more detailed explanation with nice
 graphics can be found <a href="http://building-babylon.net/2017/08/01/hierarchical-softmax/">here</a>.</p>
 <p>For a more rigorous description of negative sampling and hierarchical softmax, see
-<a href="https://arxiv.org/abs/1310.4546">this article</a> and references therein.
-In general, ns or hs are the only way to train the model in reasonable time. As a rule of thumb,
-ns requires several epochs to be accurate (-epoch flag) wheread hs does not benefits from more epoch
-(<a href="https://groups.google.com/forum/#!msg/word2vec-toolkit/WUWad9fL0jU/LdbWy1jQjUIJ">as stated here</a>).</p>
+<a href="https://arxiv.org/abs/1310.4546">this article</a> and references therein.</p>
+<p>In general, "ns" or "hs" are the only way to train the model in reasonable time when the vocabulary size is large. 
+As a rule of thumb, "ns" requires several epochs to be accurate ("-epoch" flag) whereas "hs" does not benefits from 
+more epoch(<a href="https://groups.google.com/forum/#!msg/word2vec-toolkit/WUWad9fL0jU/LdbWy1jQjUIJ">as stated here</a>).</p>
 <hr>
 <p>The "-bucket" option is used to tune the number of buckets used in the hash table. There is a
 trade-off between accuracy and memory used as a smaller value implies more collisions.</p>
 <hr>
-<p>The "-lr" option tunes the learning rate. In general, a larger value means faster trainig and a
+<p>The "-lr" option tunes the learning rate. In general, a larger value means faster training and a
 potentially less accurate model because of a higher risk of getting stuck in local minimum.</p>
 <h1>Some results</h1>
-<p>After a rather light parameter tuning phase, the best cutoff to balance TP and FP results in
+<p>After a light parameter tuning phase, the best cutoff to balance TP and FP results in
 a ~2/3 precision. Interestingly, this is almost the best that can be reached.
 Indeed, lowering the threshold further (i.e. predicting more and more patients as "pathology") yields
 very marginal changes on the precision, TP and FP until reaching a threshold where everything is predicted
-as "pathology". This is because most of the low probabilities are all clustered very closeley around the
+as "pathology". This is because most of the low probabilities are all clustered very closely around the
 same value.</p>
 <p>All in all, these results are fairly good considering I did not have to engineer any features and spent
 little time optimizing the parameters.
 The next step is to see whether word2vec features could benefit a classifier when used along LDA
 topic mixtures.</p>
 <h1>Further thoughts:</h1>
-<p>I stumbled upon other alternatives in a similar philosophy:</p>
+<p>I stumbled upon other alternatives in a similar vein:</p>
 <ul>
 <li><a href="https://radimrehurek.com/gensim/models/doc2vec.html">Gensim's Doc2Vec</a> does exactly what it
   says: it computes the embedding of whole documents/sentences which can then be fed to a classifier.

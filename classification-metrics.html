@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="HandheldFriendly" content="True" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="robots" content="" />
+    <meta name="robots" content="index, follow" />
 
   <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
 
@@ -137,24 +137,26 @@ The following confusion matrix will be our reference:</p>
 </tr>
 </tbody>
 </table>
-<p>Sensitivity, true positive rate, recall, probability of detection:
-\[Sens = \frac{TP}{P} = \frac{a}{a+c}\]
-Probability that positive tests are rightly so: \(\mathcal{P}(\tilde{P} | P)\).
+<h2>Sensitivity, true positive rate, recall, probability of detection</h2>
+<p>\[Sens = \frac{TP}{P} = \frac{a}{a+c}\]
+Probability that real positives are predicted as positive: \(\mathcal{P}(\tilde{P} | P)\).
 Intrinsic to the test / classifier.</p>
-<p>Specificity, true negative rate:
-\[Sens = \frac{TN}{N} = \frac{d}{b+d}\]
-Probability that negative tests are rightly so : \(\mathcal{P}(\tilde{N} | N)\).
+<h2>Specificity, true negative rate</h2>
+<p>\[Sens = \frac{TN}{N} = \frac{d}{b+d}\]
+Probability that true negatives are predicted as negatives: \(\mathcal{P}(\tilde{N} | N)\).
 Intrinsic to the test / classifier.</p>
-<p>Positive predictive value, precision:
-\[Sens = \frac{TP}{\tilde{P}} = \frac{a}{a+b}\]
-Probability that, given a postitive prediction, it is a real positive:
+<h2>Positive predictive value, precision:</h2>
+<p>\[Sens = \frac{TP}{\tilde{P}} = \frac{a}{a+b}\]
+Probability that postitive predictions, are real positives:
 \(\mathcal{P}(P | \tilde{P})\).
-Not intrinsic to the test / classifier; also depends on \(P\).</p>
+Not intrinsic to the test / classifier: a large \(P\) compared to \(N\) will make 
+\(a\) larger than \(b\) independently from the test / classifier.</p>
 <p>Negative predictive value, precision (note: depends on \(P\)):
 \[Sens = \frac{TN}{\tilde{N}} = \frac{d}{c+d}\]
-Probability that, given a negative prediction, it is a real negative:
+Probability that negative predictions, are real negatives:
 \(\mathcal{P}(N | \tilde{N})\).
-Not intrinsic to the test / classifier; also depends on \(P\).</p>
+Not intrinsic to the test / classifier; also depends on \(P\) and \(N\) as 
+illustrated above.</p>
 <h1>References</h1>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Sensitivity_and_specificity">https://en.wikipedia.org/wiki/Sensitivity_and_specificity</a></li>
