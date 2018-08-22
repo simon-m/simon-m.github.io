@@ -33,16 +33,16 @@ Intrinsic to the test / classifier.
 
 ## Positive predictive value, precision:
 \\[Sens = \\frac{TP}{\\tilde{P}} = \\frac{a}{a+b}\\]
-Probability that postitive predictions, are real positives:
+Probability that postitive predictions are real positives:
 \\(\\mathcal{P}(P | \\tilde{P})\\).
-Not intrinsic to the test / classifier: a large \\(P\\) compared to \\(N\\) will make 
-\\(a\\) larger than \\(b\\) independently from the test / classifier.
+Not intrinsic to the test / classifier: a large \\(P\\) compared to \\(N\\) will make
+\\(a\\) larger than \\(b\\) independently from the test / classifier ability.
 
 Negative predictive value, precision (note: depends on \\(P\\)):
 \\[Sens = \\frac{TN}{\\tilde{N}} = \\frac{d}{c+d}\\]
-Probability that negative predictions, are real negatives:
+Probability that negative predictions are real negatives:
 \\(\\mathcal{P}(N | \\tilde{N})\\).
-Not intrinsic to the test / classifier; also depends on \\(P\\) and \\(N\\) as 
+Not intrinsic to the test / classifier; also depends on \\(P\\) and \\(N\\) as
 illustrated above.
 
 
