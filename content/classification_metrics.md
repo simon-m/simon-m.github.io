@@ -15,33 +15,35 @@ Let \\(P\\) and \\(N\\) represent the real positive and negatives and
 \\(\\tilde{P}\\) and \\(\\tilde{N}\\) be the predicted positive and negatives.
 The following confusion matrix will be our reference:
 
-|                  | \\(P\\) | \\(N\\) |         |
-|------------------|:-------:|:-------:|---------|
+|                   | \\(P\\) | \\(N\\) |         |
+|-------------------|:-------:|:-------:|---------|
 | \\( \\tilde P \\) | TP = a  |  FP = b | = a + b |
 | \\( \\tilde N \\) | FN = c  |  TN = d | = c + d |
-|                    | = a + c | = b + d |         |
+|                   | = a + c | = b + d |         |
 
-Sensitivity, true positive rate, recall, probability of detection:
+## Sensitivity, true positive rate, recall, probability of detection
 \\[Sens = \\frac{TP}{P} = \\frac{a}{a+c}\\]
-Probability that positive tests are rightly so: \\(\\mathcal{P}(\\tilde{P} | P)\\).
+Probability that real positives are predicted as positive: \\(\\mathcal{P}(\\tilde{P} | P)\\).
 Intrinsic to the test / classifier.
 
-Specificity, true negative rate:
+## Specificity, true negative rate
 \\[Sens = \\frac{TN}{N} = \\frac{d}{b+d}\\]
-Probability that negative tests are rightly so : \\(\\mathcal{P}(\\tilde{N} | N)\\).
+Probability that true negatives are predicted as negatives: \\(\\mathcal{P}(\\tilde{N} | N)\\).
 Intrinsic to the test / classifier.
 
-Positive predictive value, precision:
+## Positive predictive value, precision:
 \\[Sens = \\frac{TP}{\\tilde{P}} = \\frac{a}{a+b}\\]
-Probability that, given a postitive prediction, it is a real positive:
+Probability that postitive predictions, are real positives:
 \\(\\mathcal{P}(P | \\tilde{P})\\).
-Not intrinsic to the test / classifier; also depends on \\(P\\).
+Not intrinsic to the test / classifier: a large \\(P\\) compared to \\(N\\) will make 
+\\(a\\) larger than \\(b\\) independently from the test / classifier.
 
 Negative predictive value, precision (note: depends on \\(P\\)):
 \\[Sens = \\frac{TN}{\\tilde{N}} = \\frac{d}{c+d}\\]
-Probability that, given a negative prediction, it is a real negative:
+Probability that negative predictions, are real negatives:
 \\(\\mathcal{P}(N | \\tilde{N})\\).
-Not intrinsic to the test / classifier; also depends on \\(P\\).
+Not intrinsic to the test / classifier; also depends on \\(P\\) and \\(N\\) as 
+illustrated above.
 
 
 # References

@@ -8,36 +8,38 @@ Summary: Some notes about maximum likelihood estimation
 
 
 Beside [epidemiology](epidemiology-cheat-sheet.html), I am also studying some statistics.
-Below you can find my notes on far on maximum likelihood estimation (MLE).
+Below you can find my notes so far on maximum likelihood estimation (MLE).
 
-Let \\(X = (X_1, \\dots, X_n)\\) be a vector of iid random variables following a
-distribution \\(D_{\\theta_0}\\) parametrized by the vector \\(\\theta_0\\).
+Let \\(X = (X_1, \\dots, X_n)\\) be a vector of [iid](https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables) 
+random variables following a distribution \\(D_{\\theta_0}\\) parametrized by the vector \\(\\theta_0\\).
+For instance, if \\(D\\) is a [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution), 
+then \\(\\theta_0 = (\\mu, \\sigma)\\).
 In the continuous case, let \\(f_{\\theta_0}\\) be the probability density function (PDF) of \\(D_{\\theta_0}\\).
-In the discrete case, let \\(P_{\\theta_0}\\) be the probability mass function (PMF) of \\(D_{\\theta_0}\\)
-Let \\(x = (x_1, \\dots, x_n)\\) be a realization of \\(X\\), i.e. the *observed data*.
+In the discrete case, let \\(P_{\\theta_0}\\) be the probability mass function (PMF) of \\(D_{\\theta_0}\\).
+Finally, let \\(x = (x_1, \\dots, x_n)\\) be a realization of \\(X\\), i.e. the *observed data*.
 
 Then, the maximum likelihood estimator (MLE) \\(\\hat{\\theta}\\) of \\(\\theta_0\\) is computed as follows.
 
-First compute the likelihood \\(\mathcal{L}(\\theta) = P(X; \\theta)\\).
-If \\(F_{\\theta}\\) is continuous, then
-\\[\mathcal{L}(\\theta) = \\prod\{i=1}^{n} f_{\\theta}(x_i)\\]
-If \\(F_{\\theta}\\) is discrete, then
-\\[\mathcal{L}(\\theta) = \\prod\{i=1}^{n} P_{\\theta}(x_i)\\]
+First compute the likelihood \\(\mathcal{L}(\\theta | X) = p_\\theta(X)\\) for a given \\(\\theta\\).
+If \\(D_{\\theta}\\) is continuous, then
+\\[\mathcal{L}(\\theta) = \\prod{i=1}^{n} f_{\\theta}(x_i)\\]
+If \\(D_{\\theta}\\) is discrete, then
+\\[\mathcal{L}(\\theta) = \\prod{i=1}^{n} P_{\\theta}(x_i)\\]
 
-**NB**: the iid assumtion is crucial as it allows the total probability to be equal to the product
+**NB**: the iid assumtion is crucial here as it allows the total probability to be equal to the product
 of individual probabilities.
 
 The log-likelihood \\(\mathcal{l}(\\theta)\\) is simply the logarithm of \\(\mathcal{L}(\\theta)\\).
 Since \\(\\log\\) is a strictly increasing function, the value maximizing \\(\mathcal{l}(\\theta)\\) is the
 same as that maximizing \\(\mathcal{L}(\\theta)\\). The log-likelihood has the added benefit that it
-allows to get rid of the product which will prove useful for the next calculations.
+allows to get replace products with sums which will prove useful for the next calculations.
 
-In order to maximize the likelihood, we first need to compute its derivative which respect to the
+In order to maximize the log-likelihood, we first need to compute its derivative which respect to the
 parameter of interest (namely \\(\\theta\\)), set the derivative to 0 and solve for \\(\\theta\\):
 \\[u(\\theta) = \\frac{\\partial \mathcal{l}(\\theta)}{\\partial \\theta} = 0\\]
 This derivative is sometimes called *score function* or "Fisher's score function".
 
-The score is a random vector whose expectation at the true parameter value \\(E_{\\theta}[u(\\theta)_0]\\)
+The score is a random vector whose expectation at the true parameter value \\(E_{\\theta}[u(\\theta_0)]\\)
 is equal to 0.
 
 The score variance also called *information matrix* of "Fisher information matrix" is the positive
@@ -50,8 +52,8 @@ which under mild regularity conditions can be written
 
 
 Asymptotically we have: \\( E[\\hat{\\theta}] = \\theta_0\\) and
-\\( \\sigma^2(\\hat{\\theta}) = \\mathcal{I}(\\theta_0)^{-1})\\)
-Therefore, \\(\\hat{\\theta}\\) is an unbiased estimator for \\(\\theta_0)\\).
+\\( \\sigma^2(\\hat{\\theta}) = \\mathcal{I}(\\theta_0)^{-1}\\)
+Therefore, \\(\\hat{\\theta}\\) is an unbiased estimator for \\(\\theta_0\\).
 
 <!--
 The Cramér-Rao bound gives us a lower bound on the variance of \\(\\hat{\\theta}\\):

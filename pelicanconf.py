@@ -24,6 +24,7 @@ TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
+ROBOTS = 'index, follow'
 
 USE_FOLDER_AS_CATEGORY = False
 MAIN_MENU = True
@@ -52,6 +53,6 @@ DISPLAY_CATEGORIES_ON_MENU = False
 
 THEME_STATIC_DIR = "themes"
 THEME = "themes/Flex"
-GITHUB_URL = "https://github.com/simon-m/simon-m.github.io/"
+GITHUB_URL = "https://github.com/simon-m/simon-m.github.io"
 
 

@@ -1,4 +1,4 @@
-Title: Classification of text data: using multiple feature spaces
+Title: Classification of text data: using multiple feature spaces with Scikit-learn
 Date: 2017-11-02 21:40
 Modified: 2017-11-02 21:40
 Category: Machine learning
@@ -20,8 +20,9 @@ and [non-negative matrix factorization](https://en.wikipedia.org/wiki/Non-negati
 
 These methods start with a term-document matrix \\(T\\) with documents as rows and terms as columns.
 In the simplest case, the value \\(T_{ij}\\) is simply the absolute frequency (or count) of
-term \\(j\\) in document \\(i\\). This value is often replaced by the so-called TF-IDF value (Term Frequency -
-Inverse Document Frequency) which basically allows to give more importance to rare terms.
+term \\(j\\) in document \\(i\\). This value is often replaced by the so-called 
+[TF-IDF](https://en.wikipedia.org/wiki/Tf%E2%80%93idf) value (Term Frequency - Inverse Document Frequency) 
+which basically allows to give more importance to rare terms.
 Note that "terms" could be words or n-grams or possibly any other relevant unit of text.
 
 From this matrix, topic-based methods seek to discover latent factors called *topics*, which are linear
@@ -38,15 +39,14 @@ non-negative matrix factorization of \\(T\\).
 
 
 ## Word embedding-based
-Although these approaches are standard in text analysis, I was curious about the newer so-called *word embedding*
-methods such as [Facebook's FastText](Bag of Tricks for Efficient Text Classification). These follow a rather
-orthogonal approach to topic-based methods as they
-seek to find a vector representation of *words* so that semantically similar words are represented by similar vectors
+Although topic-based approaches are standard in text analysis, I was curious about the newer so-called *word embedding*
+methods such as [Facebook's FastText](https://arxiv.org/abs/1607.01759). These follow a rather
+orthogonal approach as they seek to find a vector representation of *words* so that semantically similar words are represented by similar vectors
 (according to a given metric).
 To reach this goal, the broad idea is to find an embedding allowing to predict which word should occur given its *context*
 (for the continuous bag of words representation, the skip-gram representation swaps words and contexts).
 Here context mean "surroundings words", i.e. words found in a windows around the word of interest.
-Note that I use "word" instead of "terms", but this can also be applied to n-grams as a unit.
+Note that I use "word" instead of "terms", but this can also be applied to n-grams as a unit as well.
 
 As opposed to topic-based methods, word-embedding methods consider a more local context:
 for the former, similar terms are those appearing in similar documents, for the latter,
@@ -54,8 +54,8 @@ similar terms appear in similar contexts *within* a document.
 
 
 ## The best of both worlds?
-The two approaches seeming quite complementary so I thought may give a shot to
-combining their resulting features. I settled to use NMF and a FastText-based
+The two approaches seeming quite complementary I thought I may give a shot at
+combining their resulting features. I settled on using NMF and a FastText-based
 document embedding.
 
 
@@ -213,7 +213,7 @@ gs_cv = GridSearchCV(pipe, param_grid=params_grid,
 And that's it.
 
 # Epilogue
-It turns out that using both feature spaces as input improves on using either separately.
+Using both feature spaces as input gives improved classification results as compared to using either separately.
 
 # References:
 
