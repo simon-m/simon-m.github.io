@@ -45,7 +45,7 @@ It is also called the total *time at risk* for the population of interest.
 
 ## Open and closed populations
 **Closed population or cohort**: fixed number of individuals, except for loss to
-follow-up or death (which must be corrected in subsequent analyses, see 
+follow-up or death (which must be corrected in subsequent analyses, see
 [censoring](https://en.wikipedia.org/wiki/Censoring_(statistics))).
 
 **Open population**: inflow and outflow are possible, the size of the population can vary.
@@ -109,7 +109,7 @@ As opposed to an *event* defined above, consider a *case* to be a patient with t
 As opposed to incidence, the prevalence is concerned with all cases, not only new ones.
 Let \\(N_t\\) be the population size at time \\(t\\). The *point prevalence* at time \\(t\\) is then:
 \\[ \\text{PR}\cdot = \\frac{ \\text{#cases}}{N_t} \\]
-Here the number of cases refers to both cases with diagnosis in the past and during 
+Here the number of cases refers to both cases with diagnosis in the past and during
 period \\(T\\).
 
 Let \\(N_T\\) be the average population size during for period \\(T\\), assuming it remains fixed.
@@ -175,12 +175,12 @@ In terms of probabilities:
 \\[\\text{OR} = \\frac{P(D | E)}{P( \\tilde D | E)} \\frac{P( \\tilde D | \\tilde E)}{P(D | \\tilde E)} \\]
 
 ## Odds ratio versus relative risk
-Relative risk can only be calculated for cohort studies whereas odds ratio can be calculated for 
+Relative risk can only be calculated for cohort studies whereas odds ratio can be calculated for
 both case-control and cohort studies (see section "Cohort versus case-control" below).
 
 If the incidence of the disease is low, OR is a good approximation of RR since
 \\(a + b \\approx b\\) and \\(c + d \\approx d\\). Thus,
-\\[\\text{RR} = \\frac{a (c + d}{c (a + b)} \\approx \\frac{ad}{bc} = \\text{OR}\\]
+\\[\\text{RR} = \\frac{a (c + d)}{c (a + b)} \\approx \\frac{ad}{bc} = \\text{OR}\\]
 
 
 # Stratification and adjustment strategies
@@ -207,7 +207,7 @@ of the populations. Sometime, we only have access to the number of cases. Then t
 is of use.
 
 ## Indirect method
-1. Build a *reference population* for the population under study. Both populations should be similar enough. 
+1. Build a *reference population* for the population under study. Both populations should be similar enough.
    The rate or proportion of interest (or estimates thereof) must be available for the reference population.
 2. Using the stratum-specific rates or proportions from the reference population and the stratum sizes in the population
   under study, compute the *expected* number of cases in the the population under study.
@@ -248,7 +248,7 @@ In particular, case-control trials are often conducted for rare diseases so that
 oversampled compared to controls: the prevalence is what the study design wants it to be.
 Thus we do not know the total number of exposed and non-exposed patients needed to compute the relative risk.
 
-In other words, we need to know the prevalence  which is only known for cohort trials since disease status is not used 
+In other words, we need to know the prevalence  which is only known for cohort trials since disease status is not used
 for defining the groups as opposed to case-control trials.
 
 ## Cross-sectional trials:
@@ -262,7 +262,7 @@ Record both exposure and disease at the same time.
 ## Randomized clinical trial:
 [Source](http://ocw.jhsph.edu/courses/FundEpiII/PDFs/Lecture12.pdf)
 
-- Assign patients to groups randomly (possibly stratify with respect to some variables). 
+- Assign patients to groups randomly (possibly stratify with respect to some variables).
 - Administer the treatments to non-control groups (exposure).
 - Follow how the disease develops.
 
