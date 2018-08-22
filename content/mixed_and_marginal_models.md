@@ -30,6 +30,7 @@ Equivalently letting \\(\\mathbf{\\beta} = (\\beta_1, \\dots \\beta_p)\\) and
 \\[ Y_i = \\mathbf{\\beta} \\mathbf{x_i} + \\epsilon_i \\]
 
 The assumptions of the model are that
+
 - \\(E[\\epsilon_i] = 0\\)
 - \\(Var[\\epsilon_i] = \\sigma_i^2\\),
 - \\(cov[\\epsilon] = \\Sigma\\).
