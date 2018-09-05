@@ -317,9 +317,9 @@ quit;
 data dummy;
   input num text $;
   datalines;
-  1 "one"
-  2 "two"
-  3 "three"
+1 "one"
+2 "two"
+3 "three"
 ;
 run;
 ```
