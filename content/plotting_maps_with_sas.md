@@ -1,6 +1,6 @@
 Title: Plotting maps with SAS: labeled choropleth
-Date: 2018-08-27 19:00
-Modified: 2018-09-05 21:50
+Date: 2018-09-03 21:05
+Modified: 2018-09-03 21:30
 Category: SAS
 Tags: maps, choropleth, SAS, gmaps
 Authors: Simon-M
@@ -157,3 +157,5 @@ The result is still quite rough: the text for small departements in not readable
 the legend could be improved, and the labels are not optimally placed - but considering
 SAS is not a [GIS](en.wikipedia.org/wiki/Geographic_information_system), this is still
 very much acceptable.
+
+The full code can be found [here](https://github.com/simon-m/simon-m.github.io/blob/master/content/plotting_maps_with_sas/plotting_maps_with_sas.sas).

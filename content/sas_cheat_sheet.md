@@ -1,6 +1,6 @@
 Title: Sas cheat sheet
-Date: 2018-08-27 19:00
-Modified: 2018-08-27 19:00
+Date: 2018-09-05 21:50
+Modified: 2018-08-27 22:13
 Category: SAS
 Tags: SAS, data_analysis, data_management, gplot, macro, formats
 Authors: Simon-M
@@ -258,7 +258,7 @@ run;
 
 # Plotting maps
 Plotting maps is a bit more involved so I wrote a dedicated article:
-[Plotting maps in SAS](plotting_maps_with_sas.html).
+[Plotting maps in SAS](plotting-maps-with-sas-labeled-choropleth.html).
 
 
 # Various tricks using formats
