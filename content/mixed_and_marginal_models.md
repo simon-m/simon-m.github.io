@@ -78,7 +78,7 @@ For observation \\(j\\) belonging to group \\(i\\), we have:
 = \\sum_{k=1}^{p} \\beta_j x_{ijk} + \\sum_{l=1}^{q} U_{il} Z_{ijl} + \\epsilon_{ij}\\]
 
 As for the fixed effects model above, given and \\(\\mathbf{U_i} = (U_{i1}, \\dots, U_{iq})\\) and
-\\(\\mathbf{Z_{ij]} = (Z_{ij1}, \\dots, Z_{1jq})^T\\), we can write this as:
+\\(\\mathbf{Z_{ij}} = (Z_{ij1}, \\dots, Z_{1jq})^T\\), we can write this as:
 \\[ Y_{ij} = \\mathbf{\\beta} \\mathbf{x_{ij}} + \\mathbf{U_i} \\mathbf{Z_{ij}} + \\epsilon_{ij}\\]
 
 Note that this is essentially the fixed-effects models to which were added with the random effects
