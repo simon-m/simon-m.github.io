@@ -1,0 +1,273 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="./themes/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="./themes/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="./themes/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+
+<meta name="author" content="Simon-M" />
+<meta name="description" content="A short tutorial to plot a labeled choropleth with SAS." />
+<meta name="keywords" content="maps, choropleth, SAS, gmaps">
+
+<meta property="og:site_name" content="Weblog"/>
+<meta property="og:title" content="Plotting maps with SAS: labeled choropleth"/>
+<meta property="og:description" content="A short tutorial to plot a labeled choropleth with SAS."/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="./plotting-maps-with-sas-labeled-choropleth.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2018-08-27 19:00:00+02:00"/>
+<meta property="article:modified_time" content="2018-09-05 21:50:00+02:00"/>
+<meta property="article:author" content="./author/simon-m.html">
+<meta property="article:section" content="SAS"/>
+<meta property="article:tag" content="maps"/>
+<meta property="article:tag" content="choropleth"/>
+<meta property="article:tag" content="SAS"/>
+<meta property="article:tag" content="gmaps"/>
+<meta property="og:image" content="">
+
+  <title>Weblog &ndash; Plotting maps with SAS: labeled choropleth</title>
+
+
+<script         src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'>
+</script>
+
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href=".">
+        <img src="./themes/img/profile.png" alt="What's in there?" title="What's in there?">
+      </a>
+      <h1><a href=".">What's in there?</a></h1>
+
+<p>Random notes about data analysis at large</p>
+      <nav>
+        <ul class="list">
+          <li><a href="./pages/links.html#links">Links</a></li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href=".">    Home
+</a>
+
+      <a href="categories.html">Categories</a>
+      <a href="tags.html">Tags</a>
+
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="plotting-maps-with-sas-labeled-choropleth">Plotting maps with SAS: labeled choropleth</h1>
+    <p>
+          Posted on lun. 27 août 2018 in <a href="./category/sas.html">SAS</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>For geographical data, SAS convenientely provides shapes for various countries in the <code>maps</code> library.
+These can be used along with
+<a href="http://support.sas.com/documentation/cdl/en/graphref/63022/HTML/default/viewer.htm#gmap-proc-statement.htm">proc gmap</a>
+to plot various data over maps.
+Here we will simply plot a choropleth maps with text labels showing the numerical values in our dataset.
+A nice and thorough tutorial about <code>gmap</code> can be found <a href="http://www2.sas.com/proceedings/sugi29/251-29.pdf">here</a>.</p>
+<h1>Plotting a simple map</h1>
+<p>This is rather straightforward although not very useful by itself.
+Notice that we cannot really plot the map alone: we need to plot a
+<a href="https://support.sas.com/documentation/cdl/en/graphref/63022/HTML/default/viewer.htm#gmap-choro-statement.htm">choropleth</a>
+(or a <a href="https://support.sas.com/documentation/cdl/en/graphref/63022/HTML/default/viewer.htm#gmap-block-statement.htm">block</a>,
+<a href="https://support.sas.com/documentation/cdl/en/graphref/63022/HTML/default/viewer.htm#gmap-prism-statement.htm">prism</a> or
+<a href="https://support.sas.com/documentation/cdl/en/graphref/63022/HTML/default/viewer.htm#gmap-surface-statement.htm">surface</a>
+ plot) for a given variable (latitude here for the sake of example).</p>
+<div class="highlight"><pre><span></span><span class="kr">proc gmap </span>data=maps<span class="m">.</span>france map=maps<span class="m">.</span>france all;
+    id Id;
+    choro lat / nolegend<span class="kr">;</span>
+<span class="kr">run;</span>
+<span class="kr">quit;</span>
+</pre></div>
+
+
+<p><img alt="Simplest choropleth" src="content/plotting_maps_with_sas/gmap.png"></p>
+<p>To get a blank map we need to fiddle a bit with the parameters.
+First define an empty
+<a href="http://support.sas.com/documentation/cdl/en/graphref/63022/HTML/default/viewer.htm#patternchap.htm">pattern</a>
+with <code>pattern v=e</code>.
+Then we only load one observation from the table (<code>obs=1</code>) but still require <code>gplot</code> to plot
+departement with missing data (<code>all</code>).</p>
+<div class="highlight"><pre><span></span>pattern v=e<span class="kr">;</span>
+<span class="kr">proc gmap </span>data=maps<span class="m">.</span>france(obs=<span class="m">1</span>) map=maps<span class="m">.</span>france all;
+    id Id;
+    choro lat / nolegend<span class="kr">;</span>
+<span class="kr">run;</span>
+<span class="kr">quit;</span>
+<span class="c">* Cancel pattern;</span>
+pattern;
+</pre></div>
+
+
+<p><img alt="Blank map" src="content/plotting_maps_with_sas/gmap1.png"></p>
+<h1>Plotting a simple choropleth</h1>
+<p>Now assuming there are some statistic we want to overlay on the previous map, we can plot a choropleth. Let us first define a fake dataset whose value we want to plot. This is closer to a real-life example where the shape data and the data we want to plot live in separate tables.</p>
+<div class="highlight"><pre><span></span><span class="kr">data </span>map_data;
+    <span class="k">set</span> maps<span class="m">.</span>france;
+    <span class="k">by</span> Id;
+    value = <span class="k">x</span> * y / <span class="m">10000</span>;
+    <span class="k">if</span> first<span class="m">.</span>Id <span class="k">then</span> <span class="k">output</span>;
+    <span class="k">keep</span> Id Value<span class="kr">;</span>
+<span class="kr">run;</span>
+</pre></div>
+
+
+<p>The important bit here is that the <code>Id</code> value here must match those from <code>maps.france</code>.
+We can then proceed with the plotting:</p>
+<div class="highlight"><pre><span></span><span class="kr">proc gmap </span>data=map_data map=maps<span class="m">.</span>france;
+    id Id;
+    choro Value<span class="kr">;</span>
+<span class="kr">run;</span>
+<span class="kr">quit;</span>
+</pre></div>
+
+
+<p><img alt="Choropleth" src="content/plotting_maps_with_sas/gmap2.png"></p>
+<p>Note that replacing <code>choro</code> with <code>block</code>, <code>prism</code> or <code>surface</code> will result in other types of plots.</p>
+<h1>Plotting a choropleth with values at the center of departements</h1>
+<p>While colours allow to have a quick intuition of what is going on, it is common to display numerical
+values on top of maps to get a more detailed view of the statistic of interest. Dooing this with SAS
+requires more boilerplate code but can still be achieved without too much pain.</p>
+<p>The shape of each departement is defined as a polygon, in essence a
+list of points with their \((x, y)\) coordinates.
+Therefore, in order to plot a values at the center of each departement, we need to
+compute the barycenter of a polygon, which is done by averaging the coordinates of
+its points.</p>
+<div class="highlight"><pre><span></span><span class="c">* Average longitude of departements;</span>
+<span class="kr">proc means </span>data=maps<span class="m">.</span>france mean noprint;
+    var <span class="k">x</span>;
+    <span class="k">by</span> Id;
+    <span class="k">output</span> <span class="k">out</span>=france_dpt_avg_lon mean=<span class="k">x</span><span class="kr">;</span>
+<span class="kr">run;</span>
+
+<span class="c">* Average latitude of departements;</span>
+<span class="kr">proc means </span>data=maps<span class="m">.</span>france mean noprint;
+    var y;
+    <span class="k">by</span> Id;
+    <span class="k">output</span> <span class="k">out</span>=france_dpt_avg_lat mean=y<span class="kr">;</span>
+<span class="kr">run;</span>
+
+<span class="c">* Departement centroids;</span>
+<span class="kr">data </span>france_dpt_proj_centroids;
+    <span class="k">merge</span> france_dpt_avg_lon(<span class="k">keep</span>=Id <span class="k">x</span>)
+          france_dpt_avg_lat(<span class="k">keep</span>=Id y);
+    <span class="k">by</span> Id<span class="kr">;</span>
+<span class="kr">run;</span>
+</pre></div>
+
+
+<p>We can then assign the label properties to each departement:</p>
+<div class="highlight"><pre><span></span><span class="kr">data </span>pre_labels;
+    <span class="k">set</span> france_dpt_proj_centroids;
+    <span class="k">retain</span>
+    xsys ysys <span class="s">&#39;2&#39;</span>
+    hsys      <span class="s">&#39;3&#39;</span>
+    position  <span class="s">&#39;5&#39;</span>
+    function  <span class="s">&#39;label&#39;</span>
+    size      <span class="m">1.5</span>
+    style     <span class="s">&quot;&#39;Tahoma/bo&#39;&quot;</span>
+    when      <span class="s">&#39;a&#39;</span><span class="kr">;</span>
+<span class="kr">run;</span>
+</pre></div>
+
+
+<p>Finally, we can merge the label properties and coordinates:</p>
+<div class="highlight"><pre><span></span><span class="kr">data </span>labels;
+    <span class="k">merge</span> pre_labels map_data(<span class="k">keep</span>=Id Value);
+    <span class="k">by</span> Id;
+    round_value = <span class="nb">round(</span>value, <span class="m">0.1</span>);
+    text = <span class="k">put</span>(round_value, <span class="m">6.1</span>)<span class="kr">;</span>
+<span class="kr">run;</span>
+</pre></div>
+
+
+<p>Then all that is left is to plot with <code>gmap</code>:</p>
+<div class="highlight"><pre><span></span><span class="kr">proc gmap </span>data=map_data map=maps<span class="m">.</span>france;
+    id Id;
+    choro Value / annotate=labels<span class="kr">;</span>
+<span class="kr">run;</span>
+<span class="kr">quit;</span>
+</pre></div>
+
+
+<p><img alt="Choropleth with data labels" src="content/plotting_maps_with_sas/gmap15.png"></p>
+<p>The result is still quite rough: the text for small departements in not readable,
+the legend could be improved, and the labels are not optimally placed - but considering
+SAS is not a <a href="en.wikipedia.org/wiki/Geographic_information_system">GIS</a>, this is still
+very much acceptable.</p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="./tag/maps.html">maps</a>
+      <a href="./tag/choropleth.html">choropleth</a>
+      <a href="./tag/sas.html">SAS</a>
+      <a href="./tag/gmaps.html">gmaps</a>
+    </p>
+  </div>
+
+
+
+    <div class="addthis_relatedposts_inline">
+
+
+</article>
+
+    <footer>
+<p>&copy;  2017</p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Weblog ",
+  "url" : ".",
+  "image": "",
+  "description": "Notes and ressources about data analysis, machine learning, statistics and epidemiology"
+}
+</script>
+
+</body>
+</html>
